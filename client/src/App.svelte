@@ -1,30 +1,23 @@
 <script lang="ts">
+    import Three from "./components/Three.svelte";
+    import Card from "./components/Card.svelte";
+
     console.log("Hello from Svelte!")
 </script>
 
 <style global lang="sass">
+    @import "theme"
     @import "global"
 
     main
-        padding: 1em
-        margin: 0
-        font-family: "Lexend Deca", Arial, sans-serif
-        display: grid
-        grid-template-columns: 1fr minmax(0, 2fr)
-        grid-template-rows: 22rem auto auto
-        height: calc(100vh - 4rem)
+        font-family: "IBM Plex Sans", sans-serif
+        width: 100%
+        height: 100%
+        display: block
 
-    footer
-        margin: 1rem 0 0 1rem
-        font-size: $size-small
-
-    #creator
-        text-decoration: none
-        color: $x-cyan
 </style>
 
 <main>
-    <footer>
-        <strong>Hello</strong> brainy friend! 😃 Got Feedback? Contact <a href="mailto:valentin.rogg@xentral.com" id="creator">@ValentinRogg</a>
-    </footer>
+    <Card />
+    <Three />
 </main>
