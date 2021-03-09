@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/01_rust_rocket.iml" filepath="$PROJECT_DIR$/.idea/01_rust_rocket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/02_rust_rocket_svelte.iml" filepath="$PROJECT_DIR$/.idea/02_rust_rocket_svelte.iml" />
     </modules>
   </component>
 </project>
