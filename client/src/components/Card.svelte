@@ -13,7 +13,7 @@
 
     .badge
         display: inline-block
-        padding:  .2rem .25rem
+        padding:  .2rem .5rem
         margin-left: .5rem
         background: $blue-10
         border-radius: $border-radius
