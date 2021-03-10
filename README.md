@@ -20,7 +20,7 @@ Make sure all languages dependencies are installed:
 - [Rust](https://rustup.rs/)
 - [NodeJS / NPM](https://nodejs.org/en/)
 
----
+<br/>
 
 ### Rust Nightly for Rocket
 
@@ -32,7 +32,7 @@ If you prefer, once we setup a project directory in the following section, you c
 
 `rustup override set nightly`
 
----
+<br/>
 
 ### Startup
 
