@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Three from "./components/Three.svelte";
+    import Three from "./components/Three/Three.svelte";
     import Card from "./components/Card.svelte";
 
     console.log("Hello from Svelte!")
