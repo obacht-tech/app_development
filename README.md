@@ -38,7 +38,7 @@ If you prefer, once we setup a project directory in the following section, you c
 
 #### Rocket
 
-Start Rocket using your IDE or using `cargo run`
+Start Rocket using your IDE or using `cargo run`. 
 Rust has no live reloading feature. If there are any changes to the server cargo has to be restarted.
 
 #### Svelte
