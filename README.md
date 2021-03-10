@@ -20,6 +20,8 @@ Make sure all languages dependencies are installed:
 - [Rust](https://rustup.rs/)
 - [NodeJS / NPM](https://nodejs.org/en/)
 
+---
+
 ### Rust Nightly for Rocket
 
 Once rustup is installed, configure Rust nightly as your default toolchain by running the command:
@@ -29,6 +31,8 @@ Once rustup is installed, configure Rust nightly as your default toolchain by ru
 If you prefer, once we setup a project directory in the following section, you can use per-directory overrides to use the nightly version only for your Rocket project by running the following command in the directory:
 
 `rustup override set nightly`
+
+---
 
 ### Startup
 
