@@ -38,7 +38,7 @@ If you prefer, once we setup a project directory in the following section, you c
 
 #### Rocket
 
-Start Rocket using your IDE or using `cargo run`. 
+Start Rocket using your IDE or using `cargo run`.
 Rust has no live reloading feature. If there are any changes to the server cargo has to be restarted.
 
 #### Svelte
@@ -61,4 +61,4 @@ Or build Svelte once `npm run build`
 
 CLion offers Debugging for Rust. WebStorm doesn't have this feature but is more focused on web languages.
 Both can be used as a single tool for everything.
-Other IDEs like VSCode, Sublime or Vim can also be used but are not recommended. 
+Other IDEs like VSCode, Sublime or Vim can also be used but are not recommended.
