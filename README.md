@@ -49,3 +49,16 @@ First change to the client folder
 Start Svelte with hot reload `npm run dev`
 
 Or build Svelte once `npm run build`
+
+<br/>
+
+### Recommended IDEs
+
+|IDE|Language|
+|---|---|
+|JetBrains CLion|Rust|
+|JetBrains WebStorm|Svelte|
+
+CLion offers Debugging for Rust. WebStorm doesn't have this feature but is more focused on web languages.
+Both can be used as a single tool for everything.
+Other IDEs like VSCode, Sublime or Vim can also be used but are not recommended. 
