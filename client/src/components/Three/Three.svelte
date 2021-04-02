@@ -86,13 +86,16 @@
     /**
      * Camera
      */
-            // const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+    // const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
     const aspectRatio = sizes.width / sizes.height;
     const camera = new THREE.OrthographicCamera(-5 * aspectRatio, 5 * aspectRatio, 5, -5, 0.1, 100);
     camera.position.x = 15;
     camera.position.y = 10;
     camera.position.z = 10;
     scene.add(camera);
+
+    let controls;
+    let renderer;
 
     onMount(() => {
 
@@ -108,7 +111,7 @@
         /**
          * Renderer
          */
-        const renderer = new THREE.WebGLRenderer({
+        renderer = new THREE.WebGLRenderer({
             canvas: canvas,
             antialias: true,
             // alpha: true,
@@ -151,7 +154,7 @@
         /**
          * Controls
          */
-        const controls = new OrbitControls(camera, canvas);
+        controls = new OrbitControls(camera, canvas);
         controls.enableDamping = true;
         controls.minZoom = 0.8;
         controls.maxZoom = 2.5;
@@ -222,11 +225,13 @@
 
 <section id="three">
     <Card bottom="true">
-        ThreeJS <br/><br/>
+        ThreeJS Controls
+        <br/><br/>
         <button on:click={() => {
-            gsap.to(camera.position,  { duration: 0.6, x: 0});
-            gsap.to(camera.position,  { duration: 1, y: 15});
-            gsap.to(camera.position,  { duration: 1, z: 0});
+            controls.enableDamping = false;
+            gsap.to(camera.position,  { duration: 0.2, x: 0});
+            gsap.to(camera.position,  { duration: 0.4, y: 15, onComplete: () => {controls.enableDamping = true}});
+            gsap.to(camera.position,  { duration: 0.3, z: camera.position.z > 0 ? 0.01 : -0.01});
         }}>
             Move to TopDown View
         </button>
