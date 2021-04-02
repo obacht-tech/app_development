@@ -10,6 +10,7 @@
     import {RenderPass} from "three/examples/jsm/postprocessing/RenderPass";
     import Card from "../Card.svelte";
     import gsap from 'gsap';
+    import {SMAAPass} from "three/examples/jsm/postprocessing/SMAAPass";
     // import {SSAOPass} from "three/examples/jsm/postprocessing/SSAOPass";
     // import galaxyVertexShader from '../../shaders/galaxy/vertex.glsl'
     // import galaxyFragmentShader from '../../shaders/galaxy/fragment.glsl'
@@ -109,6 +110,7 @@
 
     let controls;
     let renderer;
+    let effectComposer;
 
     onMount(() => {
 
@@ -126,21 +128,28 @@
          */
         renderer = new THREE.WebGLRenderer({
             canvas: canvas,
-            antialias: true,
         });
         renderer.setSize(sizes.width, sizes.height);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-        // const renderTarget = new THREE.WebGLRenderTarget(600, 800, {
-        //     minFilter: THREE.LinearFilter,
-        //     magFilter: THREE.LinearFilter,
-        //     format: THREE.RGBAFormat,
-        //     encoding: THREE.sRGBEncoding
-        // })
+        let RenderTargetClass;
 
-        const effectComposer = new EffectComposer(renderer);
+        if(renderer.getPixelRatio() === 1 && renderer.capabilities.isWebGL2) {
+            RenderTargetClass = THREE.WebGLMultisampleRenderTarget;
+        } else {
+            RenderTargetClass = THREE.WebGLRenderTarget;
+        }
+
+        const renderTarget = new RenderTargetClass(600, 800, {
+            minFilter: THREE.LinearFilter,
+            magFilter: THREE.LinearFilter,
+            format: THREE.RGBAFormat,
+            // encoding: THREE.sRGBEncoding
+        })
+
+        effectComposer = new EffectComposer(renderer, renderTarget);
         effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         effectComposer.setSize(sizes.width, sizes.height);
 
@@ -158,6 +167,11 @@
         saoPass.params.saoBlurStdDev = 4;
         saoPass.params.saoBlurDepthCutoff = 0.01;
         effectComposer.addPass(saoPass);
+
+        if(renderer.getPixelRatio() === 1 && !renderer.capabilities.isWebGL2) {
+            const smaaPass = new SMAAPass(600, 800)
+            effectComposer.addPass(smaaPass)
+        }
 
         // gui.add(saoPass.params, 'saoBias').min(0).max(2).step(0.01)
         // gui.add(saoPass.params, 'saoIntensity').min(0).max(0.05).step(0.0001)
@@ -190,6 +204,10 @@
             // Update renderer
             renderer.setSize(sizes.width, sizes.height);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Update effectComposer
+            effectComposer.setSize(sizes.width, sizes.height)
+            effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
         })
 
         /**
@@ -247,7 +265,7 @@
             gsap.to(camera.position,  { duration: 0.4, y: 15, onComplete: () => {controls.enableDamping = true}});
             gsap.to(camera.position,  { duration: 0.3, z: camera.position.z > 0 ? 0.01 : -0.01});
         }}>
-            Move to TopDown View
+            TopDown View
         </button>
     </Card>
     <canvas class="webgl"></canvas>
