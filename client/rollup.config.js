@@ -6,6 +6,7 @@ import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-css-only';
+import glslify from 'rollup-plugin-glslify';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -21,26 +22,26 @@ const preprocess = sveltePreprocess({
     }
 });
 
-function serve() {
-    let server;
-
-    function toExit() {
-        if (server) server.kill(0);
-    }
-
-    return {
-        writeBundle() {
-            if (server) return;
-            server = require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
-                stdio: ['ignore', 'inherit', 'inherit'],
-                shell: true
-            });
-
-            process.on('SIGTERM', toExit);
-            process.on('exit', toExit);
-        }
-    };
-}
+// function serve() {
+//     let server;
+//
+//     function toExit() {
+//         if (server) server.kill(0);
+//     }
+//
+//     return {
+//         writeBundle() {
+//             if (server) return;
+//             server = require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
+//                 stdio: ['ignore', 'inherit', 'inherit'],
+//                 shell: true
+//             });
+//
+//             process.on('SIGTERM', toExit);
+//             process.on('exit', toExit);
+//         }
+//     };
+// }
 
 export default {
     input: 'src/main.ts',
@@ -76,6 +77,7 @@ export default {
             sourceMap: !production,
             inlineSources: !production
         }),
+        glslify(),
 
         // In dev mode, call `npm run start` once
         // the bundle has been generated

@@ -7,7 +7,11 @@
 
 <style global lang="sass">
     @import "theme"
-    @import "global"
+    //@import "global"
+
+    html, body
+        margin: 0
+        padding: 0
 
     main
         font-family: "IBM Plex Sans", sans-serif
@@ -18,6 +22,6 @@
 </style>
 
 <main>
-    <Card />
     <Three />
+    <Card />
 </main>

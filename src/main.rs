@@ -12,6 +12,11 @@ fn index() -> Template {
     Template::render("index", &map)
 }
 
+#[get("/client/static/<file..>")]
+fn files_static(file: PathBuf) -> Option<NamedFile> {
+    NamedFile::open(Path::new("client/static").join(file)).ok()
+}
+
 #[get("/client/<file..>")]
 fn files(file: PathBuf) -> Option<NamedFile> {
     NamedFile::open(Path::new("client/public/build").join(file)).ok()

@@ -2,8 +2,9 @@
     @import "./../theme"
 
     section
+        background: white
         position: absolute
-        top: 2rem
+        top: 4rem
         left: 2rem
         width: max-content
         font-size: $size-normal

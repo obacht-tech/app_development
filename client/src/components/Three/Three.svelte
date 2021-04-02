@@ -18,7 +18,6 @@
         display: block
         height: 100%
         width: 100%
-        pointer-events: none
         top: 0
 
     canvas
@@ -28,6 +27,5 @@
 </style>
 
 <section id="three">
-    <canvas id="canvas"></canvas>
+    <canvas class="webgl"></canvas>
 </section>
-
