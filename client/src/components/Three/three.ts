@@ -1,6 +1,10 @@
 import * as THREE from "three";
+import Stats from "stats.js";
 
 function main() {
+
+    const stats = new Stats();
+    document.body.appendChild(stats.dom);
 
     const canvas: HTMLCanvasElement = document.querySelector('#canvas');
     const renderer = new THREE.WebGL1Renderer({canvas, antialias: true, alpha: true});
@@ -57,6 +61,8 @@ function main() {
     }
 
     function render(time) {
+        stats.begin();
+
         time *= 0.001;
 
         if (resizeRendererToDisplaySize(renderer)) {
@@ -75,6 +81,8 @@ function main() {
         renderer.render(scene, camera);
 
         requestAnimationFrame(render);
+
+        stats.end();
     }
 
     requestAnimationFrame(render);
