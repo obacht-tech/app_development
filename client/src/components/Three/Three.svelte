@@ -20,14 +20,14 @@
              * Base
              */
             // Debug
-            // const gui = new dat.GUI()
+            const gui = new dat.GUI();
 
             // Stats
             const stats = new Stats()
-            document.body.appendChild(stats.dom)
+            document.body.appendChild(stats.dom);
 
             // Canvas
-            const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl')
+            const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl');
 
             // Scene
             const scene = new THREE.Scene();
@@ -38,10 +38,10 @@
              * Light
              */
 
-            const ambientLight = new THREE.AmbientLight( 0xffffff, 0.80 );
+            const ambientLight = new THREE.AmbientLight( 0xffffff, 0.60 );
             scene.add(ambientLight);
 
-            const directionalLight = new THREE.DirectionalLight( 0x404040, 1 );
+            const directionalLight = new THREE.DirectionalLight( 0x404040, 1.5 );
             directionalLight.position.z = 3;
             directionalLight.position.y = 3;
             directionalLight.position.x = 2;
@@ -100,24 +100,25 @@
                 sizes.height = window.innerHeight
 
                 // Update camera
-                // camera.aspect = sizes.width / sizes.height
-                camera.updateProjectionMatrix()
+                camera.left = - 5 * (sizes.width / sizes.height);
+                camera.right = 5 * (sizes.width / sizes.height);
+                camera.updateProjectionMatrix();
 
                 // Update renderer
-                renderer.setSize(sizes.width, sizes.height)
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+                renderer.setSize(sizes.width, sizes.height);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             })
 
             /**
              * Camera
              */
             // const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-            const aspectRatio = sizes.width / sizes.height
+            const aspectRatio = sizes.width / sizes.height;
             const camera = new THREE.OrthographicCamera(- 5 * aspectRatio, 5 * aspectRatio, 5, - 5, 0.1, 100);
-            camera.position.x = 15
-            camera.position.y = 10
-            camera.position.z = 10
-            scene.add(camera)
+            camera.position.x = 15;
+            camera.position.y = 10;
+            camera.position.z = 10;
+            scene.add(camera);
 
             // Controls
             const controls = new OrbitControls(camera, canvas);
@@ -143,17 +144,17 @@
             //     encoding: THREE.sRGBEncoding
             // })
 
-            const effectComposer = new EffectComposer(renderer)
-            effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-            effectComposer.setSize(sizes.width, sizes.height)
+            const effectComposer = new EffectComposer(renderer);
+            effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            effectComposer.setSize(sizes.width, sizes.height);
 
-            const renderPass = new RenderPass(scene, camera)
-            effectComposer.addPass(renderPass)
+            const renderPass = new RenderPass(scene, camera);
+            effectComposer.addPass(renderPass);
 
             const saoPass = new SAOPass(scene, camera);
-            saoPass.params.saoBias = 0.5;
-            saoPass.params.saoIntensity = 0.002;
-            saoPass.params.saoScale = 1;
+            saoPass.params.saoBias = 0.8;
+            saoPass.params.saoIntensity = 0.005;
+            saoPass.params.saoScale = 2;
             saoPass.params.saoKernelRadius = 100;
             saoPass.params.saoMinResolution = 0;
             saoPass.params.saoBlur = 1;
@@ -162,31 +163,37 @@
             saoPass.params.saoBlurDepthCutoff = 0.01;
             effectComposer.addPass(saoPass);
 
+            // gui.add(saoPass.params, 'saoBias').min(0).max(2).step(0.01)
+            // gui.add(saoPass.params, 'saoIntensity').min(0).max(0.05).step(0.0001)
+            // gui.add(saoPass.params, 'saoScale').min(0).max(5).step(0.01)
+            // gui.add(saoPass.params, 'saoKernelRadius').min(0).max(1000).step(0.1)
+            // gui.add(saoPass.params, 'saoBlur').min(0).max(100).step(0.1)
+
             /**
              * Animate
              */
-            const clock = new THREE.Clock()
+            // const clock = new THREE.Clock();
 
             const tick = () =>
             {
-                stats.begin()
+                stats.begin();
 
                 // const elapsedTime = clock.getElapsedTime()
 
                 // Update controls
-                controls.update()
+                controls.update();
 
                 // Render
                 // renderer.render(scene, camera)
-                effectComposer.render()
+                effectComposer.render();
 
                 // Call tick again on the next frame
-                window.requestAnimationFrame(tick)
+                window.requestAnimationFrame(tick);
 
-                stats.end()
+                stats.end();
             }
 
-            tick()
+            tick();
         }
 
         main();
