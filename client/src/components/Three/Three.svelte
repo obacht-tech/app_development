@@ -125,6 +125,7 @@
             controls.enableDamping = true;
             controls.minZoom = 0.8;
             controls.maxZoom = 2.5;
+            controls.maxPolarAngle = (Math.PI / 2) * 0.8;
 
             /**
              * Renderer
@@ -166,7 +167,7 @@
             // gui.add(saoPass.params, 'saoBias').min(0).max(2).step(0.01)
             // gui.add(saoPass.params, 'saoIntensity').min(0).max(0.05).step(0.0001)
             // gui.add(saoPass.params, 'saoScale').min(0).max(5).step(0.01)
-            // gui.add(saoPass.params, 'saoKernelRadius').min(0).max(1000).step(0.1)
+            // gui.add(saoPass.params, 'saoKernelRadius').min(0).max(100).step(0.1)
             // gui.add(saoPass.params, 'saoBlur').min(0).max(100).step(0.1)
 
             /**
