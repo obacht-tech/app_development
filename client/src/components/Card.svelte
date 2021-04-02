@@ -1,3 +1,8 @@
+<script lang="ts">
+    export let bottom: boolean = false;
+    export let right: boolean = false;
+</script>
+
 <style lang="sass">
     @import "./../theme"
 
@@ -12,20 +17,15 @@
         box-shadow: $shadow-2xl
         border-radius: $border-radius
 
-    .badge
-        display: inline-block
-        padding:  .2rem .5rem
-        margin-left: .5rem
-        background: $blue-10
-        border-radius: $border-radius
+    .bottom
+        top: auto
+        bottom: 2rem
 
-    #creator
-        text-decoration: none
-        color: $blue
+    .right
+        left: auto
+        right: 2rem
 </style>
 
-<section>
-    <strong>Hello</strong> friend! 😃<br/>
-    Got Feedback? Contact
-    <div class="badge"> <a href="mailto:mail@valentinrogg.de" id="creator">@ValentinRogg</a> </div>
+<section class:bottom={bottom} class:right={right}>
+    <slot/>
 </section>

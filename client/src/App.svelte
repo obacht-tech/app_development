@@ -23,5 +23,9 @@
 
 <main>
     <Three />
-    <Card />
+    <Card>
+        <strong>Hello</strong> friend! 😃<br/>
+        Got Feedback? Contact
+        <div class="badge"> <a href="mailto:mail@valentinrogg.de" id="creator">@ValentinRogg</a> </div>
+    </Card>
 </main>
