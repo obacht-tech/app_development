@@ -12,12 +12,12 @@ fn index() -> Template {
     Template::render("index", &map)
 }
 
-#[get("/client/static/<file..>")]
+#[get("/client/static/<file..>", rank = 2)]
 fn files_static(file: PathBuf) -> Option<NamedFile> {
     NamedFile::open(Path::new("client/static").join(file)).ok()
 }
 
-#[get("/client/<file..>")]
+#[get("/client/<file..>", rank = 3)]
 fn files(file: PathBuf) -> Option<NamedFile> {
     NamedFile::open(Path::new("client/public/build").join(file)).ok()
 }
@@ -29,7 +29,7 @@ fn not_found() -> Redirect {
 
 fn main() {
     rocket::ignite()
-        .mount("/", routes![index, files])
+        .mount("/", routes![index, files_static, files])
         .attach(Template::fairing())
         .register(catchers![not_found])
         .launch();

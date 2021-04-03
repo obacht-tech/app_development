@@ -256,7 +256,7 @@
 </style>
 
 <section id="three">
-    <Card bottom="true">
+    <Card bottom={true} bg={false}>
         ThreeJS Controls
         <br/><br/>
         <button on:click={() => {

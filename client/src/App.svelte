@@ -23,9 +23,10 @@
 
 <main>
     <Three />
-    <Card bottom="true" right="true">
-        Got Feedback?
-        <br/>
-        Contact <div class="badge"> <a href="mailto:mail@valentinrogg.de" id="creator">@ValentinRogg</a> </div>
+    <Card bottom={true} right={true}>
+<!--        Got Feedback?-->
+<!--        <br/>-->
+<!--        Contact <div class="badge"> <a href="mailto:mail@valentinrogg.de" id="creator">@ValentinRogg</a> </div>-->
+        <img width="128" src="/client/static/obacht-logo.svg">
     </Card>
 </main>
