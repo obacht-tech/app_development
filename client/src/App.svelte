@@ -21,9 +21,13 @@
 
 </style>
 
+<svelte:head>
+    <link rel="shortcut icon" type="image/png" href="/client/static/obacht-human-195.png"/>
+</svelte:head>
+
 <main>
     <Three />
-    <Card bottom={true} right={true}>
+    <Card bottom={true} right={false}>
 <!--        Got Feedback?-->
 <!--        <br/>-->
 <!--        Contact <div class="badge"> <a href="mailto:mail@valentinrogg.de" id="creator">@ValentinRogg</a> </div>-->

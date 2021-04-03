@@ -173,12 +173,6 @@
             effectComposer.addPass(smaaPass)
         }
 
-        // gui.add(saoPass.params, 'saoBias').min(0).max(2).step(0.01)
-        // gui.add(saoPass.params, 'saoIntensity').min(0).max(0.05).step(0.0001)
-        // gui.add(saoPass.params, 'saoScale').min(0).max(5).step(0.01)
-        // gui.add(saoPass.params, 'saoKernelRadius').min(0).max(100).step(0.1)
-        // gui.add(saoPass.params, 'saoBlur').min(0).max(100).step(0.1)
-
         /**
          * Controls
          */
@@ -256,7 +250,7 @@
 </style>
 
 <section id="three">
-    <Card bottom={true} bg={false}>
+    <Card bottom={true} right={true} bg={false}>
         ThreeJS Controls
         <br/><br/>
         <button on:click={() => {
