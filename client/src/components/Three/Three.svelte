@@ -251,7 +251,7 @@
 
 <section id="three">
     <Card bottom={true} right={true} bg={false}>
-        ThreeJS Controls
+        Camera Controls
         <br/><br/>
         <button on:click={() => {
             controls.enableDamping = false;
