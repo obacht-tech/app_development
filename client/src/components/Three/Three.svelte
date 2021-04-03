@@ -259,7 +259,7 @@
             gsap.to(camera.position,  { duration: 0.4, y: 15, onComplete: () => {controls.enableDamping = true}});
             gsap.to(camera.position,  { duration: 0.3, z: camera.position.z > 0 ? 0.01 : -0.01});
         }}>
-            TopDown View
+            <i class="fas fa-camera-movie"></i> TopDown View
         </button>
     </Card>
     <canvas class="webgl"></canvas>

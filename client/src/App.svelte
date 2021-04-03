@@ -23,6 +23,7 @@
 
 <svelte:head>
     <link rel="shortcut icon" type="image/png" href="/client/static/obacht-human-195.png"/>
+    <script src="https://kit.fontawesome.com/3a515d3a9f.js" crossorigin="anonymous"></script>
 </svelte:head>
 
 <main>
