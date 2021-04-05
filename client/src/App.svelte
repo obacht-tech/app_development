@@ -1,6 +1,8 @@
 <script lang="ts">
     import Three from "./components/Three/Three.svelte";
     import Card from "./components/Card.svelte";
+    import Timeline from "./components/Timeline.svelte";
+    import Controls from "./components/Controls.svelte";
 
     console.log("Hello from Svelte!")
 </script>
@@ -28,10 +30,12 @@
 
 <main>
     <Three />
-    <Card bottom={true} right={false}>
+    <Timeline />
+    <Controls />
+<!--    <Card bottom={false} right={false}>-->
 <!--        Got Feedback?-->
 <!--        <br/>-->
 <!--        Contact <div class="badge"> <a href="mailto:mail@valentinrogg.de" id="creator">@ValentinRogg</a> </div>-->
-        <img width="128" src="/client/static/obacht-logo.svg">
-    </Card>
+<!--        <img width="128" src="/client/static/obacht-logo.svg">-->
+<!--    </Card>-->
 </main>

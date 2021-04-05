@@ -11,6 +11,8 @@
     import Card from "../Card.svelte";
     import gsap from 'gsap';
     import {SMAAPass} from "three/examples/jsm/postprocessing/SMAAPass";
+    import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
+    import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
     // import {SSAOPass} from "three/examples/jsm/postprocessing/SSAOPass";
     // import galaxyVertexShader from '../../shaders/galaxy/vertex.glsl'
     // import galaxyFragmentShader from '../../shaders/galaxy/fragment.glsl'
@@ -62,6 +64,9 @@
     const planeMaterial = new THREE.MeshStandardMaterial({
         color: 0xffffff,
     });
+    const humanMaterial = new THREE.MeshStandardMaterial({
+        color: '#C7C700',
+    })
 
     /**
      * Plane
@@ -96,6 +101,37 @@
 
     scene.add(cube0, cube1, cube2);
     scene.add(plane);
+
+    /**
+     * Models
+     */
+    const gltfLoader = new GLTFLoader();
+
+    gltfLoader.load('/client/static/models/human.gltf', (gltf) => {
+        const human = gltf.scene.children[0];
+        human.scale.set(0.0015, 0.0015, 0.0015);
+        human.position.set(0, -0.5, 0);
+        human.children[0].children[0].children[0].children[0].castShadow = true;
+        human.children[0].children[0].children[0].children[0].receiveShadow = true;
+        human.children[0].children[0].children[0].children[0].material = humanMaterial;
+        scene.add(human);
+    })
+
+    // let mixer;
+    //
+    // const fbxLoader = new FBXLoader();
+    // fbxLoader.load(
+    //         '/client/static/models/human-walk.fbx',
+    //         (fbx) => {
+    //             console.log(fbx);
+    //             fbx.scale.set(0.002, 0.002, 0.002);
+    //             scene.add(fbx);
+    //
+    //             mixer = new THREE.AnimationMixer(fbx);
+    //             const action = mixer.clipAction(fbx.animations[0]);
+    //             action.play();
+    //         }
+    // )
 
     /**
      * Camera
@@ -208,11 +244,14 @@
          * Animate
          */
         // const clock = new THREE.Clock();
+        // let oldElapsedTime = 0;
 
         const tick = () => {
             stats.begin();
 
-            // const elapsedTime = clock.getElapsedTime()
+            // const elapsedTime = clock.getElapsedTime();
+            // const deltaTime = elapsedTime - oldElapsedTime;
+            // oldElapsedTime = elapsedTime;
 
             // Update controls
             controls.update();
@@ -220,6 +259,12 @@
             // Render
             // renderer.render(scene, camera)
             effectComposer.render();
+
+
+            // AnimationMixer (Not working with SAOPass)
+            // if(mixer) {
+            //     mixer.update(deltaTime);
+            // }
 
             // Call tick again on the next frame
             window.requestAnimationFrame(tick);
@@ -250,17 +295,15 @@
 </style>
 
 <section id="three">
-    <Card bottom={true} right={true} bg={false}>
-        Camera Controls
-        <br/><br/>
-        <button on:click={() => {
-            controls.enableDamping = false;
-            gsap.to(camera.position,  { duration: 0.2, x: 0});
-            gsap.to(camera.position,  { duration: 0.4, y: 15, onComplete: () => {controls.enableDamping = true}});
-            gsap.to(camera.position,  { duration: 0.3, z: camera.position.z > 0 ? 0.01 : -0.01});
-        }}>
-            <i class="fas fa-camera-movie"></i> TopDown View
-        </button>
-    </Card>
+<!--    <Card bottom={true} right={true} bg={false}>-->
+<!--        <button on:click={() => {-->
+<!--            controls.enableDamping = false;-->
+<!--            gsap.to(camera.position,  { duration: 0.2, x: 0});-->
+<!--            gsap.to(camera.position,  { duration: 0.4, y: 15, onComplete: () => {controls.enableDamping = true}});-->
+<!--            gsap.to(camera.position,  { duration: 0.3, z: camera.position.z > 0 ? 0.01 : -0.01});-->
+<!--        }}>-->
+<!--            <i class="fas fa-camera-movie"></i> TopDown View-->
+<!--        </button>-->
+<!--    </Card>-->
     <canvas class="webgl"></canvas>
 </section>
