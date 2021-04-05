@@ -3,7 +3,7 @@
     import Card from "./components/Card.svelte";
     import Timeline from "./components/Timeline.svelte";
     import Controls from "./components/Controls.svelte";
-
+    import TextCard from "./components/TextCard.svelte";
     console.log("Hello from Svelte!")
 </script>
 
@@ -28,6 +28,7 @@
         top: 0
         right: 0
         position: absolute
+
 </style>
 
 <svelte:head>
@@ -35,10 +36,16 @@
     <script src="https://kit.fontawesome.com/3a515d3a9f.js" crossorigin="anonymous"></script>
 </svelte:head>
 
-<main>
-    <Three />
-    <Timeline />
-    <Controls />
+<main >
+<div >
+    <TextCard header="Corona-Studie im Herzen von Augsburg" subheader="Abstandsmessung auf dem Rathausplatz" text="Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut, zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war. Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen neuen Arbeitslosen im Viertel herankarrte. "/>
+
+</div>
+    <div>
+        <Three />
+        <Timeline />
+        <Controls />
+    </div>
 <!--    <Card bottom={false} right={false}>-->
 <!--        Got Feedback?-->
 <!--        <br/>-->
