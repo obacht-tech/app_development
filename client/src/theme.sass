@@ -62,7 +62,7 @@ $size-small: .85rem
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
 
 @font-face
-    font-family: 'IBM Plex Sans'
+    font-family: 'IBM Plex Sans Light'
     font-style: normal
     font-weight: 300
     font-display: swap
@@ -80,7 +80,7 @@ $size-small: .85rem
 
 
 @font-face
-    font-family: 'IBM Plex Sans'
+    font-family: 'IBM Plex Sans Medium'
     font-style: normal
     font-weight: 500
     font-display: swap
@@ -89,7 +89,7 @@ $size-small: .85rem
 
 
 @font-face
-    font-family: 'IBM Plex Sans'
+    font-family: 'IBM Plex Sans SemiBold'
     font-style: normal
     font-weight: 600
     font-display: swap
@@ -98,7 +98,7 @@ $size-small: .85rem
 
 
 @font-face
-    font-family: 'IBM Plex Sans'
+    font-family: 'IBM Plex Sans Bold'
     font-style: normal
     font-weight: 700
     font-display: swap
@@ -107,7 +107,7 @@ $size-small: .85rem
 
 
 @font-face
-    font-family: 'IBM Plex Serif'
+    font-family: 'IBM Plex Serif Light'
     font-style: normal
     font-weight: 300
     font-display: swap
@@ -125,7 +125,7 @@ $size-small: .85rem
 
 
 @font-face
-    font-family: 'IBM Plex Serif'
+    font-family: 'IBM Plex Serif Medium'
     font-style: normal
     font-weight: 500
     font-display: swap
@@ -134,7 +134,7 @@ $size-small: .85rem
 
 
 @font-face
-    font-family: 'IBM Plex Serif'
+    font-family: 'IBM Plex Serif SemiBold'
     font-style: normal
     font-weight: 600
     font-display: swap
@@ -143,7 +143,7 @@ $size-small: .85rem
 
 
 @font-face
-    font-family: 'IBM Plex Serif'
+    font-family: 'IBM Plex Serif Bold'
     font-style: normal
     font-weight: 700
     font-display: swap
@@ -152,6 +152,38 @@ $size-small: .85rem
 
 
 //------------------------------------------------
+
+// Font Styles
+h1
+    font-size: 4rem
+    line-height: 4rem
+    font-family: 'IBM Plex Sans Bold', sans-serif
+
+h2
+    font-size: 3rem
+    line-height: 3rem
+    font-family: 'IBM Plex Sans SemiBold', sans-serif
+
+h3
+    font-size: 1.3rem
+    line-height: 1.3rem
+    font-family: 'IBM Plex Serif', 'serif'
+h4
+    font-size: 1.15rem
+    line-height: 1.35rem
+    font-family: 'IBM Plex Serif'  , 'serif'
+h5
+    font-size: 1rem
+    line-height: 1.25rem
+    font-family: 'IBM Plex Sans Light', sans-serif
+
+h6
+    font-size: .85rem
+    line-height: 1rem
+    font-family: 'IBM Plex Sans Light', sans-serif
+
+// General Styles
+
 .badge
     display: inline-block
     padding:  .2rem .5rem
@@ -184,3 +216,14 @@ button
         transform: translateY(1px)
         background: radial-gradient(circle at top right, #87e3ff, darken($blue, 15) 80%)
         background: darken($blue, 7)
+
+// Spacing Styles
+
+.margin
+    margin: 18px
+
+.padding
+    margin: 18px
+
+.grid
+    display: flex
