@@ -18,6 +18,12 @@
     // import galaxyFragmentShader from '../../shaders/galaxy/fragment.glsl'
 
     /**
+     * Component properties
+     */
+
+    export let controlsEnabled: boolean = false;
+
+    /**
      * Base
      */
     const sizes = {
@@ -166,7 +172,7 @@
         });
         renderer.setSize(sizes.width, sizes.height);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.enabled = controlsEnabled;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
         let RenderTargetClass;
@@ -212,6 +218,7 @@
          * Controls
          */
         controls = new OrbitControls(camera, canvas);
+        controls.enabled = false
         controls.enableDamping = true;
         controls.minZoom = 0.8;
         controls.maxZoom = 4;
@@ -281,15 +288,15 @@
     #three
         margin: auto
         padding: 0
-        position: fixed
+        //position: absolute
         display: block
-        height: 100%
+        height: 100vh
         width: 100%
         top: 0
 
     canvas
         display: block
-        height: 100%
+        //height: 100%
         width: 100%
 </style>
 
