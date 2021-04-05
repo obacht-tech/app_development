@@ -2,7 +2,7 @@
     @import "./../theme"
 
     .timeline
-        position: absolute
+        position: fixed
         bottom: 7rem
         left: 1rem
         width: calc(100% - 2rem - 3rem)

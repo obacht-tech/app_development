@@ -21,6 +21,13 @@
         height: 100%
         display: block
 
+
+    .scrolling
+        z-index: 1030
+        width: 20%
+        top: 0
+        right: 0
+        position: absolute
 </style>
 
 <svelte:head>
@@ -38,4 +45,82 @@
 <!--        Contact <div class="badge"> <a href="mailto:mail@valentinrogg.de" id="creator">@ValentinRogg</a> </div>-->
 <!--        <img width="128" src="/client/static/obacht-logo.svg">-->
 <!--    </Card>-->
+<!--    <section class="scrolling">-->
+<!--        <p>-->
+<!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci dolore dolorum exercitationem harum, iste iure laboriosam nobis quidem!-->
+<!--        </p>-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <p>-->
+<!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias commodi consequatur consequuntur dicta esse et explicabo placeat, quidem sequi voluptatem voluptates?-->
+<!--        </p>-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <p>-->
+<!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci dolore dolorum exercitationem harum, iste iure laboriosam nobis quidem!-->
+<!--        </p>-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <p>-->
+<!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias commodi consequatur consequuntur dicta esse et explicabo placeat, quidem sequi voluptatem voluptates?-->
+<!--        </p>-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+
+<!--        <p>-->
+<!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci dolore dolorum exercitationem harum, iste iure laboriosam nobis quidem!-->
+<!--        </p>-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <p>-->
+<!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias commodi consequatur consequuntur dicta esse et explicabo placeat, quidem sequi voluptatem voluptates?-->
+<!--        </p>-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--        <br />-->
+<!--    </section>-->
 </main>

@@ -2,7 +2,7 @@
     @import "./../theme"
 
     .controls
-        position: absolute
+        position: fixed
         bottom: 1rem
         left: 1rem
         width: calc(100% - 2rem - 3rem)

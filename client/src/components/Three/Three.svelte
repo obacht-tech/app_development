@@ -105,8 +105,7 @@
     /**
      * Models
      */
-    const gltfLoader = new GLTFLoader();
-
+    const gltfLoader = new GLTFLoader();//
     gltfLoader.load('/client/static/models/human.gltf', (gltf) => {
         const human = gltf.scene.children[0];
         human.scale.set(0.0015, 0.0015, 0.0015);
@@ -282,7 +281,7 @@
     #three
         margin: auto
         padding: 0
-        position: absolute
+        position: fixed
         display: block
         height: 100%
         width: 100%
@@ -295,7 +294,7 @@
 </style>
 
 <section id="three">
-<!--    <Card bottom={true} right={true} bg={false}>-->
+<!--    <Card bottom={false} right={true} bg={false}>-->
 <!--        <button on:click={() => {-->
 <!--            controls.enableDamping = false;-->
 <!--            gsap.to(camera.position,  { duration: 0.2, x: 0});-->
