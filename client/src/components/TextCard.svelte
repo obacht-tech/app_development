@@ -9,8 +9,8 @@
     @import "./../theme"
 
     .text-section
-        margin-top: 7.5rem
-        margin-bottom: 5rem
+        margin-top: 5rem
+        margin-bottom: 2.5rem
 
     //.text
         //padding-top: 80px

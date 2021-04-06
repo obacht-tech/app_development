@@ -30,6 +30,15 @@
 
     header.container
         margin: 5rem 0 0
+
+    footer
+        margin: 5rem 0
+        text-align: center
+
+    .obacht-logo
+        width: 100px
+        height: auto
+        margin: 0 auto .5rem
 </style>
 
 <svelte:head>
@@ -82,4 +91,11 @@
         <Timeline/>
         <Controls layers={true} camera={true}/>
     </div>
+
+    <footer>
+        <picture>
+            <img alt="Obacht Logo" src="/client/static/obacht-logo.svg" class="obacht-logo">
+        </picture>
+        &copy; 2021
+    </footer>
 </main>
