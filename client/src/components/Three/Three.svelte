@@ -17,6 +17,8 @@
     // import galaxyVertexShader from '../../shaders/galaxy/vertex.glsl'
     // import galaxyFragmentShader from '../../shaders/galaxy/fragment.glsl'
 
+
+
     /**
      * Component properties
      */
@@ -33,7 +35,7 @@
     };
 
     // Debug
-    const gui = new dat.GUI();
+    // const gui = new dat.GUI();
 
     // Stats
     const stats = new Stats();
@@ -67,7 +69,7 @@
     /**
      * Material
      */
-    const material = new THREE.MeshStandardMaterial({color: 0xffffff});
+    const material = new THREE.MeshStandardMaterial({color: 0xbbbbbb});
     const planeMaterial = new THREE.MeshStandardMaterial({
         color: 0xffffff,
     });
@@ -163,7 +165,7 @@
         document.body.appendChild(stats.dom);
 
         // Canvas
-        canvas = document.querySelector('canvas.webgl');
+        canvas = document.querySelector('canvas.' + canvasName);
 
         /**
          * Renderer
@@ -208,7 +210,7 @@
         saoPass.params.saoBlurRadius = 8;
         saoPass.params.saoBlurStdDev = 4;
         saoPass.params.saoBlurDepthCutoff = 0.01;
-        effectComposer.addPass(saoPass);
+        // effectComposer.addPass(saoPass);
 
         if(renderer.getPixelRatio() === 1 && !renderer.capabilities.isWebGL2) {
             const smaaPass = new SMAAPass(600, 800)

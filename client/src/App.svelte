@@ -56,7 +56,8 @@
     </TextCard>
 
     <div class="application">
-        <img src="/client/static/Heatmap.png" alt="heatmap">
+<!--        <img src="/client/static/Heatmap.png" alt="heatmap">-->
+        <Three canvasName="app0"/>
         <Timeline/>
         <Controls layers={false} camera={false}/>
     </div>
@@ -66,7 +67,8 @@
     </TextCard>
 
     <div class="application">
-        <img src="/client/static/Pfadmap.png" alt="Pfadmap">
+<!--        <img src="/client/static/Pfadmap.png" alt="Pfadmap">-->
+        <Three canvasName="app1"/>
         <Timeline/>
         <Controls layers={false} camera={false}/>
     </div>
@@ -76,7 +78,7 @@
     </TextCard>
 
     <div class="application">
-        <Three/>
+        <Three canvasName="app2"/>
         <Timeline/>
         <Controls layers={true} camera={true}/>
     </div>

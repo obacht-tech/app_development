@@ -5,7 +5,7 @@
         position: absolute
         bottom: 5rem
         left: 1rem
-        width: calc(100% - 2rem - 3rem)
+        width: calc(100% - 2rem)
         font-size: $size-normal
         border-radius: $border-radius
         background: white
