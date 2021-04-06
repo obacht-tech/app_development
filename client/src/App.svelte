@@ -48,37 +48,44 @@
 
 <main>
 
-    <TextCard header="Corona-Studie im Herzen von Augsburg" subheader="Abstandsmessung auf dem Rathausplatz"
-              text="Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut, zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war. Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen neuen Arbeitslosen im Viertel herankarrte. "/>
-    <TextCard title="Heatmap"
-              text="Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut, zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war. Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen neuen Arbeitslosen im Viertel herankarrte. "/>
+    <header class="container">
+        <h1>Corona-Studie im Herzen von Augsburg</h1>
+        <h2>Abstandsmessung auf dem Rathausplatz</h2>
+    </header>
+
+
+    <TextCard>
+        Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut, zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war. Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen neuen Arbeitslosen im Viertel herankarrte.
+    </TextCard>
+
+    <TextCard>
+        Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut, zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war. Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen neuen Arbeitslosen im Viertel herankarrte.
+    </TextCard>
 
     <div class="application">
-
         <img src="/client/static/Heatmap.png" alt="heatmap">
         <Timeline/>
         <Controls layers={false} camera={false}/>
-
     </div>
 
-    <TextCard title="Pfadmap"
-              text="Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut, zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war. Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen neuen Arbeitslosen im Viertel herankarrte. "/>
+    <TextCard>
+        Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut, zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war. Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen neuen Arbeitslosen im Viertel herankarrte. "
+    </TextCard>
 
     <div class="application">
         <img src="/client/static/Pfadmap.png" alt="Pfadmap">
         <Timeline/>
         <Controls layers={false} camera={false}/>
-
     </div>
 
-    <TextCard title="Anwendung"
-              text="Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut, zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war. Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen neuen Arbeitslosen im Viertel herankarrte. "/>
+    <TextCard>
+        Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut, zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war. Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen neuen Arbeitslosen im Viertel herankarrte.
+    </TextCard>
 
     <div class="application">
         <Three/>
         <Timeline/>
         <Controls layers={true} camera={true}/>
-
     </div>
     <!--    <Card bottom={false} right={false}>-->
     <!--        Got Feedback?-->
