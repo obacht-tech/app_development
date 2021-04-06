@@ -29,7 +29,7 @@
         overflow-x: hidden
 
     header.container
-        margin: 5rem 0 0
+        margin: 5rem auto 0
 
     footer
         margin: 5rem 0
@@ -87,7 +87,7 @@
     </TextCard>
 
     <div class="application">
-        <Three canvasName="app2"/>
+        <Three canvasName="app2" controlsEnabled={true}/>
         <Timeline/>
         <Controls layers={true} camera={true}/>
     </div>

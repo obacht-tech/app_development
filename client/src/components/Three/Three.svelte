@@ -221,7 +221,7 @@
          * Controls
          */
         controls = new OrbitControls(camera, canvas);
-        controls.enabled = false
+        controls.enabled = controlsEnabled;
         controls.enableDamping = true;
         controls.minZoom = 0.8;
         controls.maxZoom = 4;
@@ -276,7 +276,7 @@
             // }
 
             // Call tick again on the next frame
-            // window.requestAnimationFrame(tick);
+            window.requestAnimationFrame(tick);
 
             stats.end();
         }
