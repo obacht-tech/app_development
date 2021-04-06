@@ -9,7 +9,7 @@
     @import "./../theme"
 
     .text-section
-        margin-top: 12.5rem
+        margin-top: 7.5rem
         margin-bottom: 5rem
 
     //.text

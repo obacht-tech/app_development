@@ -9,19 +9,8 @@
 </script>
 
 <style global lang="sass">
+    @import "global"
     @import "theme"
-    //@import "global"
-
-    html, body
-        margin: 0
-        padding: 0
-        overflow-x: hidden
-
-    main
-        font-family: "IBM Plex Sans", sans-serif
-        width: 100%
-        height: 100%
-        display: block
 
 
     .scrolling
@@ -39,6 +28,8 @@
         width: 100vh
         overflow-x: hidden
 
+    header.container
+        margin: 5rem 0 0
 </style>
 
 <svelte:head>
@@ -51,6 +42,8 @@
     <header class="container">
         <h1>Corona-Studie im Herzen von Augsburg</h1>
         <h2>Abstandsmessung auf dem Rathausplatz</h2>
+        <hr />
+        <article>5 min Lesezeit</article>
     </header>
 
 
@@ -87,88 +80,4 @@
         <Timeline/>
         <Controls layers={true} camera={true}/>
     </div>
-    <!--    <Card bottom={false} right={false}>-->
-    <!--        Got Feedback?-->
-    <!--        <br/>-->
-    <!--        Contact <div class="badge"> <a href="mailto:mail@valentinrogg.de" id="creator">@ValentinRogg</a> </div>-->
-    <!--        <img width="128" src="/client/static/obacht-logo.svg">-->
-    <!--    </Card>-->
-    <!--    <section class="scrolling">-->
-    <!--        <p>-->
-    <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci dolore dolorum exercitationem harum, iste iure laboriosam nobis quidem!-->
-    <!--        </p>-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <p>-->
-    <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias commodi consequatur consequuntur dicta esse et explicabo placeat, quidem sequi voluptatem voluptates?-->
-    <!--        </p>-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <p>-->
-    <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci dolore dolorum exercitationem harum, iste iure laboriosam nobis quidem!-->
-    <!--        </p>-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <p>-->
-    <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias commodi consequatur consequuntur dicta esse et explicabo placeat, quidem sequi voluptatem voluptates?-->
-    <!--        </p>-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-
-    <!--        <p>-->
-    <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci dolore dolorum exercitationem harum, iste iure laboriosam nobis quidem!-->
-    <!--        </p>-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <p>-->
-    <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias commodi consequatur consequuntur dicta esse et explicabo placeat, quidem sequi voluptatem voluptates?-->
-    <!--        </p>-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--        <br />-->
-    <!--    </section>-->
 </main>
