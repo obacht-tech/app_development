@@ -22,6 +22,7 @@
      */
 
     export let controlsEnabled: boolean = false;
+    export let canvasName: string = 'webgl'
 
     /**
      * Base
@@ -311,5 +312,5 @@
 <!--            <i class="fas fa-camera-movie"></i> TopDown View-->
 <!--        </button>-->
 <!--    </Card>-->
-    <canvas class="webgl"></canvas>
+    <canvas class={canvasName}></canvas>
 </section>

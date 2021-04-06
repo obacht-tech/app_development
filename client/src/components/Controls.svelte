@@ -1,15 +1,19 @@
+<script lang="ts">
+    export let camera: boolean = true;
+    export let layers: boolean = true;
+
+</script>
 <style lang="sass">
     @import "./../theme"
 
     .controls
-        position: relative
+        position: absolute
         bottom: 1rem
-        left: 1rem
-        width: calc(100% - 2rem - 3rem)
+
+        width: 100%
         font-size: 2rem
-        padding: 1.5rem
         display: flex
-        justify-content: space-between
+        justify-content: space-evenly
 
 
     .playback
@@ -21,7 +25,7 @@
             font-size: 2.6rem
 
 
-    .playback,.camera,.layers
+    .playback, .camera, .layers
         display: flex
         align-items: center
 
@@ -41,13 +45,16 @@
             <i class="fas fa-stop icon"></i>
         </div>
     </div>
+    {#if camera}
+        <div class="camera">
+            <i class="fas fa-camera-movie"></i>
+        </div>
+    {/if}
+    {#if layers}
+        <div class="layers">
+            <i class="fad fa-layer-group"></i>
+        </div>
+    {/if}
 
-    <div class="camera">
-        <i class="fas fa-camera-movie"></i>
-    </div>
-
-    <div class="layers">
-        <i class="fad fa-layer-group"></i>
-    </div>
 
 </section>

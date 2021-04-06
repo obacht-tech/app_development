@@ -1,9 +1,10 @@
 <script lang="ts">
-    import Three from "./components/Three/Three.svelte";
-    import Card from "./components/Card.svelte";
-    import Timeline from "./components/Timeline.svelte";
-    import Controls from "./components/Controls.svelte";
-    import TextCard from "./components/TextCard.svelte";
+    import Three from "./components/Three/Three.svelte"
+    import Card from "./components/Card.svelte"
+    import Timeline from "./components/Timeline.svelte"
+    import Controls from "./components/Controls.svelte"
+    import TextCard from "./components/TextCard.svelte"
+
     console.log("Hello from Svelte!")
 </script>
 
@@ -14,6 +15,7 @@
     html, body
         margin: 0
         padding: 0
+        overflow-x: hidden
 
     main
         font-family: "IBM Plex Sans", sans-serif
@@ -29,6 +31,14 @@
         right: 0
         position: absolute
 
+    .application
+        position: relative
+
+    img
+        height: 700px
+        width: 100vh
+        overflow-x: hidden
+
 </style>
 
 <svelte:head>
@@ -36,98 +46,122 @@
     <script src="https://kit.fontawesome.com/3a515d3a9f.js" crossorigin="anonymous"></script>
 </svelte:head>
 
-<main >
-<div >
-    <TextCard header="Corona-Studie im Herzen von Augsburg" subheader="Abstandsmessung auf dem Rathausplatz" text="Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut, zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war. Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen neuen Arbeitslosen im Viertel herankarrte. "/>
+<main>
 
-</div>
-    <div>
-        <Three />
-        <Timeline />
-        <Controls />
+    <TextCard header="Corona-Studie im Herzen von Augsburg" subheader="Abstandsmessung auf dem Rathausplatz"
+              text="Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut, zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war. Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen neuen Arbeitslosen im Viertel herankarrte. "/>
+    <TextCard title="Heatmap"
+              text="Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut, zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war. Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen neuen Arbeitslosen im Viertel herankarrte. "/>
+
+    <div class="application">
+
+        <img src="/client/static/Heatmap.png" alt="heatmap">
+        <Timeline/>
+        <Controls layers={false} camera={false}/>
+
     </div>
-<!--    <Card bottom={false} right={false}>-->
-<!--        Got Feedback?-->
-<!--        <br/>-->
-<!--        Contact <div class="badge"> <a href="mailto:mail@valentinrogg.de" id="creator">@ValentinRogg</a> </div>-->
-<!--        <img width="128" src="/client/static/obacht-logo.svg">-->
-<!--    </Card>-->
-<!--    <section class="scrolling">-->
-<!--        <p>-->
-<!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci dolore dolorum exercitationem harum, iste iure laboriosam nobis quidem!-->
-<!--        </p>-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <p>-->
-<!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias commodi consequatur consequuntur dicta esse et explicabo placeat, quidem sequi voluptatem voluptates?-->
-<!--        </p>-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <p>-->
-<!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci dolore dolorum exercitationem harum, iste iure laboriosam nobis quidem!-->
-<!--        </p>-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <p>-->
-<!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias commodi consequatur consequuntur dicta esse et explicabo placeat, quidem sequi voluptatem voluptates?-->
-<!--        </p>-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
 
-<!--        <p>-->
-<!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci dolore dolorum exercitationem harum, iste iure laboriosam nobis quidem!-->
-<!--        </p>-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <p>-->
-<!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias commodi consequatur consequuntur dicta esse et explicabo placeat, quidem sequi voluptatem voluptates?-->
-<!--        </p>-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--        <br />-->
-<!--    </section>-->
+    <TextCard title="Pfadmap"
+              text="Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut, zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war. Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen neuen Arbeitslosen im Viertel herankarrte. "/>
+
+    <div class="application">
+        <img src="/client/static/Pfadmap.png" alt="Pfadmap">
+        <Timeline/>
+        <Controls layers={false} camera={false}/>
+
+    </div>
+
+    <TextCard title="Anwendung"
+              text="Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut, zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war. Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen neuen Arbeitslosen im Viertel herankarrte. "/>
+
+    <div class="application">
+        <Three/>
+        <Timeline/>
+        <Controls layers={true} camera={true}/>
+
+    </div>
+    <!--    <Card bottom={false} right={false}>-->
+    <!--        Got Feedback?-->
+    <!--        <br/>-->
+    <!--        Contact <div class="badge"> <a href="mailto:mail@valentinrogg.de" id="creator">@ValentinRogg</a> </div>-->
+    <!--        <img width="128" src="/client/static/obacht-logo.svg">-->
+    <!--    </Card>-->
+    <!--    <section class="scrolling">-->
+    <!--        <p>-->
+    <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci dolore dolorum exercitationem harum, iste iure laboriosam nobis quidem!-->
+    <!--        </p>-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <p>-->
+    <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias commodi consequatur consequuntur dicta esse et explicabo placeat, quidem sequi voluptatem voluptates?-->
+    <!--        </p>-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <p>-->
+    <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci dolore dolorum exercitationem harum, iste iure laboriosam nobis quidem!-->
+    <!--        </p>-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <p>-->
+    <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias commodi consequatur consequuntur dicta esse et explicabo placeat, quidem sequi voluptatem voluptates?-->
+    <!--        </p>-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+
+    <!--        <p>-->
+    <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci dolore dolorum exercitationem harum, iste iure laboriosam nobis quidem!-->
+    <!--        </p>-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <p>-->
+    <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias commodi consequatur consequuntur dicta esse et explicabo placeat, quidem sequi voluptatem voluptates?-->
+    <!--        </p>-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--        <br />-->
+    <!--    </section>-->
 </main>

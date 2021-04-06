@@ -2,8 +2,8 @@
     @import "./../theme"
 
     .timeline
-        position: relative
-        bottom: 7rem
+        position: absolute
+        bottom: 5rem
         left: 1rem
         width: calc(100% - 2rem - 3rem)
         font-size: $size-normal
