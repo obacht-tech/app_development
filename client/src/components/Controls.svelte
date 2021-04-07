@@ -55,6 +55,4 @@
             <i class="fad fa-layer-group"></i>
         </div>
     {/if}
-
-
 </section>

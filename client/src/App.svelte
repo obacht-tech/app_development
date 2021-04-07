@@ -52,7 +52,7 @@
         <h1>Corona-Studie im Herzen von Augsburg</h1>
         <h2>Abstandsmessung auf dem Rathausplatz</h2>
         <hr />
-        <article>5 min Lesezeit</article>
+        <p>5 min Lesezeit</p>
     </header>
 
 
