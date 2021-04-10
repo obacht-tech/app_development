@@ -1,6 +1,5 @@
 <script lang="ts">
     import Three from "./components/Three/Three.svelte"
-    import Card from "./components/Card.svelte"
     import Timeline from "./components/Timeline.svelte"
     import Controls from "./components/Controls.svelte"
     import TextCard from "./components/TextCard.svelte"
@@ -13,11 +12,11 @@
     @import "theme"
 
     .scroll-snap-container
-        flex-basis: 50%
+        width: 100%
         max-height: 100vh
         overflow-y: scroll
 
-        scroll-snap-type: y mandatory
+        scroll-snap-type: y proximity
 
     .scroll-snap-child
         //  for testing only:
@@ -38,12 +37,6 @@
     .application
         position: relative
 
-
-    img
-        height: 700px
-        width: 100vh
-        overflow-x: hidden
-
     header.container
         padding-top: 5rem
 
@@ -63,78 +56,73 @@
     <script src="https://kit.fontawesome.com/3a515d3a9f.js" crossorigin="anonymous"></script>
 </svelte:head>
 
-<main>
-    <div class="scroll-snap-container">
-        <header class=" scroll-snap-child padding container">
-            <h1>Corona-Studie im Herzen von Augsburg</h1>
-            <h2>Abstandsmessung auf dem Rathausplatz</h2>
-            <hr/>
-            <p>5 min Lesezeit</p>
-        </header>
+<main class="scroll-snap-container">
 
-        <div class="scroll-snap-child">
-            <TextCard class="scroll-snap-child">
-                Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die
-                leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut,
-                zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war.
-                Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen
-                neuen Arbeitslosen im Viertel herankarrte.
-            </TextCard>
-        </div>
+    <header class=" scroll-snap-child padding container">
+        <h1>Corona-Studie im Herzen von Augsburg</h1>
+        <h2>Abstandsmessung auf dem Rathausplatz</h2>
+        <hr/>
+        <p>5 min Lesezeit</p>
+    </header>
 
-        <div class="scroll-snap-child">
-            <TextCard>
-                Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die
-                leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut,
-                zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war.
-                Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen
-                neuen Arbeitslosen im Viertel herankarrte.
-            </TextCard>
-        </div>
+    <TextCard class="scroll-snap-child">
+        Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die
+        leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut,
+        zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war.
+        Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen
+        neuen Arbeitslosen im Viertel herankarrte.
+    </TextCard>
 
-        <div class="application scroll-snap-child">
-            <Three canvasName="app0"/>
-            <Timeline/>
-            <Controls layers={false} camera={false}/>
-        </div>
+    <TextCard>
+        Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die
+        leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut,
+        zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war.
+        Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen
+        neuen Arbeitslosen im Viertel herankarrte.
+    </TextCard>
 
-        <div class="scroll-snap-child">
-            <TextCard>
-                Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die
-                leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut,
-                zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war.
-                Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen
-                neuen Arbeitslosen im Viertel herankarrte. "
-            </TextCard>
-        </div>
 
-        <div class="application scroll-snap-child">
-            <Three canvasName="app1"/>
-            <Timeline/>
-            <Controls layers={false} camera={false}/>
-        </div>
-
-        <div class="scroll-snap-child">
-            <TextCard>
-                Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die
-                leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut,
-                zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war.
-                Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen
-                neuen Arbeitslosen im Viertel herankarrte.
-            </TextCard>
-        </div>
-
-        <div class="application scroll-snap-child">
-            <Three canvasName="app2" controlsEnabled={true}/>
-            <Timeline/>
-            <Controls layers={true} camera={true}/>
-        </div>
-
-        <footer class="scroll-snap-child">
-            <picture>
-                <img alt="Obacht Logo" src="/client/static/obacht-logo.svg" class="obacht-logo">
-            </picture>
-            &copy; 2021
-        </footer>
+    <div class="application scroll-snap-child">
+        <Three canvasName="app0"/>
+        <Timeline/>
+        <Controls layers={false} camera={false}/>
     </div>
+
+
+    <TextCard>
+        Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die
+        leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut,
+        zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war.
+        Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen
+        neuen Arbeitslosen im Viertel herankarrte. "
+    </TextCard>
+
+    <div class="application scroll-snap-child">
+        <Three canvasName="app1"/>
+        <Timeline/>
+        <Controls layers={false} camera={false}/>
+    </div>
+
+
+    <TextCard>
+        Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die
+        leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut,
+        zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war.
+        Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen
+        neuen Arbeitslosen im Viertel herankarrte.
+    </TextCard>
+
+
+    <div class="application scroll-snap-child">
+        <Three canvasName="app2" controlsEnabled={true}/>
+        <Timeline/>
+        <Controls layers={true} camera={true}/>
+    </div>
+
+    <footer class="scroll-snap-child">
+        <picture>
+            <img alt="Obacht Logo" src="/client/static/obacht-logo.svg" class="obacht-logo">
+        </picture>
+        &copy; 2021
+    </footer>
 </main>

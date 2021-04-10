@@ -8,7 +8,7 @@
 
     .controls
         position: absolute
-        bottom: 1rem
+        bottom: 2rem
 
         width: 100%
         font-size: 2rem

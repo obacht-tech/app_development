@@ -3,7 +3,7 @@
 
     .timeline
         position: absolute
-        bottom: 5rem
+        bottom: 6rem
         left: 1rem
         width: calc(100% - 2rem)
         font-size: $size-normal
