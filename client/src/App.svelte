@@ -20,9 +20,9 @@
         scroll-snap-type: y mandatory
 
     .scroll-snap-child
-        border-bottom: 1px solid white
-        background: lightgray
-
+        //  for testing only:
+        // border-bottom: 1px solid grey
+        // background: lightgray
         scroll-snap-align: start
         display: flex
         flex-flow: column
@@ -72,9 +72,8 @@
             <p>5 min Lesezeit</p>
         </header>
 
-
         <div class="scroll-snap-child">
-            <TextCard>
+            <TextCard class="scroll-snap-child">
                 Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die
                 leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut,
                 zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war.
@@ -82,6 +81,7 @@
                 neuen Arbeitslosen im Viertel herankarrte.
             </TextCard>
         </div>
+
         <div class="scroll-snap-child">
             <TextCard>
                 Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die
@@ -93,7 +93,6 @@
         </div>
 
         <div class="application scroll-snap-child">
-
             <Three canvasName="app0"/>
             <Timeline/>
             <Controls layers={false} camera={false}/>
@@ -110,12 +109,11 @@
         </div>
 
         <div class="application scroll-snap-child">
-
             <Three canvasName="app1"/>
             <Timeline/>
             <Controls layers={false} camera={false}/>
-
         </div>
+
         <div class="scroll-snap-child">
             <TextCard>
                 Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die
@@ -131,13 +129,12 @@
             <Timeline/>
             <Controls layers={true} camera={true}/>
         </div>
+
+        <footer class="scroll-snap-child">
+            <picture>
+                <img alt="Obacht Logo" src="/client/static/obacht-logo.svg" class="obacht-logo">
+            </picture>
+            &copy; 2021
+        </footer>
     </div>
-
-
-    <footer>
-        <picture>
-            <img alt="Obacht Logo" src="/client/static/obacht-logo.svg" class="obacht-logo">
-        </picture>
-        &copy; 2021
-    </footer>
 </main>
