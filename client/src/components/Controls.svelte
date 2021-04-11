@@ -66,9 +66,8 @@
         <div class="camera" on:click={changeCamera}>
             {#if cameraLocked}
                 <div>
+                    <i class="fas over-icon fa-lock" ></i>
                 </div>
-                <!--                <i class="fas over-icon fa-lock" ></i>-->
-                true
             {/if}
             <i class="fas fa-camera-movie"></i>
         </div>
