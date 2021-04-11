@@ -71,7 +71,7 @@
 
 </style>
 
-<section class="timeline">
+<div class="timeline">
     <div class="timeline__bar">
     </div>
     <div class="timeline__legend">
@@ -82,4 +82,4 @@
         14:27 Uhr
         <i class="fas fa-triangle timeline__marker--icon"></i>
     </div>
-</section>
+</div>

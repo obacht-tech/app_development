@@ -95,11 +95,11 @@
     </TextCard>
 
 
-    <div class="application scroll-snap-child">
+    <section class="application scroll-snap-child">
         <Three canvasName="app0" controlsEnabled={false}/>
         <Timeline/>
         <Controls layers={false} camera={false}/>
-    </div>
+    </section>
 
 
     <TextCard>
@@ -110,11 +110,11 @@
         neuen Arbeitslosen im Viertel herankarrte. "
     </TextCard>
 
-    <div class="application scroll-snap-child">
+    <section class="application scroll-snap-child">
         <Three canvasName="app1" controlsEnabled={false}/>
         <Timeline/>
         <Controls layers={false} camera={false}/>
-    </div>
+    </section>
 
 
     <TextCard>
@@ -126,12 +126,12 @@
     </TextCard>
 
 
-    <div class="application scroll-snap-child">
+    <section class="application scroll-snap-child">
         <Three canvasName="app2" controlsEnabled={!cameraLocked}/>
         <Timeline/>
      <Controls layers={true} camera={true}  on:cameraLock={handleCameraChange}/>
 
-    </div>
+    </section>
 
     <footer class="scroll-snap-child">
         <picture>

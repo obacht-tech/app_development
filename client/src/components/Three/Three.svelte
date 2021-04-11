@@ -306,7 +306,7 @@
         width: 100%
 </style>
 
-<section id="three">
+<div id="three">
 <!--    <Card bottom={false} right={true} bg={false}>-->
 <!--        <button on:click={() => {-->
 <!--            controls.enableDamping = false;-->
@@ -318,4 +318,4 @@
 <!--        </button>-->
 <!--    </Card>-->
     <canvas class={canvasName}></canvas>
-</section>
+</div>

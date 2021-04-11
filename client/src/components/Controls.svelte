@@ -50,7 +50,7 @@
         color: $blue
 </style>
 
-<section class="controls">
+<div class="controls">
     <div class="playback">
         <div>
             <i class="fas fa-play icon blue"></i>
@@ -77,4 +77,4 @@
             <i class="fad fa-layer-group"></i>
         </div>
     {/if}
-</section>
+</div>
