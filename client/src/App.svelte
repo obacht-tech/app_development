@@ -123,7 +123,8 @@
     <div class="application scroll-snap-child">
         <Three canvasName="app2" controlsEnabled={true}/>
         <Timeline/>
-        <Controls layers={true} camera={true}/>
+     <Controls layers={true} camera={true}  on:cameraLock={handleCameraChange}/>
+
     </div>
 
     <footer class="scroll-snap-child">
