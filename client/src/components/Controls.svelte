@@ -7,7 +7,6 @@
     let cameraLocked: boolean = true;
     const changeCamera = () => {
         cameraLocked = !cameraLocked;
-        console.log(cameraLocked);
         dispatch('cameraLock', {cameraLocked});
     }
 
@@ -23,7 +22,6 @@
         font-size: 2rem
         display: flex
         justify-content: space-evenly
-
 
     .playback
 

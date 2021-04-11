@@ -5,6 +5,13 @@
     import TextCard from "./components/TextCard.svelte"
 
     console.log("Hello from Svelte!")
+    let cameraLocked: boolean = true;
+    function handleCameraChange(event) {
+        if(!event.detail){
+            return
+        }
+       cameraLocked = event.detail.cameraLocked;
+    }
 </script>
 
 <style global lang="sass">
@@ -39,7 +46,6 @@
 
     header.container
         padding-top: 5rem
-
 
     footer
         margin: 5rem 0
@@ -90,7 +96,7 @@
 
 
     <div class="application scroll-snap-child">
-        <Three canvasName="app0"/>
+        <Three canvasName="app0" controlsEnabled={false}/>
         <Timeline/>
         <Controls layers={false} camera={false}/>
     </div>
@@ -105,7 +111,7 @@
     </TextCard>
 
     <div class="application scroll-snap-child">
-        <Three canvasName="app1"/>
+        <Three canvasName="app1" controlsEnabled={false}/>
         <Timeline/>
         <Controls layers={false} camera={false}/>
     </div>
@@ -121,7 +127,7 @@
 
 
     <div class="application scroll-snap-child">
-        <Three canvasName="app2" controlsEnabled={true}/>
+        <Three canvasName="app2" controlsEnabled={!cameraLocked}/>
         <Timeline/>
      <Controls layers={true} camera={true}  on:cameraLock={handleCameraChange}/>
 

@@ -23,7 +23,7 @@
      * Component properties
      */
 
-    export let controlsEnabled: boolean = false;
+    export let controlsEnabled: boolean;
     export let canvasName: string = 'webgl'
 
     /**
@@ -263,6 +263,9 @@
             // oldElapsedTime = elapsedTime;
 
             // Update controls
+            if(controlsEnabled !== controls.enabled){
+                controls.enabled = controlsEnabled
+            }
             controls.update();
 
             // Render
