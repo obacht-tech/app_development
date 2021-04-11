@@ -49,6 +49,13 @@
         width: 100px
         height: auto
         margin: 0 auto .5rem
+    .border
+        border-top: 1px solid $dark-grey
+        height: 1px
+        margin: 0.3rem 0
+    .subheader
+        color: $dark-grey
+
 </style>
 
 <svelte:head>
@@ -61,8 +68,8 @@
     <header class=" scroll-snap-child padding container">
         <h1>Corona-Studie im Herzen von Augsburg</h1>
         <h2>Abstandsmessung auf dem Rathausplatz</h2>
-        <hr/>
-        <p>5 min Lesezeit</p>
+        <div class="border"></div>
+        <p class="subheader">5 min Lesezeit</p>
     </header>
 
     <TextCard class="scroll-snap-child">
