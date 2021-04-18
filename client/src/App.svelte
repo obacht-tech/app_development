@@ -3,15 +3,9 @@
     import Timeline from "./components/Timeline.svelte"
     import Controls from "./components/Controls.svelte"
     import TextCard from "./components/TextCard.svelte"
+    import {cameraLocked} from "./stores/store";
 
     console.log("Hello from Svelte!")
-    let cameraLocked: boolean = true;
-    function handleCameraChange(event) {
-        if(!event.detail){
-            return
-        }
-       cameraLocked = event.detail.cameraLocked;
-    }
 </script>
 
 <style global lang="sass">
@@ -22,7 +16,7 @@
         width: 100%
         max-height: 100vh
         overflow-y: scroll
-
+        overflow-x: hidden
         scroll-snap-type: y proximity
 
     .scroll-snap-child
@@ -127,9 +121,9 @@
 
 
     <section class="application scroll-snap-child">
-        <Three canvasName="app2" controlsEnabled={!cameraLocked}/>
+        <Three canvasName="app2" controlsEnabled={!$cameraLocked}/>
         <Timeline/>
-     <Controls layers={true} camera={true}  on:cameraLock={handleCameraChange}/>
+     <Controls layers={true} camera={true}  on:cameraLock={cameraLocked.set(!$cameraLocked)}/>
 
     </section>
 
