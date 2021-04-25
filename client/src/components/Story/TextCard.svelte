@@ -3,7 +3,8 @@
 </script>
 
 <style lang="sass">
-    @import "./../styles/theme"
+
+    @import "./../../styles/theme"
 
     section
         margin: 5rem auto
