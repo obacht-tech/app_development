@@ -11,17 +11,19 @@
         margin: 5rem auto 0
 
     h1
-        font-size: 4rem
+        font-size: clamp(2rem, 6vw, 4rem)
         line-height: 1em
         font-family: 'IBM Plex Serif', sans-serif
         font-weight: 400
+        //word-break: break-word
+        //hyphens: auto
 
     h2
-        font-size: 1.5rem
+        font-size: clamp(1rem, 8vw, 1.5rem)
         line-height: 1em
         font-weight: 200
         color: $dark-grey
-        margin: 2.5rem 0 1.5rem
+        margin: clamp(1.5rem, 6vw, 2.5rem) 0 1.5rem
 
     .block
         display: flex
