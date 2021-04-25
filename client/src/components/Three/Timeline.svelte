@@ -1,3 +1,11 @@
+<script lang="ts">
+
+    export let start: Date;
+    export let now: Date;
+    export let end: Date;
+
+</script>
+
 <style lang="sass">
     @import "./../../styles/theme"
 
@@ -48,7 +56,7 @@
 
         &__marker
             position: absolute
-            bottom: 1.5rem
+            bottom: 1rem
             left: 37%
             text-align: center
             color: $blue

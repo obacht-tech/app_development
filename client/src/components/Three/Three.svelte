@@ -5,12 +5,17 @@
     import Controls from "./Controls.svelte";
 
     type ApplicationID = "person" | "heatmap" | "paths" | "full";
+    type PlaybackState = "play" | "2x forward" | "stop";
 
     export let aid: ApplicationID = "full";
     export let scrollSnapChild: boolean = false;
 
     let inFrame: boolean;
     let cameraZoomLocked: boolean = true;
+    let playbackState: PlaybackState = "play";
+    let start: Date;
+    let now: Date;
+    let end: Date;
 
     onMount(() => {
         let observer = new IntersectionObserver(entries => {
@@ -49,22 +54,25 @@
 <section id={aid} class:scroll-snap-child={scrollSnapChild}>
     {#if aid === "person"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} cameraZoomLocked={cameraZoomLocked}/>
-        <Timeline/>
-        <Controls camera bind:cameraZoomLocked={cameraZoomLocked}/>
+        <Timeline bind:now={now}/>
+        <Controls zoomLock bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked} />
     {/if}
+
     {#if aid === "heatmap"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame}/>
-        <Timeline/>
-        <Controls/>
+        <Timeline bind:start={start} bind:now={now} bind:end={end}/>
+        <Controls bind:playbackState={playbackState}/>
     {/if}
+
     {#if aid === "paths"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame}/>
-        <Timeline/>
-        <Controls/>
+        <Timeline bind:start={start} bind:now={now} bind:end={end}/>
+        <Controls bind:playbackState={playbackState}/>
     {/if}
+
     {#if aid === "full"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} cameraZoomLocked={cameraZoomLocked}/>
-        <Timeline/>
-        <Controls camera bind:cameraZoomLocked={cameraZoomLocked}/>
+        <Timeline bind:start={start} bind:now={now} bind:end={end}/>
+        <Controls zoomLock layers bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked}/>
     {/if}
 </section>

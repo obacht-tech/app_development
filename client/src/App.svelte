@@ -2,9 +2,7 @@
     import TextCard from "./components/Story/TextCard.svelte";
     import Header from "./components/Story/Header.svelte";
     import Footer from "./components/Story/Footer.svelte";
-    import ThreePerson from "./components/Three/ThreePerson.svelte";
-    import ThreeHeatmap from "./components/Three/ThreeHeatmap.svelte";
-    import ThreeFull from "./components/Three/Three.svelte";
+    import Three from "./components/Three/Three.svelte";
 </script>
 
 <style global lang="sass">
@@ -29,7 +27,7 @@
 
     <main>
 
-        <ThreeFull aid="person" scrollSnapChild/>
+        <Three aid="person" scrollSnapChild/>
 
         <TextCard>
             Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die
@@ -39,7 +37,7 @@
             neuen Arbeitslosen im Viertel herankarrte.
         </TextCard>
 
-        <ThreeFull aid="heatmap" scrollSnapChild/>
+        <Three aid="heatmap" scrollSnapChild/>
 
         <TextCard>
             Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die
@@ -57,7 +55,7 @@
             neuen Arbeitslosen im Viertel herankarrte.
         </TextCard>
 
-        <ThreeFull scrollSnapChild/>
+        <Three scrollSnapChild/>
     </main>
 
     <Footer scrollSnapChild/>
