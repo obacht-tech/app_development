@@ -18,8 +18,13 @@ fn files_static(file: PathBuf) -> Option<NamedFile> {
 }
 
 #[get("/client/<file..>", rank = 3)]
-fn files(file: PathBuf) -> Option<NamedFile> {
+fn files_svelte(file: PathBuf) -> Option<NamedFile> {
     NamedFile::open(Path::new("client/public/build").join(file)).ok()
+}
+
+#[get("/positions")]
+fn positions() -> Option<NamedFile> {
+    NamedFile::open(Path::new("src/static/303.json")).ok()
 }
 
 #[catch(404)]
@@ -29,7 +34,7 @@ fn not_found() -> Redirect {
 
 fn main() {
     rocket::ignite()
-        .mount("/", routes![index, files_static, files])
+        .mount("/", routes![index, files_static, files_svelte, positions])
         .attach(Template::fairing())
         .register(catchers![not_found])
         .launch();
