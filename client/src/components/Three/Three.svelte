@@ -55,7 +55,7 @@
     {#if aid === "person"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} cameraZoomLocked={cameraZoomLocked}/>
         <Timeline bind:now={now}/>
-        <Controls bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked} />
+        <Controls playback bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked} />
     {/if}
 
     {#if aid === "heatmap"}
@@ -73,6 +73,6 @@
     {#if aid === "full"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} enableCameraControls cameraZoomLocked={cameraZoomLocked}/>
         <Timeline bind:start={start} bind:now={now} bind:end={end}/>
-        <Controls zoomLock layers bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked}/>
+        <Controls zoomLock playback layers bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked}/>
     {/if}
 </section>

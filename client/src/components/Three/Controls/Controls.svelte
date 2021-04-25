@@ -6,10 +6,11 @@
     type PlaybackState = "play" | "2x forward" | "stop";
 
     export let zoomLock: boolean = false;
+    export let playback: boolean = false;
     export let layers: boolean = false;
     export let cameraZoomLocked: boolean = true;
-
     export let playbackState: PlaybackState;
+
 
 </script>
 
@@ -34,8 +35,9 @@
         <Zoom bind:cameraZoomLocked={cameraZoomLocked}/>
     {/if}
 
-    <Playback bind:playbackState={playbackState}/>
-
+    {#if playback}
+        <Playback bind:playbackState={playbackState}/>
+    {/if}
     {#if layers}
         <Layers/>
     {/if}
