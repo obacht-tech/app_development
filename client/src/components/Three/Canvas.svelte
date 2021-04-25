@@ -1,15 +1,16 @@
 <script lang="ts">
-
     import * as THREE from "three";
     import {onMount} from "svelte";
     import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js";
 
+    type ApplicationID = "person" | "heatmap" | "paths" | "full";
+    type CanvasID = "personCanvas" | "heatmapCanvas" | "pathmapCanvas" | "fullCanvas";
 
-    type CanvasID = "personCanvas" | "headmapCanvas" | "pathmapCanvas" | "fullCanvas";
-    export let cid: CanvasID;
-    type ApplicationID = "person" | "headmap" | "pathmap" | "full";
     export let aid: ApplicationID;
+    export let cid: CanvasID;
     export let inFrame: boolean;
+    export let disableCameraControl: boolean = false;
+    export let cameraZoomLocked: boolean = true;
 
     let sizes: {width, height};
 
@@ -27,6 +28,7 @@
 
         sizes = {
             width: width(),
+            // width: window.innerWidth,
             height: section.clientHeight
         };
 
@@ -52,7 +54,8 @@
 
 
         const controls = new OrbitControls(camera, canvas);
-        // controls.enabled = controlsEnabled;
+        controls.enabled = !disableCameraControl;
+        controls.enableZoom = !cameraZoomLocked;
         controls.enableDamping = true;
         controls.minZoom = 0.8;
         controls.maxZoom = 4;
@@ -79,6 +82,7 @@
 
             window.requestAnimationFrame(render);
             if (inFrame) {
+                controls.enableZoom = !cameraZoomLocked;
                 cube.rotation.x += 0.01;
                 cube.rotation.y += 0.01;
 
@@ -95,4 +99,9 @@
 
 </script>
 
-<canvas id={cid}></canvas>
+<style lang="sass">
+    .cursor
+        cursor: move
+</style>
+
+<canvas id={cid} class:cursor={!disableCameraControl}></canvas>

@@ -1,16 +1,17 @@
 <style lang="sass">
-    @import "./../styles/theme"
+    @import "./../../styles/theme"
 
     .timeline
         position: absolute
-        bottom: 6rem
-        left: 1rem
+        bottom: 6.5rem
+        left: 0
+        right: 0
         width: calc(100% - 2rem)
         font-size: $size-normal
         border-radius: $border-radius
         background: white
         box-shadow: $shadow-2xl
-        padding: 1.5rem
+        padding: 1.5rem 1.5rem 1rem 1.5rem
 
         &__bar
             display: block
@@ -31,11 +32,11 @@
                     display: block
                     position: absolute
                     content: ''
-                    width: 2px
+                    width: 3px
                     background: $dark-grey
-                    height: 1.5rem
+                    height: 1rem
                     //left: 50%
-                    bottom: 1.5rem
+                    bottom: 1.75rem
 
             &--start
                 &:before
@@ -60,18 +61,17 @@
                 background: $blue
                 height: 2.5rem
                 left: 50%
-                bottom: 1.5rem
+                bottom: 1.75rem
 
             &--icon
                 position: absolute
-                left: calc(50% - 15px)
-                bottom: 3.7rem
-                font-size: 1.8rem
-                transform: rotateX(180deg)
+                left: calc(50% - 0.7rem)
+                bottom: 3rem
+                font-size: 2.5rem
 
 </style>
 
-<div class="timeline">
+<div class="timeline container">
     <div class="timeline__bar">
     </div>
     <div class="timeline__legend">
@@ -80,6 +80,6 @@
     </div>
     <div class="timeline__marker">
         14:27 Uhr
-        <i class="fas fa-triangle timeline__marker--icon"></i>
+        <i class="fas fa-caret-down  timeline__marker--icon"></i>
     </div>
 </div>
