@@ -1,24 +1,15 @@
 <script lang="ts">
-    export let title: string = '';
-    // export let header: string = '';
-    // export let subheader: string = '';
-    // export let text: string = '';
+    export let scrollSnapChild: boolean = false;
 </script>
 
 <style lang="sass">
-    @import "./../theme"
+    @import "./../styles/theme"
 
-    .text-section
-        margin: 5rem auto 2.5rem
-
-    //.text
-    //    padding-top: 80px
-    //
-    //.text-title
-    //    padding-top: 0
+    section
+        margin: 5rem auto
 </style>
 
-<section class="text-section container">
+<section id="text" class:scroll-snap-child={scrollSnapChild} class="container">
     <slot>
     </slot>
 </section>
