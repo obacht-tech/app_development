@@ -1,5 +1,5 @@
 <style lang="sass">
-    @import "./../theme"
+    @import "./../styles/theme"
 
     .timeline
         position: absolute
