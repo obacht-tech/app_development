@@ -1,7 +1,7 @@
 <script lang="ts">
-    import Zoom from "./Controls/Zoom.svelte";
-    import Playback from "./Controls/Playback.svelte";
-    import Layers from "./Controls/Layers.svelte";
+    import Zoom from "./Zoom.svelte";
+    import Playback from "./Playback.svelte";
+    import Layers from "./Layers.svelte";
 
     type PlaybackState = "play" | "2x forward" | "stop";
 
@@ -14,7 +14,7 @@
 </script>
 
 <style lang="sass">
-    @import "./../../styles/theme"
+    @import "./../../../styles/theme"
 
     .controls
         position: absolute

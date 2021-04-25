@@ -7,7 +7,7 @@
 </script>
 
 <style lang="sass">
-    @import "./../../styles/theme"
+    @import "./../../../styles/theme"
 
     .timeline
         position: absolute

@@ -2,6 +2,8 @@
     import * as THREE from "three";
     import {onMount} from "svelte";
     import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js";
+    import {environment} from "../../store";
+    import {Object3D} from "three";
 
     type ApplicationID = "person" | "heatmap" | "paths" | "full";
     type CanvasID = "personCanvas" | "heatmapCanvas" | "pathmapCanvas" | "fullCanvas";
@@ -9,7 +11,7 @@
     export let aid: ApplicationID;
     export let cid: CanvasID;
     export let inFrame: boolean;
-    export let disableCameraControl: boolean = false;
+    export let enableCameraControls: boolean = false;
     export let cameraZoomLocked: boolean = true;
 
     let sizes: {width, height};
@@ -28,12 +30,15 @@
 
         sizes = {
             width: width(),
-            // width: window.innerWidth,
             height: section.clientHeight
         };
 
-        const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000);
-        camera.position.z = 3;
+        // const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000);
+        const aspectRatio = sizes.width / sizes.height;
+        const camera = new THREE.OrthographicCamera(-5 * aspectRatio, 5 * aspectRatio, 5, -5, 0.1, 100);
+        camera.position.x = 15;
+        camera.position.y = 10;
+        camera.position.z = 10;
 
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas,
@@ -47,14 +52,12 @@
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(`white`);
 
-        const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-        const cube = new THREE.Mesh( geometry, material );
-        scene.add( cube );
-
+        let env: Object3D;
+        environment.subscribe(value => env = value);
+        scene.add(env.clone());
 
         const controls = new OrbitControls(camera, canvas);
-        controls.enabled = !disableCameraControl;
+        controls.enabled = enableCameraControls;
         controls.enableZoom = !cameraZoomLocked;
         controls.enableDamping = true;
         controls.minZoom = 0.8;
@@ -67,9 +70,9 @@
                 height: section.clientHeight
             };
 
-            //     // camera.left = -5 * (sizes.width / sizes.height);
-            //     // camera.right = 5 * (sizes.width / sizes.height);
-            camera.aspect = sizes.width / sizes.height;
+
+            camera.left = -5 * (sizes.width / sizes.height);
+            camera.right = 5 * (sizes.width / sizes.height);
             camera.updateProjectionMatrix();
 
             renderer.setSize(sizes.width, sizes.height);
@@ -79,13 +82,9 @@
         })
 
         function render() {
-
             window.requestAnimationFrame(render);
             if (inFrame) {
                 controls.enableZoom = !cameraZoomLocked;
-                cube.rotation.x += 0.01;
-                cube.rotation.y += 0.01;
-
                 controls.update();
                 renderer.render(scene, camera);
             }
@@ -104,4 +103,4 @@
         cursor: move
 </style>
 
-<canvas id={cid} class:cursor={!disableCameraControl}></canvas>
+<canvas id={cid} class:cursor={enableCameraControls}></canvas>

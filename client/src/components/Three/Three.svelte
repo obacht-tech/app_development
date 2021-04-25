@@ -1,8 +1,8 @@
 <script lang="ts">
     import {onMount} from "svelte";
     import Canvas from "./Canvas.svelte";
-    import Timeline from "./Timeline.svelte";
-    import Controls from "./Controls.svelte";
+    import Timeline from "./Timeline/Timeline.svelte";
+    import Controls from "./Controls/Controls.svelte";
 
     type ApplicationID = "person" | "heatmap" | "paths" | "full";
     type PlaybackState = "play" | "2x forward" | "stop";
@@ -55,7 +55,7 @@
     {#if aid === "person"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} cameraZoomLocked={cameraZoomLocked}/>
         <Timeline bind:now={now}/>
-        <Controls zoomLock bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked} />
+        <Controls bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked} />
     {/if}
 
     {#if aid === "heatmap"}
@@ -71,7 +71,7 @@
     {/if}
 
     {#if aid === "full"}
-        <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} cameraZoomLocked={cameraZoomLocked}/>
+        <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} enableCameraControls cameraZoomLocked={cameraZoomLocked}/>
         <Timeline bind:start={start} bind:now={now} bind:end={end}/>
         <Controls zoomLock layers bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked}/>
     {/if}

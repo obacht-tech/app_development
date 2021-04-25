@@ -3,6 +3,14 @@
     import Header from "./components/Story/Header.svelte";
     import Footer from "./components/Story/Footer.svelte";
     import Three from "./components/Three/Three.svelte";
+    import {positions} from "./store";
+    import environment from "./components/Three/environment";
+
+    fetch("/positions")
+        .then(res => res.json())
+        .then(json => positions.set(json));
+
+    environment();
 </script>
 
 <style global lang="sass">
@@ -56,6 +64,7 @@
         </TextCard>
 
         <Three scrollSnapChild/>
+
     </main>
 
     <Footer scrollSnapChild/>
