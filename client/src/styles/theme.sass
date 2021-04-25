@@ -4,6 +4,7 @@
 
 $white: #FFFFFF
 $light-grey: #F4F5F7
+$medium-grey: #EAEAEA
 $dark-grey: #282C31
 $black: #0F1418
 
@@ -27,6 +28,9 @@ $red-10: transparentize($red, .90)
 $blue-10: transparentize($blue, .90)
 $purple-10: transparentize($purple, .90)
 $flirt-10: transparentize($flirt, .90)
+
+.yellow
+    border: 2px solid $yellow
 
 //------------------------------------------------------------------------------------
 // Borders
@@ -154,115 +158,114 @@ $size-small: .85rem
 //------------------------------------------------------------------------------------
 // Container
 //------------------------------------------------------------------------------------
-
-.container
-    max-width: 940px
-    margin: 0 auto
-    position: relative
-    z-index: 1070
-    padding: 0 1rem
-
-@media (min-width: 1200px)
-    .container
-        max-width: 940px
-    //min-width: 940px;
-
-
-@media (min-width: 992px) and (max-width: 1199.98px)
-    .container
-        max-width: 940px
-
-
-@media (min-width: 768px) and (max-width: 991.98px)
-    .container
-        max-width: 720px
-
-
-@media (min-width: 576px) and (max-width: 767.98px)
-    .container
-        max-width: 540px
+//
+//.container
+//    max-width: 940px
+//    margin: 0 auto
+//    position: relative
+//    z-index: 1070
+//    padding: 0 1rem
+//
+//@media (min-width: 1200px)
+//    .container
+//        max-width: 940px
+//    //min-width: 940px;
+//
+//
+//@media (min-width: 992px) and (max-width: 1199.98px)
+//    .container
+//        max-width: 940px
+//
+//
+//@media (min-width: 768px) and (max-width: 991.98px)
+//    .container
+//        max-width: 720px
+//
+//
+//@media (min-width: 576px) and (max-width: 767.98px)
+//    .container
+//        max-width: 540px
 
 
 //------------------------------------------------
 
 // Font Styles
-h1
-    font-size: 1.5rem
-    line-height: 1em
-    font-family: 'IBM Plex Serif', sans-serif
-    font-weight: 500
-
-h2
-    font-size: 1rem
-    line-height: 1em
-    font-family: 'IBM Plex Sans', sans-serif
-    font-weight: 300
-    padding: 1rem 0 .5rem
-
-h3
-    font-size: 1.3rem
-    line-height: 1em
-    font-family: 'IBM Plex Serif', 'serif'
-h4
-    font-size: 1.15rem
-    line-height: 1.35rem
-    font-family: 'IBM Plex Serif'  , 'serif'
-h5
-    font-size: 1rem
-    line-height: 1.25rem
-    font-family: 'IBM Plex Sans Light', sans-serif
-
-h6
-    font-size: .85rem
-    line-height: 1rem
-    font-family: 'IBM Plex Sans Light', sans-serif
+//h1
+//    font-size: 1.5rem
+//    line-height: 1em
+//    font-family: 'IBM Plex Serif', sans-serif
+//    font-weight: 500
+//
+//h2
+//    font-size: 1rem
+//    line-height: 1em
+//    font-family: 'IBM Plex Sans', sans-serif
+//    font-weight: 300
+//    padding: 1rem 0 .5rem
+//
+//h3
+//    font-size: 1.3rem
+//    line-height: 1em
+//    font-family: 'IBM Plex Serif', 'serif'
+//h4
+//    font-size: 1.15rem
+//    line-height: 1.35rem
+//    font-family: 'IBM Plex Serif'  , 'serif'
+//h5
+//    font-size: 1rem
+//    line-height: 1.25rem
+//    font-family: 'IBM Plex Sans Light', sans-serif
+//
+//h6
+//    font-size: .85rem
+//    line-height: 1rem
+//    font-family: 'IBM Plex Sans Light', sans-serif
 
 // General Styles
 
-.badge
-    display: inline-block
-    padding:  .2rem .5rem
-    margin-left: .5rem
-    background: $blue-10
-    border-radius: $border-radius
+//.badge
+//    display: inline-block
+//    padding:  .2rem .5rem
+//    margin-left: .5rem
+//    background: $blue-10
+//    border-radius: $border-radius
+//
+//#creator
+//    text-decoration: none
+//    color: $blue
 
-#creator
-    text-decoration: none
-    color: $blue
-
-button
-    //background: radial-gradient(circle at top right, #87e3ff, $blue 80%)
-    background: $blue
-    color: $white
-    border: none
-    border-radius: 4px
-    padding: .5rem
-    box-shadow: 0 1.5px 0 #184E8E, 0 2px 4px 0 rgba(#2D2342, .4), 0 7px 13px -3px rgba(#2D2342, .3)
-    cursor: pointer
-    //text-shadow: 0 2px 0 darken(#184E8E, 15)
-    font-family: 'IBM Plex Sans', sans-serif
-    font-weight: 500
-
-    &:hover
-        background: radial-gradient(circle at top right, #87e3ff, darken($blue, 10) 80%)
-        background: darken($blue, 5)
-
-    &:active
-        transform: translateY(1px)
-        background: radial-gradient(circle at top right, #87e3ff, darken($blue, 15) 80%)
-        background: darken($blue, 7)
+//button
+//    //background: radial-gradient(circle at top right, #87e3ff, $blue 80%)
+//    background: $blue
+//    color: $white
+//    border: none
+//    border-radius: 4px
+//    padding: .5rem
+//    box-shadow: 0 1.5px 0 #184E8E, 0 2px 4px 0 rgba(#2D2342, .4), 0 7px 13px -3px rgba(#2D2342, .3)
+//    cursor: pointer
+//    //text-shadow: 0 2px 0 darken(#184E8E, 15)
+//    font-family: 'IBM Plex Sans', sans-serif
+//    font-weight: 500
+//
+//    &:hover
+//        background: radial-gradient(circle at top right, #87e3ff, darken($blue, 10) 80%)
+//        background: darken($blue, 5)
+//
+//    &:active
+//        transform: translateY(1px)
+//        background: radial-gradient(circle at top right, #87e3ff, darken($blue, 15) 80%)
+//        background: darken($blue, 7)
 
 
 
 
 
 // Spacing Styles
-
-.margin
-    margin: 1.5rem
-
-.padding
-    padding: 1.5rem
-
-.grid
-    display: flex
+//.margin
+//    margin: 1.5rem
+//
+//.padding
+//    padding: 1.5rem
+//
+//.grid
+//    display: flex
