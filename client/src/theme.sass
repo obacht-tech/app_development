@@ -4,6 +4,7 @@
 
 $white: #FFFFFF
 $light-grey: #F4F5F7
+$middle-grey: #EAEAEA
 $dark-grey: #282C31
 $black: #0F1418
 
@@ -165,7 +166,7 @@ $size-small: .85rem
 @media (min-width: 1200px)
     .container
         max-width: 940px
-    //min-width: 940px;
+//min-width: 940px;
 
 
 @media (min-width: 992px) and (max-width: 1199.98px)
@@ -203,10 +204,12 @@ h3
     font-size: 1.3rem
     line-height: 1em
     font-family: 'IBM Plex Serif', 'serif'
+
 h4
     font-size: 1.15rem
     line-height: 1.35rem
-    font-family: 'IBM Plex Serif'  , 'serif'
+    font-family: 'IBM Plex Serif', 'serif'
+
 h5
     font-size: 1rem
     line-height: 1.25rem
@@ -221,7 +224,7 @@ h6
 
 .badge
     display: inline-block
-    padding:  .2rem .5rem
+    padding: .2rem .5rem
     margin-left: .5rem
     background: $blue-10
     border-radius: $border-radius
@@ -253,9 +256,6 @@ button
         background: darken($blue, 7)
 
 
-
-
-
 // Spacing Styles
 
 .margin
@@ -266,3 +266,99 @@ button
 
 .grid
     display: flex
+
+
+// Overwrite Slider Css
+.rangeSlider.range
+    background: $middle-grey !important
+    height: 1rem !important
+    border-radius: 2px
+
+    .rangeBar
+        height: 1rem !important
+        border-radius: 0
+
+    .rangeHandle
+        transform: none !important
+        top: 0
+
+    .rangeNub
+        width: 2px
+        transform: rotate(0deg)
+
+.rangeSlider > .rangeHandle > .rangeNub
+    transform: rotate(0deg) !important
+
+.rangeSlider .rangeHandle:before
+    position: relative
+    left: -5px
+
+.indicator__container
+    input[type=range]
+
+        border: 1px solid white
+        width: 300px
+
+
+    input[type=range]::-moz-range-track
+        width: 300px
+        height: 5px
+        background: transparent
+        border: none
+        border-radius: 3px
+
+
+    input[type=range]::-moz-range-thumb
+        border: none
+        height: 16px
+        width: 16px
+        border-radius: 50%
+        background: red
+
+
+    /*hide the outline behind the border*/
+    input[type=range]:-moz-focusring
+        outline: 1px solid transparent
+        outline-offset: -1px
+
+
+    input[type=range]:focus::-moz-range-track
+        background: transparent
+
+
+    input[type=range]
+        -webkit-appearance: none
+        background: transparent
+        border: none
+
+
+    input[type=range]::-webkit-slider-runnable-track
+        -webkit-appearance: none
+        background: transparent
+        border: none
+
+
+
+    input[type=range]::-webkit-slider-thumb
+        -webkit-appearance: none
+        position: relative
+        top: 20px
+        border: none
+        height: 2.2rem
+        width: 25px
+        background-image: url("static/icons/caret-down-solid.svg")
+        -webkit-background-size: cover
+        -moz-background-size: cover
+        -o-background-size: cover
+        background-size: cover
+
+
+
+    input[type=range]:focus
+        -webkit-appearance: none
+        outline: none
+
+
+    input[type=range]:focus::-webkit-slider-runnable-track
+        background: transparent
+
