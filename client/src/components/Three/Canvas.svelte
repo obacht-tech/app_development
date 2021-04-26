@@ -73,7 +73,6 @@
                 height: section.clientHeight
             };
 
-
             camera.left = -5 * (sizes.width / sizes.height);
             camera.right = 5 * (sizes.width / sizes.height);
             camera.updateProjectionMatrix();
