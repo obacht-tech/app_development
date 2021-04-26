@@ -16,6 +16,7 @@
     @import "./styles/reset"
     @import "./styles/theme"
     @import "./styles/scroll-snapping"
+    @import "./styles/timeline"
 
     .application
         position: relative
