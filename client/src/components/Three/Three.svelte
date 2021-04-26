@@ -3,6 +3,7 @@
     import Canvas from "./Canvas.svelte";
     import Timeline from "./Timeline/Timeline.svelte";
     import Controls from "./Controls/Controls.svelte";
+    import datasetDates from "../../env";
 
     type ApplicationID = "person" | "heatmap" | "paths" | "full";
     type PlaybackState = "play" | "2x forward" | "stop";
@@ -15,9 +16,9 @@
     let cameraZoomLocked: boolean = true;
     let playbackState: PlaybackState = "play";
     let layerState: LayerState;
-    let start: Date;
-    let now: Date;
-    let end: Date;
+    let markerStart: Date = datasetDates.start;
+    let markerNow: Date = datasetDates.start;
+    let markerEnd: Date = datasetDates.end;
 
     onMount(() => {
         let observer = new IntersectionObserver(entries => {
@@ -56,25 +57,25 @@
 <section id={aid} class:scroll-snap-child={scrollSnapChild}>
     {#if aid === "person"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} cameraZoomLocked={cameraZoomLocked} layerState={"person"}/>
-        <Timeline bind:now={now}/>
+        <Timeline datasetStart={datasetDates.start} datasetEnd={datasetDates.end} bind:markerNow={markerNow}/>
         <Controls playback bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked} />
     {/if}
 
     {#if aid === "heatmap"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} layerState={"heatmap"}/>
-        <Timeline bind:start={start} bind:now={now} bind:end={end}/>
+        <Timeline datasetStart={datasetDates.start} datasetEnd={datasetDates.end} bind:markerStart={markerStart} bind:markerNow={markerNow} bind:markerEnd={markerEnd}/>
         <Controls bind:playbackState={playbackState}/>
     {/if}
 
     {#if aid === "paths"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} layerState={"paths"}/>
-        <Timeline bind:start={start} bind:now={now} bind:end={end}/>
+        <Timeline datasetStart={datasetDates.start} datasetEnd={datasetDates.end} bind:markerStart={markerStart} bind:markerNow={markerNow} bind:markerEnd={markerEnd}/>
         <Controls bind:playbackState={playbackState}/>
     {/if}
 
     {#if aid === "full"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} enableCameraControls cameraZoomLocked={cameraZoomLocked} layerState={layerState}/>
-        <Timeline bind:start={start} bind:now={now} bind:end={end}/>
+        <Timeline datasetStart={datasetDates.start} datasetEnd={datasetDates.end} bind:markerStart={markerStart} bind:markerNow={markerNow} bind:markerEnd={markerEnd}/>
         <Controls zoomLock playback layers bind:layerState={layerState} bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked}/>
     {/if}
 </section>

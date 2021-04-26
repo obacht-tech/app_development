@@ -1,8 +1,10 @@
 <script lang="ts">
 
-    export let start: Date;
-    export let now: Date;
-    export let end: Date;
+    export let datasetStart: Date;
+    export let datasetEnd: Date;
+    export let markerStart: Date;
+    export let markerNow: Date;
+    export let markerEnd: Date;
 
 </script>
 
@@ -43,7 +45,6 @@
                     width: 3px
                     background: $dark-grey
                     height: 1rem
-                    //left: 50%
                     bottom: 1.75rem
 
             &--start
@@ -83,8 +84,8 @@
     <div class="timeline__bar">
     </div>
     <div class="timeline__legend">
-        <div class="timeline__legend--start">7 Uhr</div>
-        <div class="timeline__legend--end">23 Uhr</div>
+        <div class="timeline__legend--start">{datasetStart.getHours() + ":" + datasetStart.getMinutes()} Uhr</div>
+        <div class="timeline__legend--end">{datasetEnd.getHours() + ":" + datasetEnd.getMinutes()} Uhr</div>
     </div>
     <div class="timeline__marker">
         14:27 Uhr
