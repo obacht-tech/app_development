@@ -2,8 +2,7 @@
     import * as THREE from "three";
     import {onMount} from "svelte";
     import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js";
-    import {environment} from "../../store";
-    import {Object3D} from "three";
+    import environment from "./environment";
 
     type ApplicationID = "person" | "heatmap" | "paths" | "full";
     type CanvasID = "personCanvas" | "heatmapCanvas" | "pathmapCanvas" | "fullCanvas";
@@ -33,12 +32,18 @@
             height: section.clientHeight
         };
 
-        // const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000);
         const aspectRatio = sizes.width / sizes.height;
         const camera = new THREE.OrthographicCamera(-5 * aspectRatio, 5 * aspectRatio, 5, -5, 0.1, 100);
-        camera.position.x = 15;
-        camera.position.y = 10;
-        camera.position.z = 10;
+
+        switch (aid) {
+            case "full":
+                camera.position.x = 15;
+                camera.position.y = 10;
+                camera.position.z = 10;
+                break;
+            default:
+                camera.position.y = 10;
+        }
 
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas,
@@ -52,9 +57,7 @@
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(`white`);
 
-        let env: Object3D;
-        environment.subscribe(value => env = value);
-        scene.add(env.clone());
+        scene.add(environment());
 
         const controls = new OrbitControls(camera, canvas);
         controls.enabled = enableCameraControls;

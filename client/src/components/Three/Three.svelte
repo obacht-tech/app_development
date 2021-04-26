@@ -75,6 +75,6 @@
     {#if aid === "full"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} enableCameraControls cameraZoomLocked={cameraZoomLocked} layerState={layerState}/>
         <Timeline bind:start={start} bind:now={now} bind:end={end}/>
-        <Controls zoomLock playback layers bind: bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked}/>
+        <Controls zoomLock playback layers bind:layerState={layerState} bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked}/>
     {/if}
 </section>

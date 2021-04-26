@@ -1,7 +1,6 @@
 import * as THREE from "three";
-import {environment} from "../../store";
 
-export default function () {
+export default function (): THREE.Group {
     const sceneEnvironment = new THREE.Group();
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -49,7 +48,8 @@ export default function () {
     sceneEnvironment.add(cube0, cube1, cube2);
     sceneEnvironment.add(plane);
 
+    return sceneEnvironment;
     // @ts-ignore
-    environment.set(sceneEnvironment);
+    // environment.set(sceneEnvironment);
 }
 
