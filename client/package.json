@@ -26,6 +26,7 @@
     "svelte": "^3.35.0",
     "svelte-check": "^1.2.3",
     "svelte-preprocess": "^4.0.0",
+    "svelte-range-slider-pips": "^1.7.0",
     "tslib": "^2.0.0",
     "typescript": "^3.9.3"
   },
