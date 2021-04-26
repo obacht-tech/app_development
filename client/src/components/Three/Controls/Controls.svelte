@@ -4,13 +4,14 @@
     import Layers from "./Layers.svelte";
 
     type PlaybackState = "play" | "2x forward" | "stop";
+    type LayerState = "person" | "heatmap" | "paths" | "full";
 
     export let zoomLock: boolean = false;
     export let playback: boolean = false;
     export let layers: boolean = false;
     export let cameraZoomLocked: boolean = true;
     export let playbackState: PlaybackState;
-
+    export let layerState: LayerState;
 
 </script>
 
@@ -39,6 +40,6 @@
         <Playback bind:playbackState={playbackState}/>
     {/if}
     {#if layers}
-        <Layers/>
+        <Layers bind:layerState={layerState}/>
     {/if}
 </div>

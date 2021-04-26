@@ -6,6 +6,7 @@
 
     type ApplicationID = "person" | "heatmap" | "paths" | "full";
     type PlaybackState = "play" | "2x forward" | "stop";
+    type LayerState = "person" | "heatmap" | "paths" | "full";
 
     export let aid: ApplicationID = "full";
     export let scrollSnapChild: boolean = false;
@@ -13,6 +14,7 @@
     let inFrame: boolean;
     let cameraZoomLocked: boolean = true;
     let playbackState: PlaybackState = "play";
+    let layerState: LayerState;
     let start: Date;
     let now: Date;
     let end: Date;
@@ -53,26 +55,26 @@
 
 <section id={aid} class:scroll-snap-child={scrollSnapChild}>
     {#if aid === "person"}
-        <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} cameraZoomLocked={cameraZoomLocked}/>
+        <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} cameraZoomLocked={cameraZoomLocked} layerState={"person"}/>
         <Timeline bind:now={now}/>
         <Controls playback bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked} />
     {/if}
 
     {#if aid === "heatmap"}
-        <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame}/>
+        <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} layerState={"heatmap"}/>
         <Timeline bind:start={start} bind:now={now} bind:end={end}/>
         <Controls bind:playbackState={playbackState}/>
     {/if}
 
     {#if aid === "paths"}
-        <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame}/>
+        <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} layerState={"paths"}/>
         <Timeline bind:start={start} bind:now={now} bind:end={end}/>
         <Controls bind:playbackState={playbackState}/>
     {/if}
 
     {#if aid === "full"}
-        <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} enableCameraControls cameraZoomLocked={cameraZoomLocked}/>
+        <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} enableCameraControls cameraZoomLocked={cameraZoomLocked} layerState={layerState}/>
         <Timeline bind:start={start} bind:now={now} bind:end={end}/>
-        <Controls zoomLock playback layers bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked}/>
+        <Controls zoomLock playback layers bind: bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked}/>
     {/if}
 </section>

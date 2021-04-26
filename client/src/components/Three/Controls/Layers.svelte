@@ -1,3 +1,9 @@
+<script lang="ts">
+    type LayerState = "person" | "heatmap" | "paths" | "full";
+
+    export let layerState: LayerState;
+</script>
+
 <style lang="sass">
     .layers
         justify-self: center
