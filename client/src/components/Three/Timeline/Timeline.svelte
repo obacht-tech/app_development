@@ -16,6 +16,8 @@
         stiffness: 0.4, damping: 0.7
     });
 
+    const num = new Intl.NumberFormat("en-US");
+
 </script>
 
 <style lang="sass">
@@ -32,19 +34,9 @@
         background: white
         box-shadow: $shadow-2xl
         padding: 1.5rem 1.5rem 1rem 1.5rem
-        .rangeSlider
-            margin: 0
-            padding: 0
 
         &__container
             position: relative
-
-            .indicator
-                margin: 0
-                position: absolute
-                bottom: 1rem
-                width: 100%
-                z-index: 5
 
 
         &__legend
@@ -70,26 +62,17 @@
 
     <div class="timeline__container">
         {#if indicator}
-            <div class="indicator__container">
-                <input on:change={(value) => console.log($indicatorSpring.value)} bind:value={$indicatorSpring.value}
-                       class="indicator" type=range min=0 max={100}/>
+            <div >
+                <RangeSlider id="indicator_slider" formatter={ v => num.format(v * 1000) } float  hover={false} />
             </div>
+
         {/if}
-        <RangeSlider on:stop={(value) => console.log(value)} class="rangeSlider" hover={false} range values={[30,70]}/>
+        <div >
+            <RangeSlider  id="range_slider" pushy={true}  on:stop={(value) => console.log(value)}  hover={false} range values={[30,70]}/>
+        </div>
     </div>
     <div class="timeline__legend">
         <div class="timeline__legend&#45;&#45;start">{datasetStart.getHours() + ":" + datasetStart.getMinutes()} Uhr</div>
         <div class="timeline__legend&#45;&#45;end">{datasetEnd.getHours() + ":" + datasetEnd.getMinutes()} Uhr</div>
     </div>
-
-    <!--    <div class="timeline__bar">
-        </div>
-        <div class="timeline__legend">
-            <div class="timeline__legend&#45;&#45;start">{datasetStart.getHours() + ":" + datasetStart.getMinutes()} Uhr</div>
-            <div class="timeline__legend&#45;&#45;end">{datasetEnd.getHours() + ":" + datasetEnd.getMinutes()} Uhr</div>
-        </div>
-        <div class="timeline__marker">
-            14:27 Uhr
-            <i class="fas fa-caret-down  timeline__marker&#45;&#45;icon"></i>
-        </div>-->
 </div>
