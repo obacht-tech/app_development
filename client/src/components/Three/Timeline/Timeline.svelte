@@ -1,10 +1,7 @@
 <script lang="ts">
     import RangeSlider from "svelte-range-slider-pips";
-    import {spring} from "svelte/motion";
 
-    export let springValues = {stiffness: 0.15, damping: 0.4};
     export let indicator: boolean = true;
-    export let indicatorValue: number = 0
     export let datasetStart: Date;
     export let datasetEnd: Date;
     export let markerStart: Date;
@@ -12,11 +9,29 @@
     export let markerEnd: Date;
 
 
-    let indicatorSpring = spring({value: 0}, {
-        stiffness: 0.4, damping: 0.7
-    });
+    const diffMinutes = Math.floor(((datasetEnd - datasetStart) / 1000) / 60);
 
-    const num = new Intl.NumberFormat("en-US");
+    function addMinutes(date: Date, minutes: number) {
+        return new Date(date.getTime() + minutes * 60000);
+    }
+
+    function formatDate(date: Date) {
+        const minutes =  date.getMinutes();
+        return date.getHours() + ':' + ((minutes < 10) ? 0 : '') + minutes + 'Uhr'
+    }
+
+    function setMarkerStartEnd(startValue: number, endValue: number) {
+        markerStart = addMinutes(datasetStart, startValue);
+        markerEnd = addMinutes(datasetEnd, endValue);
+    }
+
+    function setMarkerNow(nowValue: number) {
+        markerNow = addMinutes(datasetStart, nowValue);
+    }
+
+
+    markerStart = datasetStart;
+    markerEnd = datasetEnd;
 
 </script>
 
@@ -35,6 +50,7 @@
         box-shadow: $shadow-2xl
         padding: 1.5rem 1.5rem 1rem 1.5rem
 
+
         &__container
             position: relative
 
@@ -45,7 +61,6 @@
             margin-top: 1rem
 
 
-
             &--start
                 &:before
                     left: 0
@@ -53,26 +68,38 @@
             &--end
                 &:before
                     right: 0
-
-
-
 </style>
 
 <div class="timeline container">
-
     <div class="timeline__container">
         {#if indicator}
-            <div >
-                <RangeSlider id="indicator_slider" formatter={ v => num.format(v * 1000) } float  hover={false} />
+            <div>
+                <RangeSlider
+                        id="indicator_slider"
+                        min={0}
+                        max={diffMinutes}
+                        step={1}
+                        formatter={ value => formatDate(addMinutes(datasetStart, value)) }
+                        float hover={false}
+                        on:stop={(value) => setMarkerNow(value.detail.value)}/>
             </div>
-
         {/if}
-        <div >
-            <RangeSlider  id="range_slider" pushy={true}  on:stop={(value) => console.log(value)}  hover={false} range values={[30,70]}/>
+        <div>
+            <RangeSlider
+                    id="range_slider"
+                    min={0}
+                    max={diffMinutes}
+                    step={1}
+                    pushy={true}
+                    hover={false}
+                    range
+                    on:stop={(value) =>setMarkerStartEnd(value.detail.values[0], value.detail.values[1])}
+                    values={[0, diffMinutes]}/>
         </div>
     </div>
     <div class="timeline__legend">
-        <div class="timeline__legend&#45;&#45;start">{datasetStart.getHours() + ":" + datasetStart.getMinutes()} Uhr</div>
-        <div class="timeline__legend&#45;&#45;end">{datasetEnd.getHours() + ":" + datasetEnd.getMinutes()} Uhr</div>
+        <div class="timeline__legend&#45;&#45;start">{formatDate(markerStart)}
+        </div>
+        <div class="timeline__legend&#45;&#45;end">{formatDate(markerEnd)}</div>
     </div>
 </div>
