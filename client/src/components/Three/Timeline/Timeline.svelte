@@ -22,7 +22,7 @@
 
     function setMarkerStartEnd(startValue: number, endValue: number) {
         markerStart = addMinutes(datasetStart, startValue);
-        markerEnd = addMinutes(datasetEnd, endValue);
+        markerEnd = addMinutes(datasetStart, endValue);
     }
 
     function setMarkerNow(nowValue: number) {
@@ -90,14 +90,15 @@
                     max={diffMinutes}
                     pushy={true}
                     hover={false}
-                    range
+                    range float
+                    formatter={ value => formatDate(addMinutes(datasetStart, value)) }
                     on:stop={(value) =>setMarkerStartEnd(value.detail.values[0], value.detail.values[1])}
                     values={[0, diffMinutes]}/>
         </div>
     </div>
     <div class="timeline__legend">
-        <div class="timeline__legend&#45;&#45;start">{formatDate(markerStart)}
+        <div class="timeline__legend&#45;&#45;start">{formatDate(datasetStart)}
         </div>
-        <div class="timeline__legend&#45;&#45;end">{formatDate(markerEnd)}</div>
+        <div class="timeline__legend&#45;&#45;end">{formatDate(datasetEnd)}</div>
     </div>
 </div>
