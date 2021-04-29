@@ -78,7 +78,6 @@
                         id="indicator_slider"
                         min={0}
                         max={diffMinutes}
-                        step={1}
                         formatter={ value => formatDate(addMinutes(datasetStart, value)) }
                         float hover={false}
                         on:stop={(value) => setMarkerNow(value.detail.value)}/>
@@ -89,7 +88,6 @@
                     id="range_slider"
                     min={0}
                     max={diffMinutes}
-                    step={1}
                     pushy={true}
                     hover={false}
                     range
