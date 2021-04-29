@@ -16,7 +16,7 @@
     }
 
     function formatDate(date: Date) {
-        const minutes =  date.getMinutes();
+        const minutes = date.getMinutes();
         return date.getHours() + ':' + ((minutes < 10) ? 0 : '') + minutes + 'Uhr'
     }
 
@@ -48,7 +48,7 @@
         border-radius: $border-radius
         background: white
         box-shadow: $shadow-2xl
-        padding: 1.5rem 1.5rem 1rem 1.5rem
+        padding: 2.5rem 1.5rem 0.5rem 1.5rem
 
 
         &__container
@@ -68,12 +68,19 @@
             &--end
                 &:before
                     right: 0
+
+        .range_slider__container
+            --range-float-text: $dark-grey
+
+        .indicator_slider__container
+            --range-float-text: #18A0FB
+
 </style>
 
 <div class="timeline container">
     <div class="timeline__container">
         {#if indicator}
-            <div>
+            <div class="indicator_slider__container">
                 <RangeSlider
                         id="indicator_slider"
                         min={0}
@@ -83,7 +90,7 @@
                         on:stop={(value) => setMarkerNow(value.detail.value)}/>
             </div>
         {/if}
-        <div>
+        <div class="range_slider__container">
             <RangeSlider
                     id="range_slider"
                     min={0}
