@@ -86,7 +86,7 @@
                         min={0}
                         max={diffMinutes}
                         formatter={ value => formatDate(addMinutes(datasetStart, value)) }
-                        float hover={false}
+                        float hover={true}
                         on:stop={(value) => setMarkerNow(value.detail.value)}/>
             </div>
         {/if}
@@ -96,7 +96,7 @@
                     min={0}
                     max={diffMinutes}
                     pushy={true}
-                    hover={false}
+                    hover={true}
                     range float
                     formatter={ value => formatDate(addMinutes(datasetStart, value)) }
                     on:stop={(value) =>setMarkerStartEnd(value.detail.values[0], value.detail.values[1])}
