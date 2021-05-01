@@ -3,11 +3,12 @@
     import Header from "./components/Story/Header.svelte";
     import Footer from "./components/Story/Footer.svelte";
     import Three from "./components/Three/Three.svelte";
-    import {positions} from "./store";
+    import {positions, modal} from "./store";
+    import Modal from "./components/Three/Controls/Modal.svelte";
 
     fetch("/positions")
-        .then(res => res.json())
-        .then(json => positions.set(json));
+            .then(res => res.json())
+            .then(json => positions.set(json));
 
 </script>
 
@@ -33,6 +34,8 @@
     <Header scrollSnapChild/>
 
     <main>
+        <Modal show={$modal}>
+        </Modal>
 
         <Three aid="person" scrollSnapChild/>
 

@@ -2,6 +2,8 @@
     import Zoom from "./Zoom.svelte";
     import Playback from "./Playback.svelte";
     import Layers from "./Layers.svelte";
+    import {modal} from "../../../store";
+    import Popup from './Popup.svelte';
 
     type PlaybackState = "play" | "2x forward" | "stop";
     type LayerState = "person" | "heatmap" | "paths" | "full";
@@ -12,6 +14,11 @@
     export let cameraZoomLocked: boolean = true;
     export let playbackState: PlaybackState;
     export let layerState: LayerState;
+
+    const showPopup = () => {
+        modal.set(Popup);
+        console.log('CKLCK')
+    };
 
 </script>
 
@@ -40,6 +47,8 @@
         <Playback bind:playbackState={playbackState}/>
     {/if}
     {#if layers}
-        <Layers bind:layerState={layerState}/>
+        <div on:click={showPopup}>
+            <Layers bind:layerState={layerState}/>
+        </div>
     {/if}
 </div>
