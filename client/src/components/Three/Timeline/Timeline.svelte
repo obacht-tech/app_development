@@ -48,7 +48,7 @@
         border-radius: $border-radius
         background: white
         box-shadow: $shadow-2xl
-        padding: 2.5rem 1.5rem 0.5rem 1.5rem
+        padding: 2.5rem 2.1rem 0.5rem 2.1rem
 
 
         &__container
