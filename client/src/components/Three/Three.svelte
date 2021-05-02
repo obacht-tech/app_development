@@ -57,8 +57,8 @@
 <section id={aid} class:scroll-snap-child={scrollSnapChild}>
     {#if aid === "person"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} cameraZoomLocked={cameraZoomLocked} layerState={"person"}/>
-        <Timeline datasetStart={datasetDates.start} datasetEnd={datasetDates.end} bind:markerNow={markerNow}/>
-        <Controls playback bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked} />
+        <Timeline indicator playback datasetStart={datasetDates.start} datasetEnd={datasetDates.end} bind:markerNow={markerNow}/>
+        <Controls bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked} />
     {/if}
 
     {#if aid === "heatmap"}
@@ -75,7 +75,7 @@
 
     {#if aid === "full"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} enableCameraControls cameraZoomLocked={cameraZoomLocked} layerState={layerState}/>
-        <Timeline datasetStart={datasetDates.start} datasetEnd={datasetDates.end} bind:markerStart={markerStart} bind:markerNow={markerNow} bind:markerEnd={markerEnd}/>
-        <Controls zoomLock playback layers bind:layerState={layerState} bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked}/>
+        <Timeline indicator playback datasetStart={datasetDates.start} datasetEnd={datasetDates.end} bind:markerStart={markerStart} bind:markerNow={markerNow} bind:markerEnd={markerEnd}/>
+        <Controls zoomLock settings layers bind:layerState={layerState} bind:playbackState={playbackState} bind:cameraZoomLocked={cameraZoomLocked}/>
     {/if}
 </section>

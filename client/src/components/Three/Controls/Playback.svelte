@@ -21,7 +21,8 @@
 
         .play, .stop
             transition: ease-in-out 25ms
-            padding: .5rem
+            padding: 0 .2rem
+            font-size: 1.3rem
 
             &:hover
                 cursor: pointer

@@ -13,7 +13,7 @@
         justify-content: center
         align-content: center
         position: relative
-        padding: .5rem
+        padding: 0.5rem .9rem
 
         &:hover
             cursor: pointer
@@ -39,8 +39,8 @@
             color: $blue
             font-size: .7em
             position: absolute
-            bottom: -2px
-            left: -2px
+            bottom: 5px
+            left: 5px
             opacity: 0
             transition: ease-in-out 25ms
 
