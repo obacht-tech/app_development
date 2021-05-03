@@ -2,6 +2,9 @@
     import RangeSlider from "svelte-range-slider-pips";
     import Playback from "../Controls/Playback.svelte";
 
+    type PlaybackState = "play" | "2x forward" | "stop";
+    export let playbackState: PlaybackState;
+
     export let indicator: boolean = false;
     export let datasetStart: Date;
     export let datasetEnd: Date;
@@ -110,7 +113,7 @@
         <div class="timeline__legend&#45;&#45;start">{formatDate(datasetStart)}
         </div>
         {#if playback}
-            <Playback></Playback>
+            <Playback bind:playbackState={playbackState}/>
         {/if}
         <div class="timeline__legend&#45;&#45;end">{formatDate(datasetEnd)}</div>
     </div>
