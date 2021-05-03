@@ -35,8 +35,6 @@
     <Header scrollSnapChild/>
 
     <main>
-        <Modal show={$modal}>
-        </Modal>
 
         <Three aid="person" scrollSnapChild/>
 
