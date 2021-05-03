@@ -9,7 +9,7 @@
         justify-self: center
         align-self: center
         display: flex
-        width: max-content
+        width: 3rem
         justify-content: center
         align-content: center
         position: relative

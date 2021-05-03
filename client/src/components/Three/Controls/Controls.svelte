@@ -3,7 +3,6 @@
     import Layers from "./Layers.svelte";
     import Settings from "./Settings.svelte";
 
-    type PlaybackState = "play" | "2x forward" | "stop";
     type LayerState = "person" | "heatmap" | "paths" | "full";
 
     export let zoomLock: boolean = false;
@@ -25,23 +24,28 @@
         left: 0
         right: 0
         margin: 0 auto
-        padding: .5rem
-        font-size: 1.5rem
-        display: flex
-        justify-content: center
-        //grid-template-columns: 1fr 1fr 1fr
+
+        &__container
+            font-size: 1.5rem
+            display: flex
+            justify-content: center
+            position: relative
+
 </style>
 
 <div class="controls container">
-    {#if zoomLock}
-        <Zoom bind:cameraZoomLocked={cameraZoomLocked}/>
-    {/if}
+    <div class="controls__container">
+        {#if zoomLock}
+            <Zoom class="controls__icon" bind:cameraZoomLocked={cameraZoomLocked}/>
+        {/if}
 
-    {#if layers}
-            <Layers bind:layerState={layerState}/>
-    {/if}
+        {#if layers}
+            <Layers class="controls__icon" bind:layerState={layerState}/>
+        {/if}
 
-    {#if settings}
-        <Settings bind:layerState={layerState}/>
-    {/if}
+        {#if settings}
+            <Settings class="controls__icon" bind:layerState={layerState}/>
+        {/if}
+    </div>
+
 </div>

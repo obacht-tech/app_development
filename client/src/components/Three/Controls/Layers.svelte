@@ -7,11 +7,7 @@
 
     export let layerState: LayerState = "person";
 
-    let targetEl;
-    let background
-
     const showModal = (event) => {
-        // ignore first click
         event.stopPropagation();
         if ($modal === '' || $modal === 'settings') {
             modal.set('layers');
@@ -30,26 +26,28 @@
         justify-self: center
         align-self: center
         display: flex
-        width: max-content
+
         justify-content: center
         align-items: center
         position: relative
-        padding: .5rem
+        padding: 1rem
 
+        &__modal
+            min-width: 5rem
+            label
+                margin: 0.2rem 0
+                display: block
 
 </style>
 
 <div class="layers">
-    <div on:click={showModal} bind:this={targetEl} class="layers">
+    <div on:click={showModal} class="layers__icon">
         <i class="fas fa-layer-group"></i>
     </div>
 
     {#if $modal==='layers'}
-  <!--      <Modal show={$modaltest}>
-        </Modal>-->
-
-        <ControlsModal on:close={()=>modal.set('')}>
-            <div>
+        <ControlsModal positionArrow="layers" on:close={()=>modal.set('')}>
+            <div class="layers__modal">
                 <label>
                     <input type=radio bind:group={layerState} value={"person"}>
                     Personen

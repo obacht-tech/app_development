@@ -1,6 +1,8 @@
 <script lang="ts">
     import {createEventDispatcher} from "svelte";
 
+    export let positionArrow: 'settings' | 'layers' = 'settings';
+
     const dispatch = createEventDispatcher();
 
     function onCloseModal() {
@@ -33,7 +35,6 @@
         position: sticky
         z-index: 800
         top: 0
-
         left: 0
         display: flex
         flex-direction: column
@@ -44,15 +45,18 @@
 
     .controls-modal
         .modal
-            left: -2.8rem
+            bottom: 4rem
+            left: 50%
+            transform: translate(-50%, 0)
+            height: min-content
             box-shadow: $shadow-2xl
             background: white
-            border-radius: 10px
+            border-radius: 4px
             font-size: $size-normal
-
+            width: 110%
+            min-width: 10rem
             padding: 1rem
             position: absolute
-            bottom: 4rem
             display: inline-block
 
             label
@@ -65,16 +69,16 @@
             position: absolute
             height: 0
             width: 0
-            left: 3.5rem
-            bottom: -2rem
+            left: var(--left-arrow)
+            bottom: -1.9rem
             /* 1px buffer for zooming problems while rendering*/
             border-width: 1rem
             border-color: white transparent transparent transparent
             border-style: solid
 </style>
 
-<div class="controls-modal" >
-    <div class="modal" use:clickOutside={() => {
+<div class="controls-modal">
+    <div class="modal" style={positionArrow==='settings'?"--left-arrow: 61%": '--left-arrow: 40%' } use:clickOutside={() => {
 		     onCloseModal()
 		   }}>
         <slot></slot>

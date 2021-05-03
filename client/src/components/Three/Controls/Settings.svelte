@@ -15,64 +15,56 @@
             modal.set('settings');
         } else {
             modal.set('')
-
         }
-
-        console.log($modal)
     };
 
 </script>
 
 <style lang="sass">
     @import "./../../../styles/theme"
-    .bg
-        position: sticky
-        z-index: 1000
-        top: 0
 
-        left: 0
-        display: flex
-        flex-direction: column
-        justify-content: center
-        width: 100vw
-        height: 100vh
-        background: rgba(0, 0, 0, 0.26)
-
-    .layers
+    .settings
         justify-self: center
         align-self: center
         display: flex
-        width: max-content
         justify-content: center
         align-items: center
-        position: relative
         padding: .5rem
+        width: 3rem
 
         &__modal
-            width: 10rem
+            padding: .5rem
+            width: 100%
 
+            p
+                font-size: $size-normal
+                line-height: $size-normal
+                margin: 1.5rem 0 0.5rem 0
 
 </style>
 
-<div class="layers">
-    <div on:click={showModal} class="layers">
+<div class="settings">
+    <div class="settings__icon" on:click={showModal}>
         <i class="fas fa-cog"></i>
     </div>
 
-    {#if $modal==='settings'}
-<ControlsModal on:close={()=>modal.set('')}>
-    <div class="layers__modal">
-        <p>Maskentragende</p>
-        <RangeSlider  id="range_slider" range="min" values={[50]} />
-        <p>Mindestabstand</p>
-        <RangeSlider  id="range_slider" range="min" values={[50]} />
-        <p>Inzidenz auf 100tsd</p>
-        <RangeSlider  id="range_slider" range="min" values={[50]} />
-        <p>Zeitlicher Kontakt zur Infektion</p>
-        <RangeSlider  id="range_slider" range="min" values={[50]} />
-    </div>
-</ControlsModal>
-
+    {#if $modal === 'settings'}
+        <ControlsModal positionArrow="settings" on:close={()=>modal.set('')}>
+            <div class="settings__modal">
+                <p>Maskentragende: {mask_wear}%</p>
+                <RangeSlider on:stop={(value) => mask_wear = value.detail.value} id="range_slider" range="min"
+                             values={[50]}/>
+                <p>Mindestabstand: {distance}m </p>
+                <RangeSlider on:stop={(value) => distance = value.detail.value/10} min={0} max={50} id="range_slider"
+                             range="min" values={[1]}/>
+                <p>Inzidenz auf 100tsd: {incidence}</p>
+                <RangeSlider on:stop={(value) => incidence = value.detail.value} min={0} max={1000} id="range_slider"
+                             range="min" values={[50]}/>
+                <p>Zeitlicher Kontakt zur Infektion: {time_infection}Sek.</p>
+                <RangeSlider on:stop={(value) => time_infection = value.detail.value} min={0} max={300}
+                             id="range_slider" range="min" values={[50]}/>
+            </div>
+        </ControlsModal>
 
 
     {/if}
