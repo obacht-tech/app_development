@@ -9,7 +9,7 @@
     export let layers: boolean = false;
     export let settings: boolean = false;
     export let cameraZoomLocked: boolean = true;
-    export let layerState: LayerState;
+    export let layerState: LayerState = 'person';
 
 
 </script>
@@ -44,7 +44,7 @@
         {/if}
 
         {#if settings}
-            <Settings class="controls__icon" bind:layerState={layerState}/>
+            <Settings class="controls__icon"/>
         {/if}
     </div>
 

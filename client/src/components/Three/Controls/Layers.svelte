@@ -5,7 +5,7 @@
 
     type LayerState = "person" | "heatmap" | "paths" | "full";
 
-    export let layerState: LayerState = "person";
+    export let layerState: LayerState;
 
     const showModal = (event) => {
         event.stopPropagation();

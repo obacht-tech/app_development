@@ -3,10 +3,10 @@
     import {modal} from "../../../store";
     import ControlsModal from "./ControlsModal.svelte";
 
-    export let mask_wear: number = 10;
-    export let distance: number = 10;
-    export let incidence: number = 10;
-    export let time_infection: number = 10;
+    let mask_wear: number = 10;
+    let distance: number = 10;
+    let incidence: number = 10;
+    let time_infection: number = 10;
 
 
     const showModal = (event) => {

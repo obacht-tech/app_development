@@ -34,18 +34,6 @@
 
 <style lang="sass">
     @import "./../../../styles/theme"
-    .bg
-        position: sticky
-        z-index: 800
-        top: 0
-        left: 0
-        display: flex
-        flex-direction: column
-        justify-content: center
-        width: 100vw
-        height: 100vh
-        background: rgba(0, 0, 0, 0.26)
-
     .controls-modal
         .modal
             bottom: 4rem
@@ -61,10 +49,6 @@
             padding: 1rem
             position: absolute
             display: inline-block
-
-            label
-                margin: 0.2rem 0
-                display: block
 
         .modal:before
             box-shadow: $shadow-2xl
