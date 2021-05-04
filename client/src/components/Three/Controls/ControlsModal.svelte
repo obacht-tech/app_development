@@ -1,9 +1,12 @@
 <script lang="ts">
     import {createEventDispatcher} from "svelte";
+    import { fade } from 'svelte/transition';
 
     export let positionArrow: 'settings' | 'layers' = 'settings';
 
     const dispatch = createEventDispatcher();
+
+    const animate = (node, args) => fade(node, {duration: 80});
 
     function onCloseModal() {
         dispatch('close', {});
@@ -77,8 +80,8 @@
             border-style: solid
 </style>
 
-<div class="controls-modal">
-    <div class="modal" style={positionArrow==='settings'?"--left-arrow: 61%": '--left-arrow: 40%' } use:clickOutside={() => {
+<div class="controls-modal" transition:animate>
+    <div class="modal" style={positionArrow==='settings'?"--left-arrow: 60%": '--left-arrow: 40%' } use:clickOutside={() => {
 		     onCloseModal()
 		   }}>
         <slot></slot>
