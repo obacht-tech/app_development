@@ -36,15 +36,15 @@
 <div class="controls container">
     <div class="controls__container">
         {#if zoomLock}
-            <Zoom class="controls__icon" bind:cameraZoomLocked={cameraZoomLocked}/>
+            <Zoom bind:cameraZoomLocked={cameraZoomLocked}/>
         {/if}
 
         {#if layers}
-            <Layers class="controls__icon" bind:layerState={layerState}/>
+            <Layers bind:layerState={layerState}/>
         {/if}
 
         {#if settings}
-            <Settings class="controls__icon"/>
+            <Settings/>
         {/if}
     </div>
 

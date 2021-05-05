@@ -3,8 +3,7 @@
     import Header from "./components/Story/Header.svelte";
     import Footer from "./components/Story/Footer.svelte";
     import Three from "./components/Three/Three.svelte";
-    import {positions, modal} from "./store";
-    import Modal from "./components/Three/Controls/Modal.svelte";
+    import {positions} from "./store";
 
     fetch("/positions")
             .then(res => res.json())

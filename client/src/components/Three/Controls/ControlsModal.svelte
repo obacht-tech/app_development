@@ -36,7 +36,7 @@
     @import "./../../../styles/theme"
     .controls-modal
         .modal
-            bottom: 4rem
+            bottom: 3.5rem
             left: 50%
             transform: translate(-50%, 0)
             height: min-content
@@ -57,8 +57,7 @@
             height: 0
             width: 0
             left: var(--left-arrow)
-            bottom: -1.9rem
-            /* 1px buffer for zooming problems while rendering*/
+            bottom: -1.7rem
             border-width: 1rem
             border-color: white transparent transparent transparent
             border-style: solid
