@@ -4,10 +4,8 @@
     import Timeline from "./Timeline/Timeline.svelte";
     import Controls from "./Controls/Controls.svelte";
     import datasetDates from "../../env";
+    import type {ApplicationID, LayerState, PlaybackState} from "../../types";
 
-    type ApplicationID = "person" | "heatmap" | "paths" | "full";
-    type PlaybackState = "play" | "2x forward" | "stop";
-    type LayerState = "person" | "heatmap" | "paths" | "full";
 
     export let aid: ApplicationID = "full";
     export let scrollSnapChild: boolean = false;

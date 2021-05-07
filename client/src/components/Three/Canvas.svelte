@@ -3,9 +3,11 @@
     import {onMount} from "svelte";
     import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js";
     import environment from "./environment";
+    import {positions} from "../../store";
+    import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
+    import type {ApplicationID, CanvasID, PositionData} from "../../types";
 
-    type ApplicationID = "person" | "heatmap" | "paths" | "full";
-    type CanvasID = "personCanvas" | "heatmapCanvas" | "pathmapCanvas" | "fullCanvas";
+
 
     export let aid: ApplicationID;
     export let cid: CanvasID;
