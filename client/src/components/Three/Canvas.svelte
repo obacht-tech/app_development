@@ -6,7 +6,7 @@
     import {positions} from "../../store";
     import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
     import type {ApplicationID, CanvasID, PositionData} from "../../types";
-
+    import {SkeletonUtils} from "three/examples/jsm/utils/SkeletonUtils";
 
 
     export let aid: ApplicationID;
@@ -15,7 +15,16 @@
     export let enableCameraControls: boolean = false;
     export let cameraZoomLocked: boolean = true;
 
-    let sizes: {width, height};
+
+    let humanMesh;
+    let positionData: PositionData[] = [];
+    let sizes: { width, height };
+
+    positions.subscribe((data: { data?: PositionData[] }) => {
+        if (data.data) {
+            positionData = data.data;
+        }
+    })
 
     onMount(async () => {
 
@@ -46,6 +55,22 @@
             default:
                 camera.position.y = 10;
         }
+
+        const humanMaterial = new THREE.MeshStandardMaterial({
+            color: '#C7C700'
+        })
+        const gltfLoader = new GLTFLoader();//
+        gltfLoader.load('/client/static/models/human.gltf', (gltf) => {
+            const human = gltf.scene.children[0];
+            human.scale.set(0.0015, 0.0015, 0.0015);
+            human.position.set(0, -0.5, 0);
+            human.children[0].children[0].children[0].children[0].castShadow = true;
+            human.children[0].children[0].children[0].children[0].receiveShadow = true;
+            human.children[0].children[0].children[0].children[0].material = humanMaterial;
+
+            humanMesh = human;
+            //scene.add(human);
+        })
 
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas,
@@ -84,8 +109,36 @@
 
             renderOnce();
         })
+        // People
+        const people = new THREE.Group()
+
+        function personModels(num: number) {
+            if (positionData.length === 0 || !humanMesh) {
+                return
+            }
+
+            people.clear();
+            for (let position of positionData[num].people) {
+                let person = SkeletonUtils.clone(humanMesh);
+                person.position.x = position.pos[0] * 0.001
+                person.position.y = -0.5
+                person.position.z = position.pos[1] * 0.001
+                people.add(person)
+            }
+        }
+
+        scene.add(people)
+        /**
+         * Animate
+         */
+        const clock = new THREE.Clock();
 
         function render() {
+            const elapsedTime = clock.getElapsedTime();
+            if(elapsedTime % 1 != 0){
+                personModels(Math.round(elapsedTime))
+            }
+
             window.requestAnimationFrame(render);
             if (inFrame) {
                 controls.enableZoom = !cameraZoomLocked;
@@ -94,10 +147,13 @@
             }
         }
 
-        function renderOnce() { renderer.render(scene, camera); }
+        function renderOnce() {
+            renderer.render(scene, camera);
+        }
 
         renderOnce();
         render();
+
     })
 
 </script>
