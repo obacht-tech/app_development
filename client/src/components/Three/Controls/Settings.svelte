@@ -52,16 +52,16 @@
         <ControlsModal positionArrow="settings" on:close={()=>modal.set('')}>
             <div class="settings__modal">
                 <p>Maskentragende: {mask_wear}%</p>
-                <RangeSlider on:stop={(value) => mask_wear = value.detail.value} id="range_slider" range="min"
+                <RangeSlider on:change={(value) => mask_wear = value.detail.value}  id="range_slider" range="min"
                              values={[mask_wear]}/>
                 <p>Mindestabstand: {distance/10}m </p>
-                <RangeSlider on:stop={(value) => distance = value.detail.value} min={0} max={50} id="range_slider"
+                <RangeSlider on:change={(value) => distance = value.detail.value} min={0} max={50} id="range_slider"
                              range="min" values={[distance]}/>
                 <p>Inzidenz auf 100tsd: {incidence}</p>
-                <RangeSlider on:stop={(value) => incidence = value.detail.value} min={0} max={1000} id="range_slider"
+                <RangeSlider on:change={(value) => incidence = value.detail.value} min={0} max={1000} id="range_slider"
                              range="min" values={[incidence]}/>
                 <p>Zeitlicher Kontakt zur Infektion: {time_infection}Sek.</p>
-                <RangeSlider on:stop={(value) => time_infection = value.detail.value} min={0} max={300}
+                <RangeSlider on:change={(value) => time_infection = value.detail.value} min={0} max={300}
                              id="range_slider" range="min" values={[time_infection]}/>
             </div>
         </ControlsModal>
