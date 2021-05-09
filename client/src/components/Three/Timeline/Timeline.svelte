@@ -1,10 +1,11 @@
 <script lang="ts">
     import RangeSlider from "svelte-range-slider-pips";
     import Playback from "../Controls/Playback.svelte";
+    import {time} from "../../../store";
+    import {onMount} from "svelte";
+    import type {PlaybackState} from "../../../types";
 
-    type PlaybackState = "play" | "2x forward" | "stop";
     export let playbackState: PlaybackState;
-
     export let indicator: boolean = false;
     export let datasetStart: Date;
     export let datasetEnd: Date;
@@ -13,7 +14,23 @@
     export let markerEnd: Date;
 
     export let playback: boolean = false;
+    let indicatorValue: number;
 
+    onMount(() => {
+        if (indicator) {
+            indicatorValue = Math.floor(((markerNow - datasetStart) / 1000) / 60);
+            time.subscribe(value => {
+                switch(playbackState){
+                    case 'play':
+                        indicatorValue++;
+                        break;
+                    case '2x forward':
+                        indicatorValue+=2;
+                        break;
+                }
+            });
+        }
+    })
 
     const diffMinutes = Math.floor(((datasetEnd - datasetStart) / 1000) / 60);
 
@@ -91,9 +108,11 @@
                         id="indicator_slider"
                         min={0}
                         max={diffMinutes}
+                        values={[indicatorValue]}
                         formatter={ value => formatDate(addMinutes(datasetStart, value)) }
                         float hover={true}
-                        on:stop={(value) => setMarkerNow(value.detail.value)}/>
+                        on:change={(value) => setMarkerNow(value.detail.value)}
+                        on:stop={(value) => {setMarkerNow(value.detail.value); indicatorValue=value.detail.value}}/>
             </div>
         {/if}
         <div class="range_slider__container">
