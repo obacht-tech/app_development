@@ -2,6 +2,15 @@
     type PlaybackState = "play" | "2x forward" | "stop";
 
     export let playbackState: PlaybackState = "play";
+
+    function handlePlay(state: PlaybackState) {
+        if (state === "play") {
+            playbackState = "2x forward"
+        } else {
+            playbackState = "play"
+        }
+
+    }
 </script>
 
 <style lang="sass">
@@ -23,6 +32,7 @@
             transition: ease-in-out 25ms
             padding: 0 .2rem
             font-size: 1.3rem
+            width: 1.3rem
 
             &:hover
                 cursor: pointer
@@ -36,8 +46,17 @@
 </style>
 
 <div class="playback">
-    <div class="play" class:active={playbackState === "play"} on:click={() => {playbackState = "play"}}>
-        <i class="fas fa-play"></i>
+    <div class="play" class:active={playbackState === "play" |playbackState === "2x forward" }
+         on:click={handlePlay(playbackState)}>
+        {#if playbackState === '2x forward'}
+            <div>
+                <i class="fas fa-forward"></i>
+            </div>
+        {:else}
+            <div>
+                <i class="fas fa-play"></i>
+            </div>
+        {/if}
     </div>
     <div class="stop" class:active={playbackState === "stop"} on:click={() => {playbackState = "stop"}}>
         <i class="fas fa-stop"></i>
