@@ -5,7 +5,7 @@
     import environment from "./environment";
     import {positions} from "../../store";
     import {FBXLoader} from 'three/examples/jsm/loaders/FBXLoader.js';
-    import type {ApplicationID, CanvasID, PositionData} from "../../types";
+    import type {ApplicationID, CanvasID, PositionData, Person} from "../../types";
     import {SkeletonUtils} from "three/examples/jsm/utils/SkeletonUtils";
 
 
@@ -15,7 +15,7 @@
     export let enableCameraControls: boolean = false;
     export let cameraZoomLocked: boolean = true;
 
-
+    let positionScaling = 0.001;
     let humanMesh;
     let positionData: PositionData[] = [];
     let sizes: { width, height };
@@ -118,35 +118,47 @@
             renderOnce();
         })
         // People
+        let nextPositions: Person[] = [];
+
         const people = new THREE.Group()
         function personModels(num: number) {
-            if (positionData.length === 0 || !humanMesh) {
+            if (positionData.length === 0 || !humanMesh || num>=positionData.length) {
                 return
             }
 
             //TODO: performence
             const addedPersons: string[] = [];
+            nextPositions = positionData[num+1].people;
+
             for (let person of positionData[num].people) {
                 let findIndexPerson = people.children.findIndex((personValue) => {
                     return personValue.uuid === person.pid
                 })
                 if (findIndexPerson > -1) {
-                    people.children[findIndexPerson].position.x = person.pos[0] * 0.001;
-                    people.children[findIndexPerson].position.z = person.pos[1] * 0.001;
+                    people.children[findIndexPerson].position.x = person.pos[0] * positionScaling;
+                    people.children[findIndexPerson].position.z = person.pos[1] * positionScaling;
                 } else {
                     //random color
                     const personMesh = SkeletonUtils.clone(humanMesh);
                     const personMaterial = new THREE.MeshStandardMaterial({
-                        color: ("#" + ((1 << 24) * Math.random() | 0).toString(16))
+                        color:'#'+(Math.random()*0xFFFFFF<<0).toString(16)
                     })
-                    personMesh.position.x = person.pos[0] * 0.001;
-                    personMesh.position.z = person.pos[1] * 0.001;
+                    personMesh.position.x = person.pos[0] * positionScaling;
+                    personMesh.position.z = person.pos[1] * positionScaling;
                     personMesh.uuid = person.pid;
                     personMesh.material = personMaterial;
 
                     people.add(personMesh)
                 }
                 addedPersons.push(person.pid);
+                    const nextPositionIndex = nextPositions.findIndex((el)=>{
+                        return person.pid === el.pid;
+                    })
+                    if(nextPositionIndex>-1){
+                        const deltaX = (nextPositions[nextPositionIndex].pos[0] - person.pos[0])
+                        const deltaZ = (nextPositions[nextPositionIndex].pos[1] - person.pos[1])
+                         nextPositions[nextPositionIndex].deltaNext = [deltaX, deltaZ]
+                    }
             }
 
             for (let person of people.children) {
@@ -161,16 +173,43 @@
 
 
         scene.add(people)
+
+        function updatePositions(time){
+            // scene people
+            for (let person of people.children) {
+
+                const nextPositionIndex = nextPositions.findIndex((el)=>{
+                    return person.uuid === el.pid;
+                })
+                if(nextPositionIndex>-1){
+                    const deltaPositionX = nextPositions[nextPositionIndex].pos[0]*positionScaling - person.position.x;
+                    const deltaPositionZ = nextPositions[nextPositionIndex].pos[1]*positionScaling - person.position.z;
+                    person.position.x += (nextPositions[nextPositionIndex].deltaNext[0]*positionScaling)/60
+                    person.position.z += nextPositions[nextPositionIndex].deltaNext[1]*positionScaling/60
+                }
+
+
+            }
+        }
         /**
          * Animate
          */
         const clock = new THREE.Clock();
 
-        function render() {
-            const elapsedTime = clock.getElapsedTime();
-            if (elapsedTime % 1 != 0) {
-                personModels(Math.round(elapsedTime))
+
+        let last = 0;
+        let num = 0;
+        let speed = 1;
+        function render(timeStamp?) {
+            let timeInSecond = timeStamp / 1000;
+
+            if (timeInSecond - last >= speed) {
+                last = timeInSecond;
+                personModels(num)
+                ++num
+
             }
+            updatePositions(timeInSecond)
 
             window.requestAnimationFrame(render);
             if (inFrame) {

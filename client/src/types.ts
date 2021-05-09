@@ -13,5 +13,6 @@ export type PositionData = {
 
 export type Person = {
     pid: string,
-    pos: number[]
+    pos: number[],
+    deltaNext?: number[]
 }
