@@ -5,6 +5,7 @@
     import environment from "./environment";
     import {positions} from "../../store";
     import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
+    import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
     import type {ApplicationID, CanvasID, PositionData} from "../../types";
     import {SkeletonUtils} from "three/examples/jsm/utils/SkeletonUtils";
 
@@ -59,7 +60,7 @@
         const humanMaterial = new THREE.MeshStandardMaterial({
             color: '#C7C700'
         })
-        const gltfLoader = new GLTFLoader();//
+      /*  const gltfLoader = new GLTFLoader();//
         gltfLoader.load('/client/static/models/human.gltf', (gltf) => {
             const human = gltf.scene.children[0];
             human.scale.set(0.0015, 0.0015, 0.0015);
@@ -71,6 +72,26 @@
             humanMesh = human;
             //scene.add(human);
         })
+*/
+        const fbxLoader = new FBXLoader();
+        fbxLoader.load( '/client/static/models/human_female.fbx', function ( object ) {
+
+            // mixer = new THREE.AnimationMixer( object );
+            //
+            // const action = mixer.clipAction( object.animations[ 0 ] );
+            // action.play();
+
+            object.traverse( function ( child ) {
+                if ( child.isMesh ) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                    child.scale.set(0.002,0.002, 0.002)
+                    child.position.set(0, -0.33, 0)
+                    child.material = humanMaterial
+                    humanMesh = child
+                }
+            } );
+        } );
 
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas,
@@ -111,21 +132,64 @@
         })
         // People
         const people = new THREE.Group()
-
+        const pos = [ [1,2], [3,4], [5,6], [1,2], [3,4]]
         function personModels(num: number) {
             if (positionData.length === 0 || !humanMesh) {
                 return
             }
 
-            people.clear();
+          /*  people.clear();
             for (let position of positionData[num].people) {
                 let person = SkeletonUtils.clone(humanMesh);
                 person.position.x = position.pos[0] * 0.001
-                person.position.y = -0.5
                 person.position.z = position.pos[1] * 0.001
                 people.add(person)
+            }*/
+            for (let person of positionData[num].people) {
+                let findIndexPerson = people.children.findIndex((personValue)=>{
+                    return personValue.uuid === person.pid
+                })
+                if(findIndexPerson>-1){
+                    people.children[findIndexPerson].position.x = person.pos[0] * 0.001;
+                    people.children[findIndexPerson].position.z = person.pos[1] * 0.001;
+                } else{
+                    //random color
+                    const personMesh = SkeletonUtils.clone(humanMesh);
+                    const personMaterial = new THREE.MeshStandardMaterial({
+                        color: "#" + ((1<<24)*Math.random() | 0).toString(16)
+                    })
+                    personMesh.position.x = person.pos[0] * 0.001;
+                    personMesh.position.z = person.pos[1] * 0.001;
+                    personMesh.uuid = person.pid;
+                    personMesh.material = personMaterial;
+
+                    people.add(personMesh)}
             }
-        }
+           // myArray = myArray.filter( ( el ) => !toRemove.includes( el ) );
+
+            }
+
+            //TODO: performence
+           /* for (let position of positionData[num].people) {
+              let findIndexPerson = people.children.findIndex((personValue)=>{
+                    return personValue.uuid === position.pid
+                })
+               if(findIndexPerson>-1){
+                   people.children[findIndexPerson].position.x = position.pos[0] * 0.001;
+                   people.children[findIndexPerson].position.y = -0.5;
+                   people.children[findIndexPerson].position.z = position.pos[1] * 0.001;
+               } else{
+                   let person = SkeletonUtils.clone(humanMesh);
+                   person.position.x = position.pos[0] * 0.001;
+                   person.position.y = -0.5;
+                   person.position.z = position.pos[1] * 0.001;
+                   person.uuid = position.pid;
+                   people.add(person)}
+            }*/
+
+
+
+
 
         scene.add(people)
         /**
