@@ -1,3 +1,5 @@
+import type {SplineCurve, Vector2} from "three";
+
 export type ApplicationID = "person" | "heatmap" | "paths" | "full";
 
 export type PlaybackState = "play" | "2x forward" | "stop";
@@ -15,4 +17,13 @@ export type Person = {
     pid: string,
     pos: number[],
     deltaNext?: number[]
+}
+
+export type PersonSpline = {
+    pid: string,
+    spline?: SplineCurve,
+    splineData: Vector2[],
+    timePosition?: number,
+    startDate: string,
+    timeDelta?:number
 }
