@@ -3,10 +3,11 @@
     import {onMount} from "svelte";
     import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js";
     import environment from "./environment";
-    import {positions} from "../../store";
+    import {positions, timeCurrentSeconds} from "../../store";
     import {FBXLoader} from 'three/examples/jsm/loaders/FBXLoader.js';
     import type {ApplicationID, CanvasID, PositionData, Person, PersonSpline} from "../../types";
     import {SkeletonUtils} from "three/examples/jsm/utils/SkeletonUtils";
+    import person from "./Layers/person";
 
 
     export let aid: ApplicationID;
@@ -21,10 +22,17 @@
     let positionSplines: PersonSpline[];
     let sizes: { width, height };
 
+    let fullSeconds = 0;
     positions.subscribe((data: { data?: PositionData[] }) => {
         if (data.data) {
             fetchingData = data.data;
             positionSplines = initSplines()
+        }
+    })
+
+    timeCurrentSeconds.subscribe(data =>{
+        if(data){
+              fullSeconds = data;
         }
     })
 
@@ -39,15 +47,12 @@
 
                 if (foundPersonIndex > -1) {
                     peopleSplines[foundPersonIndex].splineData.push(new THREE.Vector2(person.pos[0], person.pos[1]))
-
                 } else {
-
                     const newPerson = {
                         pid: person.pid,
                         splineData: [new THREE.Vector2(person.pos[0], person.pos[1])],
                         startDate: fetchingData[i].date,
                         timePosition: i
-
                     }
                     peopleSplines.push(newPerson)
                 }
@@ -87,7 +92,6 @@
 
         const section: HTMLElement = document.querySelector(`section#${aid}`)
         const canvas: HTMLCanvasElement = document.querySelector(`canvas#${cid}`);
-
 
         const width = (): number => {
             return section.clientWidth
@@ -129,8 +133,8 @@
                 if (child.isMesh) {
                     child.castShadow = true;
                     child.receiveShadow = true;
-                    child.scale.set(0.002, 0.002, 0.002)
-                    child.position.set(0, -0.33, 0)
+                    child.scale.set(positionScaling, positionScaling, positionScaling)
+                    child.position.set(0, 0.33, 0)
                     child.material = humanMaterial
                     humanMesh = child
                 }
@@ -148,9 +152,8 @@
 
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(`white`);
-
         scene.add(environment());
-
+        scene.add(person());
         const controls = new OrbitControls(camera, canvas);
         controls.enabled = enableCameraControls;
         controls.enableZoom = !cameraZoomLocked;
@@ -200,16 +203,17 @@
          * Animate
          */
         let last = 0;
-        let fullSeconds = 0;
+        let elapsedSeconds = 0;
         let speed = 1;
-
         function render(timeStamp?) {
             let timeInSecond = timeStamp / 1000;
             if (timeInSecond - last >= speed) {
                 last = timeInSecond;
+                 ++elapsedSeconds;
                 ++fullSeconds
             }
-            updatePositions(timeInSecond, fullSeconds)
+            let relativeTime = timeInSecond - elapsedSeconds; //0,231 sek
+            updatePositions(fullSeconds+relativeTime, fullSeconds)
             window.requestAnimationFrame(render);
             if (inFrame) {
                 controls.enableZoom = !cameraZoomLocked;

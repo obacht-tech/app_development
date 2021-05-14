@@ -45,7 +45,7 @@ export default function (): THREE.Group {
     cube2.position.set(3, 0.5, -0.5);
     cube2.rotateY(Math.PI * 0.1);
 
-    sceneEnvironment.add(cube0, cube1, cube2);
+   // sceneEnvironment.add(cube0, cube1, cube2);
     sceneEnvironment.add(plane);
 
     return sceneEnvironment;

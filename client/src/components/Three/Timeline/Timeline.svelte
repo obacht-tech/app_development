@@ -1,7 +1,7 @@
 <script lang="ts">
     import RangeSlider from "svelte-range-slider-pips";
     import Playback from "../Controls/Playback.svelte";
-    import {time} from "../../../store";
+    import { timeCurrentSeconds} from "../../../store";
     import {onMount} from "svelte";
     import type {PlaybackState} from "../../../types";
 
@@ -14,42 +14,66 @@
     export let markerEnd: Date;
 
     export let playback: boolean = false;
-    let indicatorValue: number;
+    let indicatorValue: number = 0;
+    let userInteraction: boolean = false;
 
     onMount(() => {
         if (indicator) {
-            indicatorValue = Math.floor(((markerNow - datasetStart) / 1000) / 60);
-            time.subscribe(value => {
-                switch(playbackState){
-                    case 'play':
-                        indicatorValue++;
-                        break;
-                    case '2x forward':
-                        indicatorValue+=2;
-                        break;
-                }
-            });
+            timeCurrentSeconds.subscribe(data =>{
+            if(data){
+                indicatorValue = data;
+            }
+        })
+
+            render()
         }
     })
 
-    const diffMinutes = Math.floor(((datasetEnd - datasetStart) / 1000) / 60);
+    let last = 0;
+    let speed = 1;
+    function render(timeStamp?) {
+        let timeInSecond = timeStamp / 1000;
+        if (timeInSecond - last >= speed) {
+            last = timeInSecond;
+            if(!userInteraction){
+                indicatorValue += 1
+            }
+
+        }
+
+        window.requestAnimationFrame(render);
+    }
+
+
+    const diffSeconds = Math.floor(((datasetEnd - datasetStart) / 1000) );
 
     function addMinutes(date: Date, minutes: number) {
         return new Date(date.getTime() + minutes * 60000);
     }
 
+    function addSeconds(date: Date, seconds: number) {
+        return new Date(date.getTime() + seconds*1000);
+    }
+
     function formatDate(date: Date) {
         const minutes = date.getMinutes();
-        return date.getHours() + ':' + ((minutes < 10) ? 0 : '') + minutes + 'Uhr'
+        return date.getHours() + ':' + ((minutes < 10) ? 0 : '') + minutes +':'+ date.getSeconds() +'Uhr'
     }
 
     function setMarkerStartEnd(startValue: number, endValue: number) {
-        markerStart = addMinutes(datasetStart, startValue);
-        markerEnd = addMinutes(datasetStart, endValue);
+        markerStart = addSeconds(datasetStart, startValue);
+        markerEnd = addSeconds(datasetStart, endValue);
     }
 
     function setMarkerNow(nowValue: number) {
-        markerNow = addMinutes(datasetStart, nowValue);
+        markerNow = addSeconds(datasetStart, nowValue);
+    }
+
+    function onStopMarkerNow(nowValue: number){
+        setMarkerNow(nowValue);
+        indicatorValue=nowValue;
+        userInteraction = false;
+        timeCurrentSeconds.set(indicatorValue)
     }
 
 
@@ -107,25 +131,27 @@
                 <RangeSlider
                         id="indicator_slider"
                         min={0}
-                        max={diffMinutes}
+                        max={diffSeconds}
                         values={[indicatorValue]}
-                        formatter={ value => formatDate(addMinutes(datasetStart, value)) }
+                        formatter={ value => formatDate(addSeconds(datasetStart, value)) }
                         float hover={true}
-                        on:change={(value) => setMarkerNow(value.detail.value)}
-                        on:stop={(value) => {setMarkerNow(value.detail.value); indicatorValue=value.detail.value}}/>
+                        on:stop={(value) => onStopMarkerNow(value.detail.value)}
+                        on:change={(value) => {userInteraction=true;setMarkerNow(value.detail.value); console.log('YESSSS')}}/>
+
+
             </div>
         {/if}
         <div class="range_slider__container">
             <RangeSlider
                     id="range_slider"
                     min={0}
-                    max={diffMinutes}
+                    max={diffSeconds}
                     pushy={true}
                     hover={true}
                     range float
-                    formatter={ value => formatDate(addMinutes(datasetStart, value)) }
+                    formatter={ value => formatDate(addSeconds(datasetStart, value)) }
                     on:stop={(value) =>setMarkerStartEnd(value.detail.values[0], value.detail.values[1])}
-                    values={[0, diffMinutes]}/>
+                    values={[0, diffSeconds]}/>
         </div>
     </div>
     <div class="timeline__legend">
