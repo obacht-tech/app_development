@@ -6,6 +6,7 @@
     import {positions, timeCurrentSeconds} from "../../store";
     import type {ApplicationID, CanvasID, PositionData} from "../../types";
     import {generatePeopleMeshes, initSplines, updatePositions} from "./Layers/person";
+    import {generatePaths} from "./Layers/paths";
 
 
     export let aid: ApplicationID;
@@ -29,6 +30,8 @@
             const positionSplines = initSplines(fetchingData)
             people = generatePeopleMeshes(positionSplines)
             scene.add(people)
+           const paths =  generatePaths(positionSplines)
+            scene.add(paths)
         }
     })
 
@@ -67,7 +70,6 @@
             default:
                 camera.position.y = 10;
         }
-
 
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas,

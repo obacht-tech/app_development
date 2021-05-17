@@ -4,7 +4,7 @@ import {SkeletonUtils} from "three/examples/jsm/utils/SkeletonUtils";
 import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
 
 let humanMesh;
-const positionScaling = 0.01;
+export const positionScaling = 0.01;
 const humanMaterial = new THREE.MeshStandardMaterial({
     color: '#C7C700'
 })
@@ -40,11 +40,11 @@ export function initSplines(fetchingData: PositionData[]): PersonSpline[] {
             })
 
             if (foundPersonIndex > -1) {
-                peopleSplines[foundPersonIndex].splineData.push(new THREE.Vector2(person.pos[0], person.pos[1]))
+                peopleSplines[foundPersonIndex].splineData.push(new THREE.Vector2(person.pos[0]* positionScaling, person.pos[1]* positionScaling))
             } else {
                 const newPerson = {
                     pid: person.pid,
-                    splineData: [new THREE.Vector2(person.pos[0], person.pos[1])],
+                    splineData: [new THREE.Vector2(person.pos[0]* positionScaling, person.pos[1]* positionScaling)],
                     startDate: fetchingData[i].date,
                     timePosition: i
                 }
@@ -62,11 +62,14 @@ export function generatePeopleMeshes(people: PersonSpline[]) {
     const peopleGroup = new THREE.Group()
     for (let personSpline of people) {
         const personMesh = SkeletonUtils.clone(humanMesh);
+        const color = new THREE.Color( 0xffffff );
+        color.setHex( Math.random() * 0xffffff );
         const personMaterial = new THREE.MeshStandardMaterial({
-            color: '#' + (Math.random() * 0xFFFFFF << 0).toString(16)
+            color
         })
         personSpline.spline = new THREE.SplineCurve(personSpline.splineData);
         personSpline.timeDelta = personSpline.splineData.length - 1;
+
 
         personMesh.visible = false
         personMesh.position.x = Math.random();
@@ -84,6 +87,9 @@ export function generatePeopleMeshes(people: PersonSpline[]) {
 
 export function updatePositions(time: number, second: number, group: THREE.Group) {
     for (let person of group.children) {
+
+
+
         const moment = time - person.timePosition; // 1.2 sek
         if (person.timePosition <= second && moment <= person.timeDelta) {
             if (!person.visible) {
@@ -91,8 +97,8 @@ export function updatePositions(time: number, second: number, group: THREE.Group
             }
             const deltaTimePosition = person.timeDelta; //diffrenz ende-starttime
             const pos = person.spline.getPoint((moment * 100 / deltaTimePosition) * 0.01);
-            person.position.x = pos.x * positionScaling
-            person.position.z = pos.y * positionScaling
+            person.position.x = pos.x
+            person.position.z = pos.y
         } else {
             if (person.visible) {
                 person.visible = false
