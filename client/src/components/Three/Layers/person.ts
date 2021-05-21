@@ -93,7 +93,6 @@ export function updatePositions(time: number, second: number, group: THREE.Group
         if (person.timePosition <= second && moment <= person.timeDelta) {
             if (!person.visible) {
                 person.visible = true;
-                console.log(person)
             }
 
             const deltaTimePosition = person.timeDelta; //diffrenz ende-starttime
