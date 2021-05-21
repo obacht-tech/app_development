@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import type {PersonSpline} from "../../../types";
+import type {Object3DTime, PersonSpline} from "../../../types";
 
 export function generatePaths(people: PersonSpline[]): THREE.Group {
     const paths = new THREE.Group()
@@ -10,7 +10,7 @@ export function generatePaths(people: PersonSpline[]): THREE.Group {
         color.setHex(Math.random() * 0xffffff);
         const material = new THREE.LineBasicMaterial({color});
 
-        const splineObject = new THREE.Line(geometry, material);
+        const splineObject: Object3DTime = new THREE.Line(geometry, material);
         splineObject.visible = true
         splineObject.position.y = -.49
         splineObject.timePosition = personSpline.timePosition;
@@ -24,7 +24,8 @@ export function generatePaths(people: PersonSpline[]): THREE.Group {
 
 
 export function rangePaths(paths: THREE.Group, start: number, end: number) {
-    for (let path of paths.children) {
+    const allPaths: Object3DTime[] = paths.children;
+    for (let path of allPaths) {
         const pathRange = path.timePosition + path.timeDelta;
         path.visible = (path.timePosition >= start && path.timePosition <= end) || (pathRange >= start && pathRange <= end);
     }
