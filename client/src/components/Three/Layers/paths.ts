@@ -13,9 +13,18 @@ export function generatePaths(people: PersonSpline[]): THREE.Group {
         const splineObject = new THREE.Line(geometry, material);
         splineObject.visible = true
         splineObject.position.y = -.49
+        splineObject.timePosition = personSpline.timePosition;
+        splineObject.timeDelta = personSpline.timeDelta;
         splineObject.rotateX(Math.PI / 2)
         paths.add(splineObject)
     }
 
     return paths;
+}
+
+
+export function rangePaths(paths: THREE.Group, start: number, end: number) {
+    for (let path of paths.children) {
+        path.visible = path.timePosition >= start && path.timePosition + path.timeDelta <= end;
+    }
 }
