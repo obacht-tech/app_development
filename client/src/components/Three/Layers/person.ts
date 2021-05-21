@@ -88,8 +88,6 @@ export function generatePeopleMeshes(people: PersonSpline[]) {
 export function updatePositions(time: number, second: number, group: THREE.Group) {
     for (let person of group.children) {
 
-
-
         const moment = time - person.timePosition; // 1.2 sek
         if (person.timePosition <= second && moment <= person.timeDelta) {
             if (!person.visible) {

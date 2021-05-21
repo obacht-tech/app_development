@@ -3,10 +3,14 @@
     import {onMount} from "svelte";
     import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js";
     import environment from "./environment";
-    import {positions, timeCurrentSeconds} from "../../store";
+    import {
+        positions,
+        markerNowSeconds,
+        markerStartEndSeconds
+    } from "../../store";
     import type {ApplicationID, CanvasID, PositionData} from "../../types";
     import {generatePeopleMeshes, initSplines, updatePositions} from "./Layers/person";
-    import {generatePaths} from "./Layers/paths";
+    import {generatePaths, rangePaths} from "./Layers/paths";
 
 
     export let aid: ApplicationID;
@@ -17,7 +21,8 @@
 
     const scene = new THREE.Scene();
 
-    let people = new THREE.Group()
+    let people = new THREE.Group();
+    let paths = new THREE.Group();
     let fetchingData: PositionData[] = [];
 
     let sizes: { width, height };
@@ -30,14 +35,20 @@
             const positionSplines = initSplines(fetchingData)
             people = generatePeopleMeshes(positionSplines)
             scene.add(people)
-           const paths =  generatePaths(positionSplines)
+            paths = generatePaths(positionSplines)
             scene.add(paths)
         }
     })
 
-    timeCurrentSeconds.subscribe(data => {
+    markerNowSeconds.subscribe(data => {
         if (data) {
             fullSeconds = data;
+        }
+    })
+
+    markerStartEndSeconds.subscribe((data: { startValue: number, endValue: number }) => {
+        if (data.startValue && data.endValue) {
+            rangePaths(paths, data.startValue, data.endValue)
         }
     })
 

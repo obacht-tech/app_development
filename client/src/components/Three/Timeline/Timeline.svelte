@@ -1,9 +1,10 @@
 <script lang="ts">
     import RangeSlider from "svelte-range-slider-pips";
     import Playback from "../Controls/Playback.svelte";
-    import { timeCurrentSeconds} from "../../../store";
+    import {markerNowSeconds, markerStartEndSeconds} from "../../../store";
     import {onMount} from "svelte";
     import type {PlaybackState} from "../../../types";
+    import {rangePaths} from "../Layers/paths";
 
     export let playbackState: PlaybackState;
     export let indicator: boolean = false;
@@ -13,13 +14,16 @@
     export let markerNow: Date;
     export let markerEnd: Date;
 
+    const diffSeconds = Math.floor(((datasetEnd - datasetStart) / 1000) );
     export let playback: boolean = false;
     let indicatorValue: number = 0;
+    let markerStartValue: number = 0;
+    let markerEndValue: number = diffSeconds;
     let userInteraction: boolean = false;
 
     onMount(() => {
         if (indicator) {
-            timeCurrentSeconds.subscribe(data =>{
+            markerNowSeconds.subscribe(data =>{
             if(data){
                 indicatorValue = data;
             }
@@ -27,6 +31,15 @@
 
             render()
         }
+
+        markerStartEndSeconds.subscribe((data: { startValue: number, endValue: number }) => {
+            if (data.startValue && data.endValue) {
+                markerStart = addSeconds(datasetStart, data.startValue);
+                markerEnd = addSeconds(datasetStart, data.endValue);
+                markerStartValue = data.startValue;
+                markerEndValue = data.endValue;
+            }
+        })
     })
 
     let last = 0;
@@ -44,9 +57,6 @@
         window.requestAnimationFrame(render);
     }
 
-
-    const diffSeconds = Math.floor(((datasetEnd - datasetStart) / 1000) );
-
     function addMinutes(date: Date, minutes: number) {
         return new Date(date.getTime() + minutes * 60000);
     }
@@ -61,8 +71,11 @@
     }
 
     function setMarkerStartEnd(startValue: number, endValue: number) {
+        markerStartEndSeconds.set({startValue, endValue})
         markerStart = addSeconds(datasetStart, startValue);
         markerEnd = addSeconds(datasetStart, endValue);
+        markerStartValue = startValue
+        markerEndValue = endValue;
     }
 
     function setMarkerNow(nowValue: number) {
@@ -73,7 +86,7 @@
         setMarkerNow(nowValue);
         indicatorValue=nowValue;
         userInteraction = false;
-        timeCurrentSeconds.set(indicatorValue)
+        markerNowSeconds.set(indicatorValue)
     }
 
 
@@ -151,7 +164,7 @@
                     range float
                     formatter={ value => formatDate(addSeconds(datasetStart, value)) }
                     on:stop={(value) =>setMarkerStartEnd(value.detail.values[0], value.detail.values[1])}
-                    values={[0, diffSeconds]}/>
+                    values={[markerStartValue, markerEndValue]}/>
         </div>
     </div>
     <div class="timeline__legend">

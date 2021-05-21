@@ -6,5 +6,5 @@ export let time = writable(0);
 
 
 // Time Controls
-export let timeCurrentSeconds = writable(0);
-
+export let markerNowSeconds = writable(0);
+export let markerStartEndSeconds = writable({});
