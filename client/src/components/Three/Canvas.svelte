@@ -35,8 +35,22 @@
             const positionSplines = initSplines(fetchingData)
             people = generatePeopleMeshes(positionSplines)
             scene.add(people)
-            paths = generatePaths(positionSplines)
-            scene.add(paths)
+            switch (aid) {
+                case "heatmap":
+                    break;
+                case "paths":
+                    paths = generatePaths(positionSplines)
+                    scene.add(paths)
+                    break;
+                case "person":
+                    break;
+                case "full":
+                    paths = generatePaths(positionSplines)
+                    scene.add(paths);
+                    break
+            }
+
+
         }
     })
 
@@ -132,7 +146,9 @@
                 ++fullSeconds
             }
             let relativeTime = timeInSecond - elapsedSeconds; //0,231 sek
-            updatePositions(fullSeconds + relativeTime, fullSeconds, people)
+            if (aid === 'person' || aid === 'full') {
+                updatePositions(fullSeconds + relativeTime, fullSeconds, people)
+            }
             window.requestAnimationFrame(render);
             if (inFrame) {
                 controls.enableZoom = !cameraZoomLocked;

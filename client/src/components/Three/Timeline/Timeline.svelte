@@ -4,7 +4,6 @@
     import {markerNowSeconds, markerStartEndSeconds} from "../../../store";
     import {onMount} from "svelte";
     import type {PlaybackState} from "../../../types";
-    import {rangePaths} from "../Layers/paths";
 
     export let playbackState: PlaybackState;
     export let indicator: boolean = false;
@@ -149,7 +148,7 @@
                         formatter={ value => formatDate(addSeconds(datasetStart, value)) }
                         float hover={true}
                         on:stop={(value) => onStopMarkerNow(value.detail.value)}
-                        on:change={(value) => {userInteraction=true;setMarkerNow(value.detail.value); console.log('YESSSS')}}/>
+                        on:change={(value) => {userInteraction=true;setMarkerNow(value.detail.value);}}/>
 
 
             </div>
