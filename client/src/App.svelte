@@ -3,11 +3,17 @@
     import Header from "./components/Story/Header.svelte";
     import Footer from "./components/Story/Footer.svelte";
     import Three from "./components/Three/Three.svelte";
-    import {positions} from "./store";
+    import {positionsData, positionSplines} from "./store";
+    import {initSplines} from "./components/Three/Layers/person";
+    import type {PersonSpline} from "./types";
 
     fetch("/positions")
             .then(res => res.json())
-            .then(json => positions.set(json));
+            .then(json => {
+                positionsData.set(json);
+                const peoplePositions: PersonSpline[] = initSplines(json.data);
+                positionSplines.set(peoplePositions);
+            });
 
 </script>
 

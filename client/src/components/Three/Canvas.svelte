@@ -4,12 +4,11 @@
     import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js";
     import environment, {setPlaneTexture} from "./environment";
     import {
-        positions,
         markerNowSeconds,
-        markerStartEndSeconds
+        markerStartEndSeconds, positionSplines
     } from "../../store";
-    import type {ApplicationID, CanvasID, PositionData} from "../../types";
-    import {generatePeopleMeshes, initSplines, updatePositions} from "./Layers/person";
+    import type {ApplicationID, CanvasID, PersonSpline} from "../../types";
+    import {generatePeopleMeshes, updatePositions} from "./Layers/person";
     import {initHeatmap} from "./Layers/heatmap";
     import {generatePaths, rangePaths} from "./Layers/paths";
 
@@ -24,29 +23,26 @@
 
     let people = new THREE.Group();
     let paths = new THREE.Group();
-    let fetchingData: PositionData[] = [];
 
     let sizes: { width, height };
 
     let fullSeconds = 0;
 
-    positions.subscribe((data: { data?: PositionData[] }) => {
-        if (data.data) {
-            fetchingData = data.data;
-            const positionSplines = initSplines(fetchingData)
-            people = generatePeopleMeshes(positionSplines)
+    positionSplines.subscribe(( data: PersonSpline[] ) => {
+        if (data.length>0) {
+            people = generatePeopleMeshes(data)
             scene.add(people)
             switch (aid) {
                 case "heatmap":
                     break;
                 case "paths":
-                    paths = generatePaths(positionSplines)
+                    paths = generatePaths(data)
                     scene.add(paths)
                     break;
                 case "person":
                     break;
                 case "full":
-                    paths = generatePaths(positionSplines)
+                    paths = generatePaths(data)
                     scene.add(paths);
                     break
             }
@@ -69,7 +65,7 @@
 
 
     onMount(async () => {
-initHeatmap();
+        initHeatmap();
         const heatmapCanvas: HTMLCanvasElement = document.querySelector('canvas.heatmap-canvas')
         const heatMapTexture: THREE.CanvasTexture = new THREE.CanvasTexture(heatmapCanvas);
 
