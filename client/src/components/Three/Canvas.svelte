@@ -2,7 +2,7 @@
     import * as THREE from "three";
     import {onMount} from "svelte";
     import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js";
-    import environment from "./environment";
+    import environment, {setPlaneTexture} from "./environment";
     import {
         positions,
         markerNowSeconds,
@@ -10,6 +10,7 @@
     } from "../../store";
     import type {ApplicationID, CanvasID, PositionData} from "../../types";
     import {generatePeopleMeshes, initSplines, updatePositions} from "./Layers/person";
+    import {initHeatmap} from "./Layers/heatmap";
     import {generatePaths, rangePaths} from "./Layers/paths";
 
 
@@ -68,6 +69,9 @@
 
 
     onMount(async () => {
+initHeatmap();
+        const heatmapCanvas: HTMLCanvasElement = document.querySelector('canvas.heatmap-canvas')
+        const heatMapTexture: THREE.CanvasTexture = new THREE.CanvasTexture(heatmapCanvas);
 
         const section: HTMLElement = document.querySelector(`section#${aid}`)
         const canvas: HTMLCanvasElement = document.querySelector(`canvas#${cid}`);
@@ -105,7 +109,9 @@
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
         scene.background = new THREE.Color(`white`);
-        scene.add(environment());
+        const env = environment();
+        setPlaneTexture(heatMapTexture)
+        scene.add(env);
 
         const controls = new OrbitControls(camera, canvas);
         controls.enabled = enableCameraControls;
@@ -127,7 +133,6 @@
 
             renderer.setSize(sizes.width, sizes.height);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
             renderOnce();
         })
 
@@ -173,4 +178,6 @@
         cursor: move
 </style>
 
+
+<div style="height: 300px; width: 300px; display: none" class="heatmap"></div>
 <canvas id={cid} class:cursor={enableCameraControls}></canvas>

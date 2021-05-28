@@ -3,17 +3,7 @@
     import Header from "./components/Story/Header.svelte";
     import Footer from "./components/Story/Footer.svelte";
     import Three from "./components/Three/Three.svelte";
-    import {positions, time} from "./store";
-    import {onMount} from 'svelte';
-
-    onMount(() => {
-        const interval = setInterval(() => {
-            time.update(n => n + 1)
-        }, 1000);
-        return () => {
-            clearInterval(interval);
-        };
-    });
+    import {positions} from "./store";
 
     fetch("/positions")
             .then(res => res.json())

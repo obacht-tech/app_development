@@ -1,5 +1,10 @@
 import * as THREE from "three";
 
+let plane: THREE.Mesh;
+const planeMaterial = new THREE.MeshStandardMaterial({
+    color: 0xffffff,
+});
+
 export default function (): THREE.Group {
     const sceneEnvironment = new THREE.Group();
 
@@ -17,12 +22,9 @@ export default function (): THREE.Group {
     sceneEnvironment.add(directionalLight);
 
     const material = new THREE.MeshStandardMaterial({color: 0xbbbbbb});
-    const planeMaterial = new THREE.MeshStandardMaterial({
-        color: 0xffffff,
-    });
 
     const planeGeometry = new THREE.CircleBufferGeometry(20, 128);
-    const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+    plane = new THREE.Mesh(planeGeometry, planeMaterial);
     plane.receiveShadow = true;
     plane.rotateX(-Math.PI / 2);
     plane.position.y = -.5;
@@ -51,5 +53,10 @@ export default function (): THREE.Group {
     return sceneEnvironment;
     // @ts-ignore
     // environment.set(sceneEnvironment);
+}
+
+export function setPlaneTexture(texture: THREE.CanvasTexture){
+    planeMaterial.map = texture;
+    plane.material = planeMaterial;
 }
 
