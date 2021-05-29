@@ -1,41 +1,36 @@
 import h337 from './heatmap_script.js'
+import type {HeatmapPoint, PersonSpline} from "../../../types";
 
 
-
-export function initHeatmap(){
-  // minimal heatmap instance configuration
+export function initHeatmap(people: PersonSpline[]) {
     let heatmapInstance = h337.create({
-        // only container is required, the rest will be defaults
-        container: document.querySelector('.heatmap')
+        container: document.querySelector('.heatmap'),
+        maxOpacity: .6,
+        radius: 10,
+        blur: .80,
     });
 
+    const points: HeatmapPoint[] = [];
+    for (let i = 0; i <people.length; i++) {
+        for (let position of people[i].splineData) {
+            const point: HeatmapPoint = {
 
-
-// now generate some random data
-    var points = [];
-    var max = 0;
-    var width = 840;
-    var height = 400;
-    var len = 200;
-
-    while (len--) {
-        var val = Math.floor(Math.random()*100);
-        max = Math.max(max, val);
-        var point = {
-            x: Math.floor(Math.random()*width),
-            y: Math.floor(Math.random()*height),
-            value: val
-        };
-        points.push(point);
+                x:  Math.floor(position.x*100+500),
+                y:  Math.floor(position.y*100+500)
+            }
+            points.push(point)
+        }
     }
-// heatmap data format
-    var data = {
-        max: max,
-        data: points
-    };
-// if you have a set of datapoints always use setData instead of addData
-// for data initialization
-    heatmapInstance.setData(data);
-    console.log(document.querySelector('.heatmap'))
+
+    const result = Object.values(points.reduce((r, e) => {
+        let k = `${e.x}|${e.y}`;
+        if(!r[k]) r[k] = {...e, value: 1}
+        else r[k].value += 1;
+        return r;
+    }, {}))
+
+    heatmapInstance.setData({
+        data: result
+    });
 }
 

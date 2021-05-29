@@ -25,7 +25,20 @@ export type PersonSpline = {
     splineData: Vector2[],
     timePosition?: number,
     startDate: string,
-    timeDelta?:number
+    timeDelta?: number
 }
 
-export type Object3DTime = THREE.Object3D & {timePosition?: number,  timeDelta?:number, spline?: SplineCurve, material?: any , isMesh?:boolean}
+export type Object3DTime = THREE.Object3D &
+    {
+        timePosition?: number,
+        timeDelta?: number,
+        spline?: SplineCurve,
+        material?: any,
+        isMesh?: boolean
+    }
+
+export type HeatmapPoint = {
+    x: number,
+    y: number,
+    value?: number
+}

@@ -3,14 +3,14 @@
     import Header from "./components/Story/Header.svelte";
     import Footer from "./components/Story/Footer.svelte";
     import Three from "./components/Three/Three.svelte";
-    import {positionsData, positionSplines} from "./store";
+    import {positionData, positionSplines} from "./store";
     import {initSplines} from "./components/Three/Layers/person";
     import type {PersonSpline} from "./types";
 
     fetch("/positions")
             .then(res => res.json())
             .then(json => {
-                positionsData.set(json);
+                positionData.set(json);
                 const peoplePositions: PersonSpline[] = initSplines(json.data);
                 positionSplines.set(peoplePositions);
             });
@@ -59,6 +59,7 @@
         Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen
         neuen Arbeitslosen im Viertel herankarrte.
     </TextCard>
+    <Three aid="paths" scrollSnapChild/>
 
     <TextCard>
         Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die
@@ -68,7 +69,15 @@
         neuen Arbeitslosen im Viertel herankarrte.
     </TextCard>
 
-    <Three scrollSnapChild/>
+    <TextCard>
+        Vor einem Jahr ließ sich unser Leben in New York am besten als apokalyptisch beschreiben. Durch die
+        leeren Straßenzüge hallten die Sirenen der Ambulanzen im Fünfminutentakt. Vor dem Beerdigungsinstitut,
+        zwei Blocks von unserem Haus entfernt, parkte ein Kühlwagen, weil die Leichenhalle dort überfüllt war.
+        Die pakistanische Gemeinde organisierte den Hunger Truck, einen Minivan, der Lebensmittel für die vielen
+        neuen Arbeitslosen im Viertel herankarrte.
+    </TextCard>
+
+    <Three aid="full" scrollSnapChild/>
 
 </main>
 

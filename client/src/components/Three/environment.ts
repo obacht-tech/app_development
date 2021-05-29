@@ -1,9 +1,5 @@
 import * as THREE from "three";
 
-let plane: THREE.Mesh;
-const planeMaterial = new THREE.MeshStandardMaterial({
-    color: 0xffffff,
-});
 
 export default function (): THREE.Group {
     const sceneEnvironment = new THREE.Group();
@@ -22,12 +18,16 @@ export default function (): THREE.Group {
     sceneEnvironment.add(directionalLight);
 
     const material = new THREE.MeshStandardMaterial({color: 0xbbbbbb});
-
-    const planeGeometry = new THREE.CircleBufferGeometry(20, 128);
-    plane = new THREE.Mesh(planeGeometry, planeMaterial);
-    plane.receiveShadow = true;
-    plane.rotateX(-Math.PI / 2);
-    plane.position.y = -.5;
+        const planeMaterial = new THREE.MeshStandardMaterial({
+            color: 0xffffff,
+        });
+        const planeGeometry = new THREE.CircleBufferGeometry(20, 128);
+        const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+        plane.receiveShadow = true;
+        plane.rotateX(-Math.PI / 2);
+        planeMaterial.map = null;
+        plane.position.y = -.5;
+        sceneEnvironment.add(plane);
 
     const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1, 1);
     const cube0 = new THREE.Mesh(cubeGeometry, material);
@@ -47,16 +47,25 @@ export default function (): THREE.Group {
     cube2.position.set(3, 0.5, -0.5);
     cube2.rotateY(Math.PI * 0.1);
 
-   // sceneEnvironment.add(cube0, cube1, cube2);
-    sceneEnvironment.add(plane);
+    // sceneEnvironment.add(cube0, cube1, cube2);
+
 
     return sceneEnvironment;
-    // @ts-ignore
-    // environment.set(sceneEnvironment);
 }
 
-export function setPlaneTexture(texture: THREE.CanvasTexture){
+export function setPlaneTexture(texture: THREE.CanvasTexture): THREE.Object3D {
+    const planeMaterial = new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        transparent: true
+    });
+    const planeGeometry = new THREE.PlaneGeometry( 10, 10 );
+    const plane = new THREE.Mesh(planeGeometry, planeMaterial);
     planeMaterial.map = texture;
     plane.material = planeMaterial;
+    plane.material.needsUpdate = true;
+    plane.receiveShadow = true;
+    plane.rotateX(-Math.PI / 2);
+    plane.position.y = -.4;
+    return plane;
 }
 

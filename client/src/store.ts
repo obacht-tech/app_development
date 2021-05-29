@@ -1,7 +1,8 @@
 import {writable} from "svelte/store";
+import type {PersonSpline} from "./types";
 
-export let positionsData = writable({});
-export let positionSplines = writable({});
+export let positionData = writable(null);
+export let positionSplines = writable(null as PersonSpline[]);
 
 export let modal = writable('');
 

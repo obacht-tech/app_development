@@ -29,25 +29,28 @@
     let fullSeconds = 0;
 
     positionSplines.subscribe(( data: PersonSpline[] ) => {
-        if (data.length>0) {
+        if (data) {
             people = generatePeopleMeshes(data)
             scene.add(people)
             switch (aid) {
                 case "heatmap":
+                    initHeatmap(data);
+                    const heatmapCanvas: HTMLCanvasElement = document.querySelector('canvas.heatmap-canvas');
+                    const heatMapTexture: THREE.CanvasTexture = new THREE.CanvasTexture(heatmapCanvas);
+                    const plane = setPlaneTexture(heatMapTexture);
+                    scene.add(plane)
                     break;
                 case "paths":
-                    paths = generatePaths(data)
-                    scene.add(paths)
+                    paths = generatePaths(data);
+                    scene.add(paths);
                     break;
                 case "person":
                     break;
                 case "full":
-                    paths = generatePaths(data)
+                    paths = generatePaths(data);
                     scene.add(paths);
                     break
             }
-
-
         }
     })
 
@@ -65,10 +68,6 @@
 
 
     onMount(async () => {
-        initHeatmap();
-        const heatmapCanvas: HTMLCanvasElement = document.querySelector('canvas.heatmap-canvas')
-        const heatMapTexture: THREE.CanvasTexture = new THREE.CanvasTexture(heatmapCanvas);
-
         const section: HTMLElement = document.querySelector(`section#${aid}`)
         const canvas: HTMLCanvasElement = document.querySelector(`canvas#${cid}`);
 
@@ -106,7 +105,6 @@
 
         scene.background = new THREE.Color(`white`);
         const env = environment();
-        setPlaneTexture(heatMapTexture)
         scene.add(env);
 
         const controls = new OrbitControls(camera, canvas);
@@ -174,6 +172,7 @@
         cursor: move
 </style>
 
-
-<div style="height: 300px; width: 300px; display: none" class="heatmap"></div>
+{#if aid==='heatmap'}
+<div style="height: 1000px; width: 1000px; display: none " class="heatmap" ></div>
+    {/if}
 <canvas id={cid} class:cursor={enableCameraControls}></canvas>
