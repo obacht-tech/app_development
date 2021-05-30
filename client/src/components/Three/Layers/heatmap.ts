@@ -1,8 +1,10 @@
 import h337 from './heatmap_script.js'
 import type {HeatmapPoint, PersonSpline} from "../../../types";
+import * as THREE from "three";
+import {setPlaneTexture} from "../environment";
 
 
-export function initHeatmap(people: PersonSpline[]) {
+export function generateHeatmap(people: PersonSpline[]): THREE.Object3D {
     let heatmapInstance = h337.create({
         container: document.querySelector('.heatmap'),
         maxOpacity: .6,
@@ -32,5 +34,13 @@ export function initHeatmap(people: PersonSpline[]) {
     heatmapInstance.setData({
         data: result
     });
+
+
+
+    const heatmapCanvas: HTMLCanvasElement = document.querySelector('canvas.heatmap-canvas');
+    const heatMapTexture: THREE.CanvasTexture = new THREE.CanvasTexture(heatmapCanvas);
+    const plane = setPlaneTexture(heatMapTexture);
+
+    return plane;
 }
 

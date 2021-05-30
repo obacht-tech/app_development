@@ -9,7 +9,7 @@
     } from "../../store";
     import type {ApplicationID, CanvasID, PersonSpline} from "../../types";
     import {generatePeopleMeshes, updatePositions} from "./Layers/person";
-    import {initHeatmap} from "./Layers/heatmap";
+    import {generateHeatmap} from "./Layers/heatmap";
     import {generatePaths, rangePaths} from "./Layers/paths";
 
 
@@ -34,11 +34,8 @@
             scene.add(people)
             switch (aid) {
                 case "heatmap":
-                    initHeatmap(data);
-                    const heatmapCanvas: HTMLCanvasElement = document.querySelector('canvas.heatmap-canvas');
-                    const heatMapTexture: THREE.CanvasTexture = new THREE.CanvasTexture(heatmapCanvas);
-                    const plane = setPlaneTexture(heatMapTexture);
-                    scene.add(plane)
+                    const heatmap = generateHeatmap(data);
+                    scene.add(heatmap)
                     break;
                 case "paths":
                     paths = generatePaths(data);
