@@ -55,7 +55,7 @@
 <section id={aid} class:scroll-snap-child={scrollSnapChild}>
     {#if aid === "person"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} cameraZoomLocked={cameraZoomLocked}/>
-        <Timeline bind:playbackState={playbackState} indicator playback datasetStart={datasetDates.start} datasetEnd={datasetDates.end} bind:markerNow={markerNow}/>
+        <Timeline bind:playbackState={playbackState} indicator range={false} playback datasetStart={datasetDates.start} datasetEnd={datasetDates.end} bind:markerNow={markerNow}/>
         <Controls  bind:cameraZoomLocked={cameraZoomLocked} />
     {/if}
 
