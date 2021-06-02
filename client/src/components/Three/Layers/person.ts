@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import type {Object3DTime, PersonSpline, PositionData} from "../../../types";
+import type {Object3DCustom, PersonSpline, PositionData} from "../../../types";
 import {SkeletonUtils} from "three/examples/jsm/utils/SkeletonUtils";
 import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
 
@@ -18,7 +18,7 @@ fbxLoader.load('/client/static/models/human_female.fbx', function (object) {
     // const action = mixer.clipAction( object.animations[ 0 ] );
     // action.play();
 
-    object.traverse(function (child:Object3DTime) {
+    object.traverse(function (child:Object3DCustom) {
         if (child.isMesh) {
             child.castShadow = true;
             child.receiveShadow = true;
@@ -61,7 +61,7 @@ export function initSplines(fetchingData: PositionData[]): PersonSpline[] {
 export function generatePeopleMeshes(people: PersonSpline[]) {
     const peopleGroup = new THREE.Group()
     for (let personSpline of people) {
-        const personMesh: Object3DTime = SkeletonUtils.clone(humanMesh);
+        const personMesh: Object3DCustom = SkeletonUtils.clone(humanMesh);
         const color = new THREE.Color( 0xffffff );
         color.setHex( Math.random() * 0xffffff );
         const personMaterial = new THREE.MeshStandardMaterial({
@@ -86,7 +86,7 @@ export function generatePeopleMeshes(people: PersonSpline[]) {
 }
 
 export function updatePositions(time: number, second: number, group: THREE.Group) {
-    const people: Object3DTime[] = group.children;
+    const people: Object3DCustom[] = group.children;
     for (let person of people) {
 
         const moment = time - person.timePosition; // 1.2 sek

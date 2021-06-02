@@ -53,19 +53,4 @@ export default function (): THREE.Group {
     return sceneEnvironment;
 }
 
-export function setPlaneTexture(texture: THREE.CanvasTexture): THREE.Object3D {
-    const planeMaterial = new THREE.MeshStandardMaterial({
-        color: 0xffffff,
-        transparent: true
-    });
-    const planeGeometry = new THREE.PlaneGeometry( 10, 10 );
-    const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-    planeMaterial.map = texture;
-    plane.material = planeMaterial;
-    plane.material.needsUpdate = true;
-    plane.receiveShadow = true;
-    plane.rotateX(-Math.PI / 2);
-    plane.position.y = -.4;
-    return plane;
-}
 

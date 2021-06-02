@@ -28,7 +28,7 @@ export type PersonSpline = {
     timeDelta?: number
 }
 
-export type Object3DTime = THREE.Object3D &
+export type Object3DCustom = THREE.Object3D &
     {
         timePosition?: number,
         timeDelta?: number,

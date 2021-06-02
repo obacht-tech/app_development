@@ -2,14 +2,14 @@
     import * as THREE from "three";
     import {onMount} from "svelte";
     import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js";
-    import environment, {setPlaneTexture} from "./environment";
+    import environment from "./environment";
     import {
         markerNowSeconds,
         markerStartEndSeconds, positionSplines
     } from "../../store";
     import type {ApplicationID, CanvasID, PersonSpline} from "../../types";
     import {generatePeopleMeshes, updatePositions} from "./Layers/person";
-    import {generateHeatmap} from "./Layers/heatmap";
+    import {generateHeatmap, rangeHeatmap} from "./Layers/heatmap";
     import {generatePaths, rangePaths} from "./Layers/paths";
 
 
@@ -23,6 +23,7 @@
 
     let people = new THREE.Group();
     let paths = new THREE.Group();
+    let heatmap = new THREE.Object3D();
 
     let sizes: { width, height };
 
@@ -34,7 +35,7 @@
             scene.add(people)
             switch (aid) {
                 case "heatmap":
-                    const heatmap = generateHeatmap(data);
+                    heatmap = generateHeatmap(data);
                     scene.add(heatmap)
                     break;
                 case "paths":
@@ -59,7 +60,8 @@
 
     markerStartEndSeconds.subscribe((data: { startValue: number, endValue: number }) => {
         if (data.startValue && data.endValue) {
-            rangePaths(paths, data.startValue, data.endValue)
+            rangePaths(paths, data.startValue, data.endValue);
+            rangeHeatmap(data.startValue, data.endValue, $positionSplines, heatmap);
         }
     })
 
