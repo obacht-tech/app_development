@@ -5,9 +5,9 @@
     import environment from "./environment";
     import {
         markerNowSeconds,
-        markerStartEndSeconds, positionSplines
+        markerStartEndSeconds, playbackState, positionSplines
     } from "../../store";
-    import type {ApplicationID, CanvasID, PersonSpline} from "../../types";
+    import type {ApplicationID, CanvasID, PersonSpline, PlaybackState} from "../../types";
     import {generatePeopleMeshes, updatePositions} from "./Layers/person";
     import {generateHeatmap, rangeHeatmap} from "./Layers/heatmap";
     import {generatePaths, rangePaths} from "./Layers/paths";
@@ -28,6 +28,7 @@
     let sizes: { width, height };
 
     let fullSeconds = 0;
+    let speed = 1;
 
     positionSplines.subscribe(( data: PersonSpline[] ) => {
         if (data) {
@@ -54,6 +55,7 @@
 
     markerNowSeconds.subscribe(data => {
         if (data) {
+            console.log(data)
             fullSeconds = data;
         }
     })
@@ -62,6 +64,18 @@
         if (data.startValue && data.endValue) {
             rangePaths(paths, data.startValue, data.endValue);
             rangeHeatmap(data.startValue, data.endValue, $positionSplines, heatmap);
+        }
+    })
+
+    playbackState.subscribe((value: PlaybackState)=>{
+        if(value==='play'){
+            speed = 1;
+        }else if(value==='2x forward'){
+            speed = 0.5;
+        }else if(value === 'stop'){
+            speed = 0;
+        }else{
+            speed = 1;
         }
     })
 
@@ -132,20 +146,19 @@
         /**
          * Animate
          */
-        let last = 0;
         let elapsedSeconds = 0;
-        let speed = 1;
-
         function render(timeStamp?) {
-            let timeInSecond = timeStamp / 1000;
-            if (timeInSecond - last >= speed) {
-                last = timeInSecond;
-                ++elapsedSeconds;
-                ++fullSeconds
-            }
-            let relativeTime = timeInSecond - elapsedSeconds; //0,231 sek
-            if (aid === 'person' || aid === 'full') {
-                updatePositions(fullSeconds + relativeTime, fullSeconds, people)
+            if(timeStamp){
+                let timeInSecond = timeStamp / 1000;
+                if ((aid === 'person' || aid === 'full') && speed != 0) {
+                    let relativeTime = timeInSecond - Math.floor(timeInSecond);
+                    if(elapsedSeconds !== Math.floor(timeInSecond)){
+                        elapsedSeconds ++;
+                        fullSeconds++;
+                    }
+                    updatePositions(fullSeconds + relativeTime, fullSeconds, people)
+                }
+
             }
             window.requestAnimationFrame(render);
             if (inFrame) {
@@ -153,6 +166,7 @@
                 controls.update();
                 renderer.render(scene, camera);
             }
+
         }
 
         function renderOnce() {
