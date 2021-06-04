@@ -4,10 +4,11 @@
     import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js";
     import environment from "./environment";
     import {
+        layerState,
         markerNowSeconds,
         markerStartEndSeconds, playbackState, positionSplines
     } from "../../store";
-    import type {ApplicationID, CanvasID, PersonSpline} from "../../types";
+    import type {ApplicationID, CanvasID, LayerState, PersonSpline} from "../../types";
     import {generatePeopleMeshes, updatePositions} from "./Layers/person";
     import {generateHeatmap, rangeHeatmap} from "./Layers/heatmap";
     import {generatePaths, rangePaths} from "./Layers/paths";
@@ -42,11 +43,13 @@
                     paths = generatePaths(data);
                     scene.add(paths);
                     break;
-                case "person":
-                    break;
                 case "full":
                     paths = generatePaths(data);
                     scene.add(paths);
+                    paths.visible = false;
+                    heatmap = generateHeatmap(data);
+                    scene.add(heatmap)
+                    paths.visible = true;
                     break
             }
         }
@@ -64,6 +67,26 @@
             rangeHeatmap(data.startValue, data.endValue, $positionSplines, heatmap);
         }
     })
+
+
+    if(aid==='full'){
+        layerState.subscribe((data: LayerState)=>{
+            switch (data) {
+                case "heatmap":
+                    heatmap.visible = true;
+                    paths.visible = false;
+                    break;
+                case "paths":
+                    heatmap.visible = false;
+                    paths.visible = true;
+                    break;
+                case "person":
+                    heatmap.visible = false;
+                    paths.visible = false;
+                    break;
+            }
+        })
+    }
 
     onMount(async () => {
         const section: HTMLElement = document.querySelector(`section#${aid}`)

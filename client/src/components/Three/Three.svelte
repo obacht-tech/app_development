@@ -4,7 +4,7 @@
     import Timeline from "./Timeline/Timeline.svelte";
     import Controls from "./Controls/Controls.svelte";
     import datasetDates from "../../env";
-    import type {ApplicationID, LayerState, PlaybackState} from "../../types";
+    import type {ApplicationID} from "../../types";
 
 
     export let aid: ApplicationID = "full";
@@ -12,7 +12,6 @@
 
     let inFrame: boolean;
     let cameraZoomLocked: boolean = true;
-    let layerState: LayerState = 'person';
     let markerStart: Date = datasetDates.start;
     let markerNow: Date = datasetDates.start;
     let markerEnd: Date = datasetDates.end;
@@ -55,24 +54,21 @@
     {#if aid === "person"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} cameraZoomLocked={cameraZoomLocked}/>
         <Timeline indicator range={false} playback datasetStart={datasetDates.start} datasetEnd={datasetDates.end} bind:markerNow={markerNow}/>
-        <Controls  bind:cameraZoomLocked={cameraZoomLocked} />
     {/if}
 
     {#if aid === "heatmap"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame}/>
         <Timeline datasetStart={datasetDates.start} datasetEnd={datasetDates.end} bind:markerStart={markerStart} bind:markerNow={markerNow} bind:markerEnd={markerEnd}/>
-        <Controls />
     {/if}
 
     {#if aid === "paths"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame}/>
         <Timeline datasetStart={datasetDates.start} datasetEnd={datasetDates.end} bind:markerStart={markerStart} bind:markerNow={markerNow} bind:markerEnd={markerEnd}/>
-        <Controls />
     {/if}
 
     {#if aid === "full"}
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} enableCameraControls cameraZoomLocked={cameraZoomLocked} />
         <Timeline indicator playback datasetStart={datasetDates.start} datasetEnd={datasetDates.end} bind:markerStart={markerStart} bind:markerNow={markerNow} bind:markerEnd={markerEnd}/>
-        <Controls zoomLock settings layers bind:layerState={layerState} bind:cameraZoomLocked={cameraZoomLocked}/>
+        <Controls zoomLock settings layers bind:cameraZoomLocked={cameraZoomLocked}/>
     {/if}
 </section>

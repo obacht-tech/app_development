@@ -1,13 +1,9 @@
 <script lang="ts">
 
-    import {modal} from "../../../store";
+    import {layerState, modal} from "../../../store";
     import ControlsModal from "./ControlsModal.svelte";
 
-    type LayerState = "person" | "heatmap" | "paths" | "full";
-
-    export let layerState: LayerState;
-
-    const showModal = (event) => {
+    function showModal(event) {
         event.stopPropagation();
         if ($modal === '' || $modal === 'settings') {
             modal.set('layers');
@@ -15,7 +11,11 @@
             modal.set('')
 
         }
-    };
+    }
+
+    function onChange(event) {
+       layerState.set(event.currentTarget.value)
+    }
 
 </script>
 
@@ -49,16 +49,15 @@
         <ControlsModal positionArrow="layers" on:close={()=>modal.set('')}>
             <div class="layers__modal">
                 <label>
-                    <input type=radio bind:group={layerState} value={"person"}>
+                    <input type=radio checked={$layerState==="person"} value={"person"} on:change={onChange}>
                     Personen
                 </label>
                 <label>
-                    <input type=radio bind:group={layerState} value={"heatmap"}>
+                    <input type=radio checked={$layerState==="heatmap"}  value={"heatmap"} on:change={onChange}>
                     Heatmap
                 </label>
-
                 <label>
-                    <input type=radio bind:group={layerState} value={"paths"}>
+                    <input type=radio checked={$layerState==="paths"}  value={"paths"} on:change={onChange}>
                     Pfadmap
                 </label>
             </div>
