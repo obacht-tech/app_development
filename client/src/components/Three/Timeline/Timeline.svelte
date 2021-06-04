@@ -1,11 +1,9 @@
 <script lang="ts">
     import RangeSlider from "svelte-range-slider-pips";
     import Playback from "../Controls/Playback.svelte";
-    import {markerNowSeconds, markerStartEndSeconds} from "../../../store";
+    import {markerNowSeconds, markerStartEndSeconds, playbackState} from "../../../store";
     import {onMount} from "svelte";
-    import type {PlaybackState} from "../../../types";
 
-    export let playbackState: PlaybackState;
     export let indicator: boolean = false;
     export let range: boolean = true;
     export let datasetStart: Date;
@@ -44,19 +42,14 @@
 
     })
 
-    let last = 0;
-    let speed = 1;
+    let delta = 0.016;
     function render(timeStamp?) {
-        let timeInSecond = timeStamp / 1000;
-        if (timeInSecond - last >= speed) {
-            last = timeInSecond;
-            if(!userInteraction){
-                indicatorValue += 1
-            }
-
-        }
-
         window.requestAnimationFrame(render);
+        if ($playbackState!=='stop') {
+                if(!userInteraction){
+                    indicatorValue += delta * ($playbackState==='play'? 1 : 5);
+                }
+        }
     }
 
     function addMinutes(date: Date, minutes: number) {
@@ -152,8 +145,6 @@
                         float hover={true}
                         on:stop={(value) => onStopMarkerNow(value.detail.value)}
                         on:change={(value) => {userInteraction=true;setMarkerNow(value.detail.value);}}/>
-
-
             </div>
         {/if}
         {#if range}
@@ -176,7 +167,7 @@
         <div class="timeline__legend&#45;&#45;start">{formatDate(datasetStart)}
         </div>
         {#if playback}
-            <Playback bind:playbackState={playbackState}/>
+            <Playback/>
         {/if}
         <div class="timeline__legend&#45;&#45;end">{formatDate(datasetEnd)}</div>
     </div>

@@ -7,7 +7,7 @@
         markerNowSeconds,
         markerStartEndSeconds, playbackState, positionSplines
     } from "../../store";
-    import type {ApplicationID, CanvasID, PersonSpline, PlaybackState} from "../../types";
+    import type {ApplicationID, CanvasID, PersonSpline} from "../../types";
     import {generatePeopleMeshes, updatePositions} from "./Layers/person";
     import {generateHeatmap, rangeHeatmap} from "./Layers/heatmap";
     import {generatePaths, rangePaths} from "./Layers/paths";
@@ -27,10 +27,9 @@
 
     let sizes: { width, height };
 
-    let fullSeconds = 0;
-    let speed = 1;
+    let elapsedTime = 0;
 
-    positionSplines.subscribe(( data: PersonSpline[] ) => {
+    positionSplines.subscribe((data: PersonSpline[]) => {
         if (data) {
             people = generatePeopleMeshes(data)
             scene.add(people)
@@ -55,8 +54,7 @@
 
     markerNowSeconds.subscribe(data => {
         if (data) {
-            console.log(data)
-            fullSeconds = data;
+            elapsedTime = data;
         }
     })
 
@@ -66,19 +64,6 @@
             rangeHeatmap(data.startValue, data.endValue, $positionSplines, heatmap);
         }
     })
-
-    playbackState.subscribe((value: PlaybackState)=>{
-        if(value==='play'){
-            speed = 1;
-        }else if(value==='2x forward'){
-            speed = 0.5;
-        }else if(value === 'stop'){
-            speed = 0;
-        }else{
-            speed = 1;
-        }
-    })
-
 
     onMount(async () => {
         const section: HTMLElement = document.querySelector(`section#${aid}`)
@@ -146,27 +131,20 @@
         /**
          * Animate
          */
-        let elapsedSeconds = 0;
+        let delta = 0.016;
         function render(timeStamp?) {
-            if(timeStamp){
-                let timeInSecond = timeStamp / 1000;
-                if ((aid === 'person' || aid === 'full') && speed != 0) {
-                    let relativeTime = timeInSecond - Math.floor(timeInSecond);
-                    if(elapsedSeconds !== Math.floor(timeInSecond)){
-                        elapsedSeconds ++;
-                        fullSeconds++;
-                    }
-                    updatePositions(fullSeconds + relativeTime, fullSeconds, people)
-                }
-
-            }
             window.requestAnimationFrame(render);
+            if ($playbackState!=='stop') {
+                elapsedTime += delta * ($playbackState==='play'? 1 : 5);
+                if (aid === 'person' || aid === 'full') {
+                    updatePositions(elapsedTime,Math.floor(elapsedTime), people);
+                }
+            }
             if (inFrame) {
                 controls.enableZoom = !cameraZoomLocked;
                 controls.update();
                 renderer.render(scene, camera);
             }
-
         }
 
         function renderOnce() {
@@ -185,7 +163,7 @@
         cursor: move
 </style>
 
-{#if aid==='heatmap'}
-<div style="height: 1000px; width: 1000px; display: none " class="heatmap" ></div>
-    {/if}
+{#if aid === 'heatmap'}
+    <div style="height: 1000px; width: 1000px; display: none " class="heatmap"></div>
+{/if}
 <canvas id={cid} class:cursor={enableCameraControls}></canvas>

@@ -10,3 +10,4 @@ export let modal = writable('');
 // Time Controls
 export let markerNowSeconds = writable(0);
 export let markerStartEndSeconds = writable({});
+export let playbackState = writable('play')

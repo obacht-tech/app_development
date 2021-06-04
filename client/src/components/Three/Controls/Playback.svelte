@@ -1,13 +1,13 @@
 <script lang="ts">
+    import {playbackState} from "../../../store";
     type PlaybackState = "play" | "2x forward" | "stop";
 
-    export let playbackState: PlaybackState = "play";
 
     function handlePlay(state: PlaybackState) {
         if (state === "play") {
-            playbackState = "2x forward"
+            playbackState.set("2x forward")
         } else {
-            playbackState = "play"
+            playbackState.set("play")
         }
 
     }
@@ -46,9 +46,9 @@
 </style>
 
 <div class="playback">
-    <div class="play" class:active={playbackState === "play" |playbackState === "2x forward" }
-         on:click={handlePlay(playbackState)}>
-        {#if playbackState === '2x forward'}
+    <div class="play" class:active={$playbackState === "play" |$playbackState === "2x forward" }
+         on:click={handlePlay($playbackState)}>
+        {#if $playbackState === '2x forward'}
             <div>
                 <i class="fas fa-forward"></i>
             </div>
@@ -58,7 +58,7 @@
             </div>
         {/if}
     </div>
-    <div class="stop" class:active={playbackState === "stop"} on:click={() => {playbackState = "stop"}}>
+    <div class="stop" class:active={$playbackState === "stop"} on:click={() => { playbackState.set("stop")}}>
         <i class="fas fa-stop"></i>
     </div>
 </div>
