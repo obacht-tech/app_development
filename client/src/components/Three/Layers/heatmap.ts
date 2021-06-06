@@ -48,7 +48,7 @@ function initHeatmapPlane(texture: THREE.CanvasTexture): THREE.Object3D {
     plane.material = planeMaterial;
     plane.material.needsUpdate = true;
     plane.rotateX(-Math.PI / 2);
-    plane.position.y = -.4;
+    plane.position.y = -.49;
     return plane;
 }
 

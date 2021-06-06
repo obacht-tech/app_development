@@ -45,11 +45,12 @@
                     break;
                 case "full":
                     paths = generatePaths(data);
-                    scene.add(paths);
                     paths.visible = false;
+                    scene.add(paths);
+
                     heatmap = generateHeatmap(data);
+                    heatmap.visible = false;
                     scene.add(heatmap)
-                    paths.visible = true;
                     break
             }
         }

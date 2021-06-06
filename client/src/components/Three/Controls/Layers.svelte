@@ -14,6 +14,9 @@
     }
 
     function onChange(event) {
+        if(!event.currentTarget){
+            return
+        }
        layerState.set(event.currentTarget.value)
     }
 
