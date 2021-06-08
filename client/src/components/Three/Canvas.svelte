@@ -12,6 +12,7 @@
     import {generatePeopleMeshes, updatePositions} from "./Layers/person";
     import {generateHeatmap, rangeHeatmap} from "./Layers/heatmap";
     import {generatePaths, rangePaths} from "./Layers/paths";
+    import {generateCollisionCircles} from "./Layers/collision";
 
 
     export let aid: ApplicationID;
@@ -24,6 +25,7 @@
 
     let people = new THREE.Group();
     let paths = new THREE.Group();
+    let collisionCircles = new THREE.Group();
     let heatmap = new THREE.Object3D();
 
     let sizes: { width, height };
@@ -35,6 +37,10 @@
             people = generatePeopleMeshes(data)
             scene.add(people)
             switch (aid) {
+                case "person":
+                    collisionCircles = generateCollisionCircles(data);
+                    scene.add(collisionCircles)
+                    break;
                 case "heatmap":
                     heatmap = generateHeatmap(data);
                     scene.add(heatmap)
@@ -46,11 +52,11 @@
                 case "full":
                     paths = generatePaths(data);
                     paths.visible = false;
-                    scene.add(paths);
-
+                    collisionCircles = generateCollisionCircles(data);
+                    scene.add(collisionCircles);
                     heatmap = generateHeatmap(data);
                     heatmap.visible = false;
-                    scene.add(heatmap)
+                    scene.add(paths, heatmap)
                     break
             }
         }
@@ -115,6 +121,7 @@
                 break;
             default:
                 camera.position.y = 10;
+                break;
         }
 
         const renderer = new THREE.WebGLRenderer({
@@ -161,7 +168,7 @@
             if ($playbackState!=='stop') {
                 elapsedTime += delta * ($playbackState==='play'? 1 : 5);
                 if (aid === 'person' || aid === 'full') {
-                    updatePositions(elapsedTime,Math.floor(elapsedTime), people);
+                    updatePositions(elapsedTime,Math.floor(elapsedTime), people, collisionCircles);
                 }
             }
             if (inFrame) {
