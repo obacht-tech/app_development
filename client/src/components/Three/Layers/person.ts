@@ -106,7 +106,8 @@ export function updatePositions(time: number, second: number, group: THREE.Group
             person.position.x = pos.x
             person.position.z = pos.y
             if (collisionCircles) {
-                const circle = collisionCircles.children.find((elem) => {
+                const circlesChildren: Object3DCustom[] = collisionCircles.children;
+                const circle = circlesChildren.find((elem) => {
                     return elem.uuid === person.uuid
                 })
                 if (circle) {
@@ -115,11 +116,10 @@ export function updatePositions(time: number, second: number, group: THREE.Group
                     circle.position.z = pos.y;
                 }
                 let colliding = false;
-                for (let circle2 of collisionCircles.children) {
-
+                for (let circle2 of circlesChildren) {
                     if (circle.uuid !== circle2.uuid && (circle2.timePosition <= second && time - circle2.timePosition <= circle2.timeDelta)) {
                         if (collision(circle, circle2, 1)) {
-                            person.colliding = true;
+                            colliding = true;
                         }
                     }
                 }
