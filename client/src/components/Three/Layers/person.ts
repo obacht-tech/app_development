@@ -2,7 +2,7 @@ import * as THREE from "three";
 import type {Object3DCustom, PersonSpline, PositionData} from "../../../types";
 import {SkeletonUtils} from "three/examples/jsm/utils/SkeletonUtils";
 import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
-import {collision, materialCollision, materialNoCollision} from "./collision";
+import {collision, materialCollision, materialNoCollision, updateCollisionCircles} from "./collision";
 
 let humanMesh;
 export const positionScaling = 0.01;
@@ -105,30 +105,8 @@ export function updatePositions(time: number, second: number, group: THREE.Group
             const pos = person.spline.getPoint((moment * 100 / deltaTimePosition) * positionScaling);
             person.position.x = pos.x
             person.position.z = pos.y
-            if (collisionCircles) {
-                const circlesChildren: Object3DCustom[] = collisionCircles.children;
-                const circle = circlesChildren.find((elem) => {
-                    return elem.uuid === person.uuid
-                })
-                if (circle) {
-                    circle.visible = true;
-                    circle.position.x = pos.x;
-                    circle.position.z = pos.y;
-                }
-                let colliding = false;
-                for (let circle2 of circlesChildren) {
-                    if (circle.uuid !== circle2.uuid && (circle2.timePosition <= second && time - circle2.timePosition <= circle2.timeDelta)) {
-                        if (collision(circle, circle2, 1)) {
-                            colliding = true;
-                        }
-                    }
-                }
-                if (colliding) {
-                    circle.material = materialCollision
-                } else {
-                    circle.material = materialNoCollision
-                }
-            }
+
+            updateCollisionCircles(collisionCircles.children, person, circle, second, time)
         } else {
             if (person.visible) {
                 person.visible = false
