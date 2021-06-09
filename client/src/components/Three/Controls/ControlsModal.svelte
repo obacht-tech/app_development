@@ -1,8 +1,9 @@
 <script lang="ts">
     import {createEventDispatcher} from "svelte";
     import { fade } from 'svelte/transition';
+    import type {ModalType} from "../../../types";
 
-    export let positionArrow: 'settings' | 'layers' = 'settings';
+    export let positionArrow: ModalType = 'settings';
 
     const dispatch = createEventDispatcher();
 

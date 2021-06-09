@@ -8,6 +8,8 @@ export type LayerState = "person" | "heatmap" | "paths" | "full";
 
 export type CanvasID = "personCanvas" | "heatmapCanvas" | "pathmapCanvas" | "fullCanvas";
 
+export type ModalType = '' | 'settings' | 'layers';
+
 export type PositionData = {
     date: string,
     people: Person[]
@@ -27,6 +29,12 @@ export type PersonSpline = {
     startDate: string,
     timeDelta?: number
 }
+
+
+export type RangeTime = {
+            startValue: number,
+            endValue: number
+        }
 
 export type Object3DCustom = THREE.Object3D &
     {
