@@ -9,6 +9,9 @@ let radius = 1;
 
 distance.subscribe((value)=>{
     radius = value.new;
+    const redoScalingFactor = 1/value.old;
+    geometry.scale(redoScalingFactor,redoScalingFactor,redoScalingFactor )
+    geometry.scale(value.new,value.new ,value.new )
 })
 
 export function collision(circle1: THREE.Object3D, circle2: THREE.Object3D): boolean {

@@ -60,7 +60,7 @@
                 <p>Mindestabstand: {distance_value / 10}m </p>
                 <RangeSlider on:change={(value) => distance_value = value.detail.value}
                              on:stop={(value) => {const old = $distance.new ; distance.set({new:value.detail.value/10, old: old})}}
-                             min={0} max={50}
+                             min={5} max={30}
                              id="range_slider"
                              range="min" values={[distance_value]}/>
                 <p>Inzidenz auf 100tsd: {incidence_value}</p>
