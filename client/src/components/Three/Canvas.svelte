@@ -43,7 +43,7 @@
                     scene.add(collisionCircles)
                     break;
                 case "heatmap":
-                    heatmap = generateHeatmap(data);
+                    heatmap = generateHeatmap(data, aid);
                     scene.add(heatmap)
                     break;
                 case "paths":
@@ -59,7 +59,7 @@
                     paths.visible = false;
                     collisionCircles = generateCollisionCircles(data);
                     scene.add(collisionCircles);
-                    heatmap = generateHeatmap(data);
+                    heatmap = generateHeatmap(data, aid);
                     heatmap.visible = false;
                     scene.add(paths, heatmap)
                     break
@@ -75,8 +75,12 @@
 
     markerStartEndSeconds.subscribe((data: { startValue: number, endValue: number }) => {
         if (data.startValue && data.endValue) {
-            rangePaths(paths, data.startValue, data.endValue);
-            rangeHeatmap(data.startValue, data.endValue, $positionSplines, heatmap);
+            if(aid=='paths'||aid==='full') {
+                rangePaths(paths, data.startValue, data.endValue);
+            }
+            if(aid=='heatmap'||aid==='full'){
+                rangeHeatmap(data.startValue, data.endValue, $positionSplines, aid,  heatmap);
+            }
         }
     })
 
@@ -200,7 +204,7 @@
         cursor: move
 </style>
 
-{#if aid === 'heatmap'}
-    <div style="height: 1000px; width: 1000px; display: none " class="heatmap"></div>
+{#if aid==='heatmap' ||  aid==='full'}
+    <div style="height: 1000px; width: 1000px; display: none" class={aid==='heatmap'?'heatmap': 'full'}></div>
 {/if}
 <canvas id={cid} class:cursor={enableCameraControls}></canvas>
