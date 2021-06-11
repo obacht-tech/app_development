@@ -3,6 +3,13 @@ import type {Object3DCustom, PersonSpline, PositionData} from "../../../types";
 import {SkeletonUtils} from "three/examples/jsm/utils/SkeletonUtils";
 import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
 import {updateCollisionCircles} from "./collision";
+import {calculateInfection, percentBool, updateIncidence} from "./infection";
+import {incidence, infectionRate, maskWear} from "../../../store";
+
+let humanMesh;
+let incidenceValue;
+let maskWearValue;
+let infectionRateValue;
 
 export const positionScaling = 0.01;
 const humanMaterial = new THREE.MeshStandardMaterial({
@@ -10,6 +17,37 @@ const humanMaterial = new THREE.MeshStandardMaterial({
 })
 const manager = new THREE.LoadingManager();
 const fbxLoader = new FBXLoader(manager);
+
+incidence.subscribe(value => {
+    incidenceValue = value;
+})
+
+maskWear.subscribe(value => {
+    maskWearValue = value;
+})
+
+infectionRate.subscribe(value => {
+    infectionRateValue = value;
+})
+
+fbxLoader.load('/client/static/models/human_female.fbx', function (object) {
+
+    // mixer = new THREE.AnimationMixer( object );
+    //
+    // const action = mixer.clipAction( object.animations[ 0 ] );
+    // action.play();
+
+    object.traverse(function (child: Object3DCustom) {
+        if (child.isMesh) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+            child.scale.set(positionScaling, positionScaling, positionScaling)
+            child.position.set(0, 0.33, 0)
+            child.material = humanMaterial
+            humanMesh = child
+        }
+    });
+});
 
 export function initSplines(fetchingData: PositionData[]): PersonSpline[] {
     const peopleSplines: PersonSpline[] = []
@@ -27,7 +65,10 @@ export function initSplines(fetchingData: PositionData[]): PersonSpline[] {
                     pid: person.pid,
                     splineData: [new THREE.Vector2(person.pos[0] * positionScaling, person.pos[1] * positionScaling)],
                     startDate: fetchingData[i].date,
-                    timePosition: i
+                    timePosition: i,
+                    wearsMask : percentBool(maskWearValue.new),
+                   // isInfected :  percentBool(incidenceValue.new*100/100000)
+                    isInfected :  percentBool(incidenceValue.new*100/1000)
                 }
                 peopleSplines.push(newPerson)
             }
@@ -78,7 +119,7 @@ export async function generatePeopleWithAnimations(people: PersonSpline[]): Prom
 
 export function generatePeopleMeshes(people: PersonSpline[], maleObject, femaleObject) {
     const peopleGroup = new THREE.Group()
-    for (let personSpline of people) {
+   /*  for (let personSpline of people) {
         const object = Math.random() > 0.5 ? maleObject : femaleObject;
         const personMesh: Object3DCustom = SkeletonUtils.clone(object)
         personMesh.animations = [...object.animations];
@@ -92,20 +133,57 @@ export function generatePeopleMeshes(people: PersonSpline[], maleObject, femaleO
             color
         })
         personSpline.spline = new THREE.SplineCurve(personSpline.splineData);
-        personSpline.timeDelta = personSpline.splineData.length - 1;
+        personSpline.timeDelta = personSpline.splineData.length - 1; */
+    for (let i = 0; i< people.length; i++ ) {
+        const object = Math.random() > 0.5 ? maleObject : femaleObject;
+        const personMesh: Object3DCustom = SkeletonUtils.clone(object)
+        personMesh.animations = [...object.animations];
+        const mixernew = new THREE.AnimationMixer(personMesh);
+        const action = mixernew.clipAction(object.animations[0]);
+        personMesh.mixer = mixernew;
+        action.play();
+       // const color = new THREE.Color(0xffffff);
+       //  color.setHex(Math.random() * 0xffffff);
+       //  const personMaterial = new THREE.MeshStandardMaterial({
+       //      color
+       //  })
+        people[i].spline = new THREE.SplineCurve(people[i].splineData);
+        people[i].timeDelta = people[i].splineData.length - 1;
 
 
         personMesh.visible = false
         personMesh.position.x = Math.random();
         personMesh.position.z = 0;
-        personMesh.uuid = personSpline.pid;
-        personMesh.material = personMaterial;
-        personMesh.spline = personSpline.spline;
-        personMesh.timePosition = personSpline.timePosition;
-        personMesh.timeDelta = personSpline.timeDelta;
+        personMesh.uuid = people[i].pid;
+        //personMesh.material = personMaterial;
+        personMesh.spline = people[i].spline;
+        personMesh.timePosition = people[i].timePosition;
+        personMesh.timeDelta = people[i].timeDelta;
+        personMesh.wearsMask = people[i].wearsMask;
+        personMesh.isInfected = people[i].isInfected;
+        personMesh.isIncidenceInfected = people[i].isInfected;
+        // min 1 infected
+
+        if(personMesh.wearsMask){
+            personMesh.material = new THREE.MeshStandardMaterial({
+                color: new THREE.Color('green')
+                  })
+
+        }
+        if(personMesh.isInfected){
+            personMesh.material = new THREE.MeshStandardMaterial({
+                color: new THREE.Color('red')
+            })
+            console.log('Infected')
+        }
 
         peopleGroup.add(personMesh)
     }
+
+    // minimum 1 infected
+      /*   peopleGroup.children[3].isInfected = true;
+        peopleGroup.children[3].isIncidenceInfected = true;
+ */
     return peopleGroup
 }
 
@@ -115,6 +193,7 @@ export function updateAnimation() {
 
 export function updatePositions(time: number, second: number, group: THREE.Group, collisionCircles: THREE.Group, delta: number) {
     const people: Object3DCustom[] = group.children;
+    let infections: number = 0;
     for (let person of people) {
         const moment = time - person.timePosition; // 1.2 sek
         const circle = collisionCircles.children.find((elem) => {
@@ -157,5 +236,12 @@ export function updatePositions(time: number, second: number, group: THREE.Group
                 circle.visible = false;
             }
         }
+
+        if(person.isInfected){
+            infections++;
+        }
+    }
+    if(infections!=infectionRateValue){
+        infectionRate.set(infections)
     }
 }

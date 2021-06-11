@@ -1,5 +1,5 @@
 import {Writable, writable} from "svelte/store";
-import type {LayerState, ModalType, PersonSpline, PlaybackState, RangeTime} from "./types";
+import type {LayerState, ModalType, OldNewValue, PersonSpline, PlaybackState, RangeTime} from "./types";
 
 // Position Data
 export let positionData = writable(null);
@@ -18,7 +18,9 @@ export let playbackState: Writable<PlaybackState> = writable('play')
 export let layerState: Writable<LayerState> = writable('person')
 
 // Settings
-export let mask_wear: Writable<number> = writable(0)
-export let distance: Writable<{old: number, new: number}> = writable({old: 1, new: 1})
-export let incidence: Writable<number> = writable(0)
-export let time_infection: Writable<number> = writable(0)
+export let maskWear: Writable<OldNewValue> = writable({old: 10, new: 10});
+export let distance: Writable<OldNewValue> = writable({old: 1, new: 1});
+export let incidence: Writable<OldNewValue> = writable({old: 200, new: 200});
+export let timeInfection: Writable<number> = writable(0);
+
+export let infectionRate: Writable<number> = writable(0);

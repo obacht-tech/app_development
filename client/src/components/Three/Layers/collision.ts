@@ -1,6 +1,6 @@
 import type {PersonSpline, Object3DCustom} from "../../../types";
 import * as THREE from "three";
-import {distance} from "../../../store";
+import {distance, incidence} from "../../../store";
 
 let geometry = new THREE.CircleGeometry(1, 16);
 export const materialCollision = new THREE.MeshBasicMaterial({color: 'red'});
@@ -31,27 +31,34 @@ export function generateCollisionCircles(people: PersonSpline[]): THREE.Group {
         circle.position.z = .48;
         circle.timePosition = personSpline.timePosition;
         circle.timeDelta = personSpline.timeDelta;
+        circle.isInfected = personSpline.isInfected;
+        circle.wearsMask = personSpline.wearsMask;
         collisionCircles.add(circle);
     }
     return collisionCircles;
 }
 
-export function updateCollisionCircles(circlesChildren: Object3DCustom[], person: Object3DCustom, circle: Object3DCustom, second, time) {
-
+export function updateCollisionCircles(people: Object3DCustom[], person: Object3DCustom, circle: Object3DCustom, second: number, time: number) {
     circle.visible = true;
     circle.position.x = person.position.x;
     circle.position.z = person.position.z;
 
     let colliding = false;
-    for (let circle2 of circlesChildren) {
+    for (let circle2 of people) {
         if (circle.uuid !== circle2.uuid && (circle2.timePosition <= second && time - circle2.timePosition <= circle2.timeDelta)) {
             if (collision(circle, circle2)) {
                 colliding = true;
+               if(circle2.isInfected){
+                   person.material = materialCollision;
+                   person.isInfected = true;
+                   break
+               }
             }
+
         }
     }
     if (colliding) {
-        circle.material = materialCollision
+        circle.material = materialCollision;
     } else {
         circle.material = materialNoCollision
     }

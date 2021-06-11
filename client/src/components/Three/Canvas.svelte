@@ -6,7 +6,7 @@
     import {
         layerState,
         markerNowSeconds,
-        markerStartEndSeconds, playbackState, positionSplines
+        markerStartEndSeconds, playbackState, positionSplines, infectionRate, maskWear, incidence
     } from "../../store";
     import type {ApplicationID, CanvasID, LayerState, PersonSpline} from "../../types";
     import {
@@ -16,6 +16,7 @@
     import {generateHeatmap, rangeHeatmap} from "./Layers/heatmap";
     import {generatePaths, rangePaths} from "./Layers/paths";
     import {generateCollisionCircles} from "./Layers/collision";
+    import {calculateInfection, updateIncidence, updateWearMask} from "./Layers/infection";
 
 
     export let aid: ApplicationID;
@@ -70,6 +71,7 @@
     markerNowSeconds.subscribe(data => {
         if (data) {
             elapsedTime = data;
+           // calculateInfection(people.children, data)
         }
     })
 
@@ -81,6 +83,18 @@
             if(aid=='heatmap'||aid==='full'){
                 rangeHeatmap(data.startValue, data.endValue, $positionSplines, aid,  heatmap);
             }
+        }
+    })
+
+    maskWear.subscribe(value => {
+        if(aid==="full"){
+            updateWearMask(people.children)
+        }
+    })
+
+    incidence.subscribe(value => {
+        if(aid==="full"){
+        updateIncidence(people.children)
         }
     })
 
@@ -207,4 +221,5 @@
 {#if aid==='heatmap' ||  aid==='full'}
     <div style="height: 1000px; width: 1000px; display: none" class={aid==='heatmap'?'heatmap': 'full'}></div>
 {/if}
+<p>{$infectionRate}/{people.children.length}</p>
 <canvas id={cid} class:cursor={enableCameraControls}></canvas>

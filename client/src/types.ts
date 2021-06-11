@@ -27,14 +27,21 @@ export type PersonSpline = {
     splineData: Vector2[],
     timePosition?: number,
     startDate: string,
-    timeDelta?: number
+    timeDelta?: number,
+    isInfected: boolean,
+    wearsMask: boolean,
+    isIncidenceInfected?: boolean
 }
 
+export type OldNewValue = {
+    old: number,
+    new: number
+}
 
 export type RangeTime = {
-            startValue: number,
-            endValue: number
-        }
+    startValue: number,
+    endValue: number
+}
 
 export type Object3DCustom = THREE.Object3D &
     {
@@ -43,7 +50,10 @@ export type Object3DCustom = THREE.Object3D &
         spline?: SplineCurve,
         material?: any,
         isMesh?: boolean,
-        mixer?: THREE.AnimationMixer
+        mixer?: THREE.AnimationMixer,
+        isInfected?: boolean,
+        isIncidenceInfected?: boolean,
+        wearsMask?: boolean
     }
 
 export type HeatmapPoint = {
