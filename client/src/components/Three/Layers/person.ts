@@ -4,7 +4,8 @@ import {SkeletonUtils} from "three/examples/jsm/utils/SkeletonUtils";
 import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
 import {collision, materialCollision, materialNoCollision, updateCollisionCircles} from "./collision";
 
-let humanMesh;
+let humanFemaleMesh;
+let humanMaleMesh;
 export const positionScaling = 0.01;
 const humanMaterial = new THREE.MeshStandardMaterial({
     color: '#C7C700'
@@ -26,7 +27,26 @@ fbxLoader.load('/client/static/models/human_female.fbx', function (object) {
             child.scale.set(positionScaling, positionScaling, positionScaling)
             child.position.set(0, 0.33, 0)
             child.material = humanMaterial
-            humanMesh = child
+            humanFemaleMesh = child
+        }
+    });
+});
+
+fbxLoader.load('/client/static/models/human_male.fbx', function (object) {
+
+    // mixer = new THREE.AnimationMixer( object );
+    //
+    // const action = mixer.clipAction( object.animations[ 0 ] );
+    // action.play();
+
+    object.traverse(function (child: Object3DCustom) {
+        if (child.isMesh) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+            child.scale.set(positionScaling, positionScaling, positionScaling)
+            child.position.set(0, 0.33, 0)
+            child.material = humanMaterial
+            humanMaleMesh = child
         }
     });
 });
@@ -62,7 +82,7 @@ export function initSplines(fetchingData: PositionData[]): PersonSpline[] {
 export function generatePeopleMeshes(people: PersonSpline[]) {
     const peopleGroup = new THREE.Group()
     for (let personSpline of people) {
-        const personMesh: Object3DCustom = SkeletonUtils.clone(humanMesh);
+        const personMesh: Object3DCustom = SkeletonUtils.clone(Math.random()>0.5 ? humanMaleMesh : humanFemaleMesh);
         const color = new THREE.Color(0xffffff);
         color.setHex(Math.random() * 0xffffff);
         const personMaterial = new THREE.MeshStandardMaterial({
@@ -80,7 +100,7 @@ export function generatePeopleMeshes(people: PersonSpline[]) {
         personMesh.spline = personSpline.spline;
         personMesh.timePosition = personSpline.timePosition;
         personMesh.timeDelta = personSpline.timeDelta;
-        personMesh.colliding = false;
+
 
         peopleGroup.add(personMesh)
     }
