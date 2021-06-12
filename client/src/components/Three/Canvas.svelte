@@ -9,12 +9,14 @@
         markerStartEndSeconds, playbackState, positionSplines
     } from "../../store";
     import type {ApplicationID, CanvasID, LayerState, PersonSpline} from "../../types";
-    import {generatePeopleMeshes, mixer2, positionScaling, test, updatePositions} from "./Layers/person";
+    import {
+        mixers,
+        generatePeopleWithAnimations,
+        updatePositions
+    } from "./Layers/person";
     import {generateHeatmap, rangeHeatmap} from "./Layers/heatmap";
     import {generatePaths, rangePaths} from "./Layers/paths";
     import {generateCollisionCircles} from "./Layers/collision";
-    import type {Object3DCustom} from "../../types";
-    import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
 
 
     export let aid: ApplicationID;
@@ -25,21 +27,19 @@
 
     const scene = new THREE.Scene();
 
-    let people = new THREE.Group();
+    let people: THREE.Group = new THREE.Group();
     let paths = new THREE.Group();
     let collisionCircles = new THREE.Group();
     let heatmap = new THREE.Object3D();
 
     let sizes: { width, height };
     let elapsedTime = 0;
-
-    positionSplines.subscribe((data: PersonSpline[]) => {
+    positionSplines.subscribe(async (data: PersonSpline[])  =>  {
         if (data) {
-            people = generatePeopleMeshes(data)
-            test(scene)
-            scene.add(people)
             switch (aid) {
                 case "person":
+                    people = await generatePeopleWithAnimations(data)
+                    scene.add(people)
                     collisionCircles = generateCollisionCircles(data);
                     scene.add(collisionCircles)
                     break;
@@ -48,10 +48,14 @@
                     scene.add(heatmap)
                     break;
                 case "paths":
+                    people = await generatePeopleWithAnimations(data)
+                    scene.add(people)
                     paths = generatePaths(data);
                     scene.add(paths);
                     break;
                 case "full":
+                    people = await generatePeopleWithAnimations(data)
+                    scene.add(people)
                     paths = generatePaths(data);
                     paths.visible = false;
                     collisionCircles = generateCollisionCircles(data);
@@ -165,15 +169,18 @@
          * Animate
          */
         let delta = 0.016;
-        let clock = new THREE.Clock()
         function render(timeStamp?) {
-            if(mixer2){
-                mixer2.update(clock.getDelta())
+            if(mixers.length>0){
+                 for (let i = 0; i <= mixers.length; i++){
+                     if(mixers[i]){
+                         mixers[i].update(delta)
+                     }
+                 }
             }
             window.requestAnimationFrame(render);
             if ($playbackState!=='stop') {
                 elapsedTime += delta * ($playbackState==='play'? 1 : 5);
-                if (aid === 'person' || aid === 'full') {
+                if ((aid === 'person' || aid === 'full') && people ) {
                     updatePositions(elapsedTime,Math.floor(elapsedTime), people, collisionCircles);
                 }
             }
