@@ -6,6 +6,8 @@ import {collision, materialCollision, materialNoCollision, updateCollisionCircle
 
 let humanFemaleMesh;
 let humanMaleMesh;
+let humanObject
+export let mixer2
 export const positionScaling = 0.01;
 const humanMaterial = new THREE.MeshStandardMaterial({
     color: '#C7C700'
@@ -13,23 +15,20 @@ const humanMaterial = new THREE.MeshStandardMaterial({
 const manager = new THREE.LoadingManager();
 const fbxLoader = new FBXLoader(manager);
 
-fbxLoader.load('/client/static/models/human_female.fbx', function (object) {
+fbxLoader.load('/client/static/models/human_female_walk.fbx', function (object) {
 
-    // mixer = new THREE.AnimationMixer( object );
-    //
-    // const action = mixer.clipAction( object.animations[ 0 ] );
-    // action.play();
 
     object.traverse(function (child: Object3DCustom) {
         if (child.isMesh) {
             child.castShadow = true;
             child.receiveShadow = true;
             child.scale.set(positionScaling, positionScaling, positionScaling)
-            child.position.set(0, 0.33, 0)
+           child.position.set(0, 0.33, 0)
             child.material = humanMaterial
             humanFemaleMesh = child
         }
     });
+    humanObject = object
 });
 
 fbxLoader.load('/client/static/models/human_male.fbx', function (object) {
@@ -79,10 +78,38 @@ export function initSplines(fetchingData: PositionData[]): PersonSpline[] {
     return peopleSplines;
 }
 
+export function test(scene){
+    fbxLoader.load('/client/static/models/Walking.fbx', function (object) {
+
+        mixer2 = new THREE.AnimationMixer( object );
+
+        const action = mixer2.clipAction( object.animations[ 0 ] );
+        action.play();
+
+        object.traverse( function ( child ) {
+
+            if ( child.isMesh ) {
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+                child.scale.set(positionScaling, positionScaling, positionScaling)
+                child.position.set(0, 0.33, 0)
+              //  child.material = humanMaterial
+
+            }
+
+        } );
+        object.scale.set(positionScaling, positionScaling, positionScaling)
+          scene.add( object );
+    });
+}
+
+
 export function generatePeopleMeshes(people: PersonSpline[]) {
     const peopleGroup = new THREE.Group()
     for (let personSpline of people) {
-        const personMesh: Object3DCustom = SkeletonUtils.clone(Math.random()>0.5 ? humanMaleMesh : humanFemaleMesh);
+        const personMesh = humanObject.clone();
+        // const personMesh: Object3DCustom = SkeletonUtils.clone(Math.random()>0.5 ? humanMaleMesh : humanFemaleMesh);
         const color = new THREE.Color(0xffffff);
         color.setHex(Math.random() * 0xffffff);
         const personMaterial = new THREE.MeshStandardMaterial({

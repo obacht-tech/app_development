@@ -9,7 +9,7 @@
         markerStartEndSeconds, playbackState, positionSplines
     } from "../../store";
     import type {ApplicationID, CanvasID, LayerState, PersonSpline} from "../../types";
-    import {generatePeopleMeshes, positionScaling, updatePositions} from "./Layers/person";
+    import {generatePeopleMeshes, mixer2, positionScaling, test, updatePositions} from "./Layers/person";
     import {generateHeatmap, rangeHeatmap} from "./Layers/heatmap";
     import {generatePaths, rangePaths} from "./Layers/paths";
     import {generateCollisionCircles} from "./Layers/collision";
@@ -31,32 +31,12 @@
     let heatmap = new THREE.Object3D();
 
     let sizes: { width, height };
-    let mixer;
     let elapsedTime = 0;
-const loader = new FBXLoader();
-    loader.load('/client/static/models/Walking.fbx', function (object) {
-        mixer = new THREE.AnimationMixer( object );
-
-        const action = mixer.clipAction( object.animations[ 0 ] );
-        action.play();
-
-        object.traverse( function ( child ) {
-
-            if ( child.isMesh ) {
-
-                child.castShadow = true;
-                child.receiveShadow = true;
-
-            }
-
-        } );
-        scene.add( object );
-
-    });
 
     positionSplines.subscribe((data: PersonSpline[]) => {
         if (data) {
             people = generatePeopleMeshes(data)
+            test(scene)
             scene.add(people)
             switch (aid) {
                 case "person":
@@ -187,8 +167,8 @@ const loader = new FBXLoader();
         let delta = 0.016;
         let clock = new THREE.Clock()
         function render(timeStamp?) {
-            if(mixer){
-                mixer.update(clock.getDelta())
+            if(mixer2){
+                mixer2.update(clock.getDelta())
             }
             window.requestAnimationFrame(render);
             if ($playbackState!=='stop') {
