@@ -4,7 +4,6 @@ import {SkeletonUtils} from "three/examples/jsm/utils/SkeletonUtils";
 import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
 import {updateCollisionCircles} from "./collision";
 
-export let mixers = [];
 export const positionScaling = 0.01;
 const humanMaterial = new THREE.MeshStandardMaterial({
     color: '#C7C700'
@@ -80,14 +79,13 @@ export async function generatePeopleWithAnimations(people: PersonSpline[]): Prom
 export function generatePeopleMeshes(people: PersonSpline[], maleObject, femaleObject) {
     const peopleGroup = new THREE.Group()
     for (let personSpline of people) {
-        const object = Math.random()>0.5 ? maleObject : femaleObject;
+        const object = Math.random() > 0.5 ? maleObject : femaleObject;
         const personMesh: Object3DCustom = SkeletonUtils.clone(object)
         personMesh.animations = [...object.animations];
         const mixernew = new THREE.AnimationMixer(personMesh);
         const action = mixernew.clipAction(object.animations[0]);
+        personMesh.mixer = mixernew;
         action.play();
-        mixers.push(mixernew)
-        // const personMesh: Object3DCustom = SkeletonUtils.clone(Math.random()>0.5 ? humanMaleMesh : humanFemaleMesh);
         const color = new THREE.Color(0xffffff);
         color.setHex(Math.random() * 0xffffff);
         const personMaterial = new THREE.MeshStandardMaterial({
@@ -111,7 +109,7 @@ export function generatePeopleMeshes(people: PersonSpline[], maleObject, femaleO
     return peopleGroup
 }
 
-export function updatePositions(time: number, second: number, group: THREE.Group, collisionCircles: THREE.Group) {
+export function updatePositions(time: number, second: number, group: THREE.Group, collisionCircles: THREE.Group, delta: number) {
     const people: Object3DCustom[] = group.children;
     for (let person of people) {
         const moment = time - person.timePosition; // 1.2 sek
@@ -122,13 +120,28 @@ export function updatePositions(time: number, second: number, group: THREE.Group
         if (person.timePosition <= second && moment <= person.timeDelta) {
 
             if (!person.visible) {
+
                 person.visible = true;
             }
 
             const deltaTimePosition = person.timeDelta; //diffrenz ende-starttime
             const pos = person.spline.getPoint((moment * 100 / deltaTimePosition) * positionScaling);
+            const nextPos = person.spline.getPoint(((moment + delta) * 100 / deltaTimePosition) * positionScaling);
+            const nextNextPos = person.spline.getPoint(((moment + delta * 2) * 100 / deltaTimePosition) * positionScaling);
             person.position.x = pos.x
             person.position.z = pos.y
+
+
+            // Rotate to walk direction
+            const currentVector = new THREE.Vector3();
+            currentVector.subVectors(new THREE.Vector3(nextPos.x, 0, nextPos.y), new THREE.Vector3(pos.x, 0, pos.y)).normalize()
+            const nextVector = new THREE.Vector3();
+            nextVector.subVectors(new THREE.Vector3(nextNextPos.x, 0, nextNextPos.y), new THREE.Vector3(nextPos.x, 0, nextPos.y)).normalize()
+            person.rotateY(currentVector.angleTo(nextVector))
+
+            // recalculate animation speed (speed of walking)
+            const speed = currentVector.length()*0.01;
+            person.mixer = person.mixer.update(speed);
 
             updateCollisionCircles(collisionCircles.children, person, circle, second, time)
         } else {

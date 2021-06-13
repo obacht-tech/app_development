@@ -10,7 +10,6 @@
     } from "../../store";
     import type {ApplicationID, CanvasID, LayerState, PersonSpline} from "../../types";
     import {
-        mixers,
         generatePeopleWithAnimations,
         updatePositions
     } from "./Layers/person";
@@ -170,18 +169,12 @@
          */
         let delta = 0.016;
         function render(timeStamp?) {
-            if(mixers.length>0){
-                 for (let i = 0; i <= mixers.length; i++){
-                     if(mixers[i]){
-                         mixers[i].update(delta)
-                     }
-                 }
-            }
+
             window.requestAnimationFrame(render);
             if ($playbackState!=='stop') {
                 elapsedTime += delta * ($playbackState==='play'? 1 : 5);
                 if ((aid === 'person' || aid === 'full') && people ) {
-                    updatePositions(elapsedTime,Math.floor(elapsedTime), people, collisionCircles);
+                    updatePositions(elapsedTime,Math.floor(elapsedTime), people, collisionCircles,delta * ($playbackState==='play'? 1 : 5));
                 }
             }
             if (inFrame) {

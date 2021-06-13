@@ -34,7 +34,8 @@ export type Object3DCustom = THREE.Object3D &
         timeDelta?: number,
         spline?: SplineCurve,
         material?: any,
-        isMesh?: boolean
+        isMesh?: boolean,
+        mixer?: THREE.AnimationMixer
     }
 
 export type HeatmapPoint = {
