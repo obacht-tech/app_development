@@ -124,10 +124,9 @@ export function updatePositions(time: number, second: number, group: THREE.Group
                 person.visible = true;
             }
 
-            const deltaTimePosition = person.timeDelta; //diffrenz ende-starttime
-            const pos = person.spline.getPoint((moment * 100 / deltaTimePosition) * positionScaling);
-            const nextPos = person.spline.getPoint(((moment + delta) * 100 / deltaTimePosition) * positionScaling);
-            const nextNextPos = person.spline.getPoint(((moment + delta * 2) * 100 / deltaTimePosition) * positionScaling);
+            const pos = person.spline.getPoint(moment  / person.timeDelta);
+            const nextPos = person.spline.getPoint(((moment + delta)  / person.timeDelta));
+            const nextNextPos = person.spline.getPoint(((moment + delta * 2)  / person.timeDelta));
             person.position.x = pos.x
             person.position.z = pos.y
 

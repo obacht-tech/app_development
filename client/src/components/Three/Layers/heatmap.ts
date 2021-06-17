@@ -70,7 +70,7 @@ export function rangeHeatmap(start: number, end: number, people: PersonSpline[],
     }
 
     heatmapInstance.setData({
-        data:  countPoints(points)
+        data:  points
     });
 
     const heatmapCanvas: HTMLCanvasElement = document.querySelector('canvas.heatmap-canvas');
