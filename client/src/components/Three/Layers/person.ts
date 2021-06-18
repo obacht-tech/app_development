@@ -131,23 +131,22 @@ export function updatePositions(time: number, second: number, group: THREE.Group
             person.position.x = pos.x
             person.position.z = pos.y
 
-            // Rotate to walk direction
+
             const t = ((moment+ delta) / (person.timeDelta))
             if(t <= 1){
+                // Rotate to walk direction
                 const nextPos = person.spline.getPoint(t);
                 const currentVector = new THREE.Vector3();
-                currentVector.subVectors(new THREE.Vector3(nextPos.x, 0, nextPos.y), new THREE.Vector3(pos.x, 0, pos.y)).normalize()
-                const atanA = Math.atan2(currentVector.x, currentVector.z);
-                person.rotation.y = atanA
+                currentVector.subVectors(new THREE.Vector3(nextPos.x, 0, nextPos.y), new THREE.Vector3(pos.x, 0, pos.y))
+                const atan = Math.atan2(currentVector.x, currentVector.z);
+                person.rotation.y = atan;
+
+                // recalculate animation speed (speed of walking)
+                 const speed = currentVector.length();
+                 person.mixer = person.mixer.update(speed);
 
             }
-            // person.matrixWorldNeedsUpdate = true
 
-
-
-            // recalculate animation speed (speed of walking)
-            // const speed = currentVector.length()*0.01;
-            //  person.mixer = person.mixer.update(speed);
 
             updateCollisionCircles(collisionCircles.children, person, circle, second, time)
         } else {
