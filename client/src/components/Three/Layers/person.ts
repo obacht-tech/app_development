@@ -109,6 +109,10 @@ export function generatePeopleMeshes(people: PersonSpline[], maleObject, femaleO
     return peopleGroup
 }
 
+export function updateAnimation() {
+
+}
+
 export function updatePositions(time: number, second: number, group: THREE.Group, collisionCircles: THREE.Group, delta: number) {
     const people: Object3DCustom[] = group.children;
     for (let person of people) {
@@ -120,27 +124,30 @@ export function updatePositions(time: number, second: number, group: THREE.Group
         if (person.timePosition <= second && moment <= person.timeDelta) {
 
             if (!person.visible) {
-
                 person.visible = true;
             }
 
-            const pos = person.spline.getPoint(moment  / person.timeDelta);
-            const nextPos = person.spline.getPoint(((moment + delta)  / person.timeDelta));
-            const nextNextPos = person.spline.getPoint(((moment + delta * 2)  / person.timeDelta));
+            const pos = person.spline.getPoint(moment / person.timeDelta);
             person.position.x = pos.x
             person.position.z = pos.y
 
-
             // Rotate to walk direction
-            const currentVector = new THREE.Vector3();
-            currentVector.subVectors(new THREE.Vector3(nextPos.x, 0, nextPos.y), new THREE.Vector3(pos.x, 0, pos.y)).normalize()
-            const nextVector = new THREE.Vector3();
-            nextVector.subVectors(new THREE.Vector3(nextNextPos.x, 0, nextNextPos.y), new THREE.Vector3(nextPos.x, 0, nextPos.y)).normalize()
-            person.rotateY(currentVector.angleTo(nextVector))
+            const t = ((moment+ delta) / (person.timeDelta))
+            if(t <= 1){
+                const nextPos = person.spline.getPoint(t);
+                const currentVector = new THREE.Vector3();
+                currentVector.subVectors(new THREE.Vector3(nextPos.x, 0, nextPos.y), new THREE.Vector3(pos.x, 0, pos.y)).normalize()
+                const atanA = Math.atan2(currentVector.x, currentVector.z);
+                person.rotation.y = atanA
+
+            }
+            // person.matrixWorldNeedsUpdate = true
+
+
 
             // recalculate animation speed (speed of walking)
-            const speed = currentVector.length()*0.01;
-            person.mixer = person.mixer.update(speed);
+            // const speed = currentVector.length()*0.01;
+            //  person.mixer = person.mixer.update(speed);
 
             updateCollisionCircles(collisionCircles.children, person, circle, second, time)
         } else {
