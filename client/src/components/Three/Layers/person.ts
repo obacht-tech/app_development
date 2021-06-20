@@ -119,21 +119,6 @@ export async function generatePeopleWithAnimations(people: PersonSpline[]): Prom
 
 export function generatePeopleMeshes(people: PersonSpline[], maleObject, femaleObject) {
     const peopleGroup = new THREE.Group()
-   /*  for (let personSpline of people) {
-        const object = Math.random() > 0.5 ? maleObject : femaleObject;
-        const personMesh: Object3DCustom = SkeletonUtils.clone(object)
-        personMesh.animations = [...object.animations];
-        const mixernew = new THREE.AnimationMixer(personMesh);
-        const action = mixernew.clipAction(object.animations[0]);
-        personMesh.mixer = mixernew;
-        action.play();
-        const color = new THREE.Color(0xffffff);
-        color.setHex(Math.random() * 0xffffff);
-        const personMaterial = new THREE.MeshStandardMaterial({
-            color
-        })
-        personSpline.spline = new THREE.SplineCurve(personSpline.splineData);
-        personSpline.timeDelta = personSpline.splineData.length - 1; */
     for (let i = 0; i< people.length; i++ ) {
         const object = Math.random() > 0.5 ? maleObject : femaleObject;
         const personMesh: Object3DCustom = SkeletonUtils.clone(object)
@@ -187,8 +172,20 @@ export function generatePeopleMeshes(people: PersonSpline[], maleObject, femaleO
     return peopleGroup
 }
 
-export function updateAnimation() {
+export function updateAnimation(moment: number, person: Object3DCustom, delta:number, pos: THREE.Vector2) {
+    const t = ((moment+ delta) / (person.timeDelta))
+    if(t <= 1){
+        // Rotate to walk direction
+        const nextPos = person.spline.getPoint(t);
+        const currentVector = new THREE.Vector3();
+        currentVector.subVectors(new THREE.Vector3(nextPos.x, 0, nextPos.y), new THREE.Vector3(pos.x, 0, pos.y))
+        const atan = Math.atan2(currentVector.x, currentVector.z);
+        person.rotation.y = atan;
 
+        // recalculate animation speed (speed of walking)
+        const speed = currentVector.length();
+        person.mixer = person.mixer.update(speed);
+    }
 }
 
 export function updatePositions(time: number, second: number, group: THREE.Group, collisionCircles: THREE.Group, delta: number) {
@@ -207,27 +204,11 @@ export function updatePositions(time: number, second: number, group: THREE.Group
             }
 
             const pos = person.spline.getPoint(moment / person.timeDelta);
-            person.position.x = pos.x
-            person.position.z = pos.y
+            person.position.x = pos.x;
+            person.position.z = pos.y;
 
-
-            const t = ((moment+ delta) / (person.timeDelta))
-            if(t <= 1){
-                // Rotate to walk direction
-                const nextPos = person.spline.getPoint(t);
-                const currentVector = new THREE.Vector3();
-                currentVector.subVectors(new THREE.Vector3(nextPos.x, 0, nextPos.y), new THREE.Vector3(pos.x, 0, pos.y))
-                const atan = Math.atan2(currentVector.x, currentVector.z);
-                person.rotation.y = atan;
-
-                // recalculate animation speed (speed of walking)
-                 const speed = currentVector.length();
-                 person.mixer = person.mixer.update(speed);
-
-            }
-
-
-            updateCollisionCircles(collisionCircles.children, person, circle, second, time)
+            updateAnimation(moment, person, delta, pos);
+            updateCollisionCircles(collisionCircles.children, person, circle, second, time);
         } else {
             if (person.visible) {
                 person.visible = false

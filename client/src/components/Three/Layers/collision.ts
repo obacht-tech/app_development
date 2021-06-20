@@ -8,17 +8,17 @@ export const materialNoCollision = new THREE.MeshBasicMaterial({color: 'blue'});
 let radius = 1;
 
 distance.subscribe((value)=>{
-    radius = value.new;
-    const redoScalingFactor = 1/value.old;
-    geometry.scale(redoScalingFactor,redoScalingFactor,redoScalingFactor )
-    geometry.scale(value.new,value.new ,value.new )
+    radius = value.new/2;
+    const redoScalingFactor = 1/(value.old/2);
+    geometry.scale(redoScalingFactor,redoScalingFactor,redoScalingFactor)
+    geometry.scale(value.new/2,value.new/2 ,value.new/2 )
 })
 
 export function collision(circle1: THREE.Object3D, circle2: THREE.Object3D): boolean {
     const dx = circle1.position.x - circle2.position.x;
     const dy = circle1.position.z - circle2.position.z;
     const resultDistance = Math.sqrt(dx * dx + dy * dy);
-    return resultDistance <= radius * 2;
+    return resultDistance <= radius*2;
 }
 
 export function generateCollisionCircles(people: PersonSpline[]): THREE.Group {
