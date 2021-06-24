@@ -12,7 +12,7 @@
     export let markerNow: Date;
     export let markerEnd: Date;
 
-    const diffSeconds = Math.floor(((datasetEnd - datasetStart) / 1000) );
+    const diffSeconds = Math.floor(((datasetEnd - datasetStart) / 1000));
     export let playback: boolean = false;
     let indicatorValue: number = 1;
     let markerStartValue: number = 1;
@@ -21,15 +21,15 @@
 
     onMount(() => {
         if (indicator) {
-            markerNowSeconds.subscribe(data =>{
-            if(data){
-                indicatorValue = data;
-            }
-        })
+            markerNowSeconds.subscribe(data => {
+                if (data) {
+                    indicatorValue = data;
+                }
+            })
 
             render()
         }
-        if(range){
+        if (range) {
             markerStartEndSeconds.subscribe((data: { startValue: number, endValue: number }) => {
                 if (data.startValue && data.endValue) {
                     markerStart = addSeconds(datasetStart, data.startValue);
@@ -39,16 +39,17 @@
                 }
             })
         }
-
+        markerStartEndSeconds.set({startValue: 0, endValue: diffSeconds})
     })
 
     let delta = 0.016;
+
     function render(timeStamp?) {
         window.requestAnimationFrame(render);
-        if ($playbackState!=='stop') {
-                if(!userInteraction){
-                    indicatorValue += delta * ($playbackState==='play'? 1 : 5);
-                }
+        if ($playbackState !== 'stop') {
+            if (!userInteraction) {
+                indicatorValue += delta * ($playbackState === 'play' ? 1 : 5);
+            }
         }
     }
 
@@ -57,12 +58,12 @@
     }
 
     function addSeconds(date: Date, seconds: number) {
-        return new Date(date.getTime() + seconds*1000);
+        return new Date(date.getTime() + seconds * 1000);
     }
 
     function formatDate(date: Date) {
         const minutes = date.getMinutes();
-        return date.getHours() + ':' + ((minutes < 10) ? 0 : '') + minutes +':'+ ((date.getSeconds() < 10) ? 0 : '')+date.getSeconds() +'Uhr'
+        return date.getHours() + ':' + ((minutes < 10) ? 0 : '') + minutes + ':' + ((date.getSeconds() < 10) ? 0 : '') + date.getSeconds() + 'Uhr'
     }
 
     function setMarkerStartEnd(startValue: number, endValue: number) {
@@ -77,9 +78,9 @@
         markerNow = addSeconds(datasetStart, nowValue);
     }
 
-    function onStopMarkerNow(nowValue: number){
+    function onStopMarkerNow(nowValue: number) {
         setMarkerNow(nowValue);
-        indicatorValue=nowValue;
+        indicatorValue = nowValue;
         userInteraction = false;
         markerNowSeconds.set(indicatorValue)
     }
@@ -135,7 +136,7 @@
 <div class="timeline container">
     <div class="timeline__container">
         {#if indicator}
-            <div class="indicator_slider__container"  class:only={!range}>
+            <div class="indicator_slider__container" class:only={!range}>
                 <RangeSlider
                         id="indicator_slider"
                         min={1}
@@ -148,19 +149,19 @@
             </div>
         {/if}
         {#if range}
-        <div class="range_slider__container">
-            <RangeSlider
-                    id="range_slider"
-                    min={1}
-                    max={diffSeconds}
-                    pushy={true}
-                    hover={true}
-                    range float
-                    formatter={ value => formatDate(addSeconds(datasetStart, value)) }
-                    on:stop={(value) =>setMarkerStartEnd(value.detail.values[0], value.detail.values[1])}
-                    values={[markerStartValue, markerEndValue]}
-                    springValues={ {stiffness: 1, damping: 1 }}/>
-        </div>
+            <div class="range_slider__container">
+                <RangeSlider
+                        id="range_slider"
+                        min={1}
+                        max={diffSeconds}
+                        pushy={true}
+                        hover={true}
+                        range float
+                        formatter={ value => formatDate(addSeconds(datasetStart, value)) }
+                        on:stop={(value) =>setMarkerStartEnd(value.detail.values[0], value.detail.values[1])}
+                        values={[markerStartValue, markerEndValue]}
+                        springValues={ {stiffness: 1, damping: 1 }}/>
+            </div>
         {/if}
     </div>
     <div class="timeline__legend">

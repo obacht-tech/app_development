@@ -1,6 +1,6 @@
 import type {PersonSpline, Object3DCustom} from "../../../types";
 import * as THREE from "three";
-import {distance, incidence} from "../../../store";
+import {distance} from "../../../store";
 
 let geometry = new THREE.CircleGeometry(1, 16);
 export const materialCollision = new THREE.MeshBasicMaterial({color: 'red'});
@@ -14,11 +14,11 @@ distance.subscribe((value)=>{
     geometry.scale(value.new/2,value.new/2 ,value.new/2 )
 })
 
-export function collision(circle1: THREE.Object3D, circle2: THREE.Object3D): boolean {
+export function collision(circle1: THREE.Object3D, circle2: THREE.Object3D, radiusVal?:number): boolean {
     const dx = circle1.position.x - circle2.position.x;
     const dy = circle1.position.z - circle2.position.z;
     const resultDistance = Math.sqrt(dx * dx + dy * dy);
-    return resultDistance <= radius*2;
+    return resultDistance <= (radiusVal ? radiusVal*2 : radius*2);
 }
 
 export function generateCollisionCircles(people: PersonSpline[]): THREE.Group {
