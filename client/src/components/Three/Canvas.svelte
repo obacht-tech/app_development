@@ -79,11 +79,15 @@
 
     markerStartEndSeconds.subscribe((data: { startValue: number, endValue: number }) => {
         if (data.startValue && data.endValue) {
-            if (aid == 'paths' || aid === 'full') {
+            if (aid === 'paths' || aid === 'full') {
                 rangePaths(paths, data.startValue, data.endValue);
             }
-            if (aid == 'heatmap' || aid === 'full') {
+            if (aid === 'heatmap' || aid === 'full') {
                 rangeHeatmap(data.startValue, data.endValue, $positionSplines, aid, heatmap);
+            }
+
+            if(aid === 'full' && people.children.length > 0 ){
+                    collidingPeople = updateDistances(people.children, $distance.new, data.startValue, data.endValue)
             }
         }
     })

@@ -70,34 +70,38 @@ export function updateWearMask(people: Object3DCustom[]) {
 
 
 export function updateDistances(people: Object3DCustom[], radius, start: number, end: number): number {
-    console.log(people.length, radius, start,end)
-    let restPeople = [...people];
+    let existingPeople = [];
     let collidingPeople = [];
     for (let i = start; i <= end; i++) {
-        for (let personI = 0; personI < restPeople.length; personI++) {
-            if (restPeople[personI].timePosition <= i && (i - restPeople[personI].timePosition <= restPeople[personI].timeDelta)) {
+        for (let personI = 0; personI < people.length; personI++) {
+            if (people[personI].timePosition <= i && (i - people[personI].timePosition <= people[personI].timeDelta)) {
                 let isColliding = false;
                 for (let person2 of people) {
-                    if (restPeople[personI].uuid !== person2.uuid && (person2.timePosition <= i && i - person2.timePosition <= person2.timeDelta)) {
-                        if (collision(restPeople[personI], person2, radius)) {
-                            isColliding = true;
-                            break;
+                    if ((people[personI].uuid !== person2.uuid) && (person2.timePosition <= i && (i - person2.timePosition <= person2.timeDelta))) {
+                        const mom = i - people[personI].timePosition
+                        const posPerson1 = people[personI].spline.getPoint(mom > 0 ?((i - people[personI].timePosition) / people[personI].timeDelta):0);
+                        const posPerson2 = person2.spline.getPoint(mom > 0 ?((i - people[personI].timePosition) / people[personI].timeDelta):0);
 
+                        const dx = posPerson1.x - person2.position.x;
+                        const dy = posPerson1.y - person2.position.z;
+                        const resultDistance = Math.sqrt(dx * dx + dy * dy);
+                        isColliding = resultDistance <= radius * 2;
+                        if (isColliding) {
+                            break;
                         }
                     }
                 }
                 if (isColliding) {
-                    collidingPeople.push(restPeople[personI].uuid)
-
+                    collidingPeople.push(people[personI].uuid)
                 }
             }
 
         }
     }
 // delete all duplicates
-    let uniq = [...new Set(collidingPeople)];
-
-    return people.length - uniq.length;
+    let uniqueColliding = [...new Set(collidingPeople)];
+    let uniqueExisting = [...new Set(existingPeople)];
+    return people.length - uniqueColliding.length;
 }
 
 export function setInfection(person: Object3DCustom, isInfected: boolean) {
