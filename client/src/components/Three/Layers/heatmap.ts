@@ -13,14 +13,14 @@ export function generateHeatmap(people: PersonSpline[], aid: ApplicationID): THR
     if (aid === 'heatmap') {
         heatmapInstance = h337.create({
             container: document.querySelector('.heatmap'),
-            maxOpacity: .6,
+          //  maxOpacity: .6,
             radius: 10,
             blur: .80,
         });
     } else {
         heatmapFullInstance = h337.create({
             container: document.querySelector('.full'),
-            maxOpacity: .6,
+           // maxOpacity: .6,
             radius: 10,
             blur: .80,
         });

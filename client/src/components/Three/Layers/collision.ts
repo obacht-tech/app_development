@@ -2,9 +2,9 @@ import type {PersonSpline, Object3DCustom} from "../../../types";
 import * as THREE from "three";
 import {distance} from "../../../store";
 
-let geometry = new THREE.CircleGeometry(1, 16);
+let geometry =  new THREE.TorusGeometry( 0.9, 0.1, 16, 50 );;
 export const materialCollision = new THREE.MeshBasicMaterial({color: 'red'});
-export const materialNoCollision = new THREE.MeshBasicMaterial({color: 'blue'});
+export const materialNoCollision = new THREE.MeshBasicMaterial({color: '#18A0FB'});
 let radius = 1;
 
 distance.subscribe((value)=>{
@@ -24,6 +24,7 @@ export function collision(circle1: THREE.Object3D, circle2: THREE.Object3D, radi
 export function generateCollisionCircles(people: PersonSpline[]): THREE.Group {
     let collisionCircles: THREE.Group = new THREE.Group();
     for (let personSpline of people) {
+
         const circle: Object3DCustom = new THREE.Mesh(geometry, materialNoCollision);
         circle.rotateX(-Math.PI / 2);
         circle.uuid = personSpline.pid;

@@ -6,8 +6,8 @@ export function generatePaths(people: PersonSpline[]): THREE.Group {
     for (let personSpline of people) {
         const points = personSpline.spline.getPoints(200);
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
-        const color = new THREE.Color(0xffffff);
-        color.setHex(Math.random() * 0xffffff);
+        const color = new THREE.Color('#18A0FB');
+       // color.setHex(Math.random() * 0xffffff);
         const material = new THREE.LineBasicMaterial({color});
 
         const splineObject: Object3DCustom = new THREE.Line(geometry, material);

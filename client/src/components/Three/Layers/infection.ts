@@ -70,7 +70,7 @@ export function updateWearMask(people: Object3DCustom[]) {
 
 
 export function updateDistances(people: Object3DCustom[], radius, start: number, end: number): number {
-    let existingPeople = [];
+   // let existingPeople = [];
     let collidingPeople = [];
     for (let i = start; i <= end; i++) {
         for (let personI = 0; personI < people.length; personI++) {
@@ -81,7 +81,6 @@ export function updateDistances(people: Object3DCustom[], radius, start: number,
                         const mom = i - people[personI].timePosition
                         const posPerson1 = people[personI].spline.getPoint(mom > 0 ?((i - people[personI].timePosition) / people[personI].timeDelta):0);
                         const posPerson2 = person2.spline.getPoint(mom > 0 ?((i - people[personI].timePosition) / people[personI].timeDelta):0);
-
                         const dx = posPerson1.x - person2.position.x;
                         const dy = posPerson1.y - person2.position.z;
                         const resultDistance = Math.sqrt(dx * dx + dy * dy);
@@ -100,8 +99,8 @@ export function updateDistances(people: Object3DCustom[], radius, start: number,
     }
 // delete all duplicates
     let uniqueColliding = [...new Set(collidingPeople)];
-    let uniqueExisting = [...new Set(existingPeople)];
-    return people.length - uniqueColliding.length;
+    //let uniqueExisting = [...new Set(existingPeople)];
+    return uniqueColliding.length;
 }
 
 export function setInfection(person: Object3DCustom, isInfected: boolean) {

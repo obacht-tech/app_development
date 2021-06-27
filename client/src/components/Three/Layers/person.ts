@@ -90,7 +90,7 @@ export async function generatePeopleWithAnimations(people: PersonSpline[]): Prom
                     child.castShadow = true;
                     child.receiveShadow = true;
                     child.scale.set(positionScaling, positionScaling, positionScaling)
-                    child.position.set(0, 0.33, 0)
+                    child.position.set(0, 0, 0)
                 }
 
             });
@@ -103,7 +103,7 @@ export async function generatePeopleWithAnimations(people: PersonSpline[]): Prom
                         child.castShadow = true;
                         child.receiveShadow = true;
                         child.scale.set(positionScaling, positionScaling, positionScaling)
-                        child.position.set(0, 0.33, 0)
+                        child.position.set(0, 0, 0)
                     }
 
                 });
@@ -139,6 +139,7 @@ export function generatePeopleMeshes(people: PersonSpline[], maleObject, femaleO
         personMesh.visible = false
         personMesh.position.x = Math.random();
         personMesh.position.z = 0;
+        personMesh.position.y = -0.5;
         personMesh.uuid = people[i].pid;
         //personMesh.material = personMaterial;
         personMesh.spline = people[i].spline;

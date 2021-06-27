@@ -19,6 +19,8 @@
     import {updateDistances, updateIncidence, updateWearMask} from "./Layers/infection";
 
 
+
+
     export let aid: ApplicationID;
     export let cid: CanvasID;
     export let inFrame: boolean;
@@ -86,9 +88,9 @@
                 rangeHeatmap(data.startValue, data.endValue, $positionSplines, aid, heatmap);
             }
 
-            if(aid === 'full' && people.children.length > 0 ){
+           /* if(aid === 'full' && people.children.length > 0 ){
                     collidingPeople = updateDistances(people.children, $distance.new, data.startValue, data.endValue)
-            }
+            }*/
         }
     })
 
