@@ -5,6 +5,7 @@ import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
 import {updateCollisionCircles} from "./collision";
 import {calculateInfection, percentBool, updateIncidence} from "./infection";
 import {incidence, infectionRate, maskWear} from "../../../store";
+import datasetDates from "../../../env";
 
 let incidenceValue;
 let maskWearValue;
@@ -31,6 +32,8 @@ infectionRate.subscribe(value => {
 
 
 export function initSplines(fetchingData: PositionData[]): PersonSpline[] {
+    let markerStart: Date = datasetDates.start;
+    let markerEnd: Date = datasetDates.end;
     const peopleSplines: PersonSpline[] = []
     for (let i = 0; i < fetchingData.length; i++) {
 
@@ -43,11 +46,13 @@ export function initSplines(fetchingData: PositionData[]): PersonSpline[] {
             if (foundPersonIndex > -1) {
                 peopleSplines[foundPersonIndex].splineData.push(position)
             } else {
-                const newPerson = {
+                // @ts-ignore
+                const relativeTimePosition = Math.floor(((new Date(fetchingData[i].date) - datasetDates.start) / 1000))
+                const newPerson: PersonSpline = {
                     pid: person.pid,
                     splineData: [position],
                     startDate: fetchingData[i].date,
-                    timePosition: i,
+                    timePosition: relativeTimePosition,
                     wearsMask : percentBool(maskWearValue.new),
                    // isInfected :  percentBool(incidenceValue.new*100/100000)
                     isInfected :  percentBool(incidenceValue.new*100/1000)
@@ -196,7 +201,7 @@ export function updatePositions(time: number, second: number, group: THREE.Group
                 person.visible = false
             }
             if (circle.visible) {
-
+                circle.visible = false;
             }
         }
 

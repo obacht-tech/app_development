@@ -44,7 +44,7 @@
 
     let delta = 0.016;
 
-    function render(timeStamp?) {
+    function render() {
         window.requestAnimationFrame(render);
         if ($playbackState !== 'stop') {
             if (!userInteraction) {
