@@ -6,7 +6,6 @@ import {updateCollisionCircles} from "./collision";
 import {calculateInfection, percentBool, updateIncidence} from "./infection";
 import {incidence, infectionRate, maskWear} from "../../../store";
 
-let humanMesh;
 let incidenceValue;
 let maskWearValue;
 let infectionRateValue;
@@ -30,40 +29,23 @@ infectionRate.subscribe(value => {
     infectionRateValue = value;
 })
 
-fbxLoader.load('/client/static/models/human_female.fbx', function (object) {
-
-    // mixer = new THREE.AnimationMixer( object );
-    //
-    // const action = mixer.clipAction( object.animations[ 0 ] );
-    // action.play();
-
-    object.traverse(function (child: Object3DCustom) {
-        if (child.isMesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-            child.scale.set(positionScaling, positionScaling, positionScaling)
-            child.position.set(0, 0.33, 0)
-            child.material = humanMaterial
-            humanMesh = child
-        }
-    });
-});
 
 export function initSplines(fetchingData: PositionData[]): PersonSpline[] {
     const peopleSplines: PersonSpline[] = []
     for (let i = 0; i < fetchingData.length; i++) {
 
         for (let person of fetchingData[i].people) {
+            const position = new THREE.Vector2(person.pos[0] * positionScaling, person.pos[1] * positionScaling);
             const foundPersonIndex = peopleSplines.findIndex((personSpline) => {
                 return personSpline.pid === person.pid;
             })
 
             if (foundPersonIndex > -1) {
-                peopleSplines[foundPersonIndex].splineData.push(new THREE.Vector2(person.pos[0] * positionScaling, person.pos[1] * positionScaling))
+                peopleSplines[foundPersonIndex].splineData.push(position)
             } else {
                 const newPerson = {
                     pid: person.pid,
-                    splineData: [new THREE.Vector2(person.pos[0] * positionScaling, person.pos[1] * positionScaling)],
+                    splineData: [position],
                     startDate: fetchingData[i].date,
                     timePosition: i,
                     wearsMask : percentBool(maskWearValue.new),
@@ -197,7 +179,6 @@ export function updatePositions(time: number, second: number, group: THREE.Group
         const circle = collisionCircles.children.find((elem) => {
             return elem.uuid === person.uuid
         })
-
         if (person.timePosition <= second && moment <= person.timeDelta) {
 
             if (!person.visible) {
@@ -215,7 +196,7 @@ export function updatePositions(time: number, second: number, group: THREE.Group
                 person.visible = false
             }
             if (circle.visible) {
-                circle.visible = false;
+
             }
         }
 

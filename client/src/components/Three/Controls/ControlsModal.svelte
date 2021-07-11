@@ -7,7 +7,7 @@
 
     const dispatch = createEventDispatcher();
 
-    const animate = (node, args) => fade(node, {duration: 80});
+    const animate = (node) => fade(node, {duration: 80});
 
     function onCloseModal() {
         dispatch('close', {});
@@ -70,5 +70,4 @@
 		   }}>
         <slot></slot>
     </div>
-
 </div>

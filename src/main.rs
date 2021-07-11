@@ -24,7 +24,7 @@ fn files_svelte(file: PathBuf) -> Option<NamedFile> {
 
 #[get("/positions")]
 fn positions() -> Option<NamedFile> {
-    NamedFile::open(Path::new("src/static/303.json")).ok()
+    NamedFile::open(Path::new("src/static/304.json")).ok()
 }
 
 #[catch(404)]
