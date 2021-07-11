@@ -203,9 +203,9 @@
             window.requestAnimationFrame(render);
             if ($playbackState !== 'stop') {
                 elapsedTime += delta * ($playbackState === 'play' ? 1 : 5);
-                if ((aid === 'person' || aid === 'full') && people) {
-                    updatePositions(elapsedTime, Math.floor(elapsedTime), people, collisionCircles, delta * ($playbackState === 'play' ? 1 : 5));
-                }
+            }
+            if ((aid === 'person' || aid === 'full') && people) {
+                updatePositions(elapsedTime, Math.floor(elapsedTime), people, collisionCircles, delta * ($playbackState === 'play' ? 1 : 5), $playbackState);
             }
             if (inFrame) {
                 controls.enableZoom = !cameraZoomLocked;

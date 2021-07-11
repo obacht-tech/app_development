@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import type {Object3DCustom, PersonSpline, PositionData} from "../../../types";
+import type {Object3DCustom, PersonSpline, PlaybackState, PositionData} from "../../../types";
 import {SkeletonUtils} from "three/examples/jsm/utils/SkeletonUtils";
 import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
 import {updateCollisionCircles} from "./collision";
@@ -176,7 +176,7 @@ export function updateAnimation(moment: number, person: Object3DCustom, delta:nu
     }
 }
 
-export function updatePositions(time: number, second: number, group: THREE.Group, collisionCircles: THREE.Group, delta: number) {
+export function updatePositions(time: number, second: number, group: THREE.Group, collisionCircles: THREE.Group, delta: number, playbackState: PlaybackState) {
     const people: Object3DCustom[] = group.children;
     let infections: number = 0;
     for (let person of people) {
@@ -194,7 +194,10 @@ export function updatePositions(time: number, second: number, group: THREE.Group
             person.position.x = pos.x;
             person.position.z = pos.y;
 
-            updateAnimation(moment, person, delta, pos);
+            if(playbackState !== 'stop'){
+                updateAnimation(moment, person, delta, pos);
+            }
+
             updateCollisionCircles(collisionCircles.children, person, circle, second, time);
         } else {
             if (person.visible) {
