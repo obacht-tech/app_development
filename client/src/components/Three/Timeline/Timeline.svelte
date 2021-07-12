@@ -96,7 +96,7 @@
 
     .timeline
         position: absolute
-        bottom: 6.5rem
+        bottom: 0.5rem
         left: 0
         right: 0
         width: calc(100% - 2rem)

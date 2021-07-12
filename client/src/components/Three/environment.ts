@@ -1,5 +1,9 @@
 import * as THREE from "three";
 
+import {positionScaling} from "./Layers/person";
+import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
+import type {Object3DCustom} from "../../types";
+
 
 export default function (): THREE.Group {
     const sceneEnvironment = new THREE.Group();
@@ -17,23 +21,48 @@ export default function (): THREE.Group {
     directionalLight.shadow.mapSize.height = 2048;
     sceneEnvironment.add(directionalLight);
 
+    const loader = new THREE.TextureLoader();
+    loader.load(
+        'client/static/303.png',
+        function (texture) {
+            const planeMaterial = new THREE.MeshStandardMaterial({
+                color: 0xffffff,
+                map: texture, transparent: true
+            });
+            const planeGeometry = new THREE.PlaneGeometry( 2*6.2, 1.45*6.2 );
+            const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+            plane.receiveShadow = true;
+            plane.rotateX(-Math.PI / 2);
+            plane.position.y = -.6;
+            plane.position.x = 0.8
+            sceneEnvironment.add(plane);
+        },
+    );
+    const fbxLoader = new FBXLoader();
+    fbxLoader.load('/client/static/models/room304.fbx', function (room) {
+        room.scale.set(positionScaling, positionScaling, positionScaling)
+        room.traverse(function (child: Object3DCustom) {
+
+            if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+               // child.scale.set(0.95, 0.95, 0.95)
+                child.position.set(0, 0, 0)
+                //sceneEnvironment.add(child)
+            }
+
+
+
+        });});
+
+
     const material = new THREE.MeshStandardMaterial({color: 0xbbbbbb});
-        const planeMaterial = new THREE.MeshStandardMaterial({
-            color: 0xffffff,
-        });
-        const planeGeometry = new THREE.CircleBufferGeometry(20, 128);
-        const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-        plane.receiveShadow = true;
-        plane.rotateX(-Math.PI / 2);
-        planeMaterial.map = null;
-        plane.position.y = -.5;
-        sceneEnvironment.add(plane);
 
     const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1, 1);
     const cube0 = new THREE.Mesh(cubeGeometry, material);
     cube0.castShadow = true;
-    cube0.scale.set(1, 2, 3);
-    cube0.position.set(-3, 0.5, 1);
+    cube0.scale.set(0.2, 0.5, 3);
+    cube0.position.set(-5.1, 1, 1);
 
     const cube1 = new THREE.Mesh(cubeGeometry, material);
     cube1.castShadow = true;

@@ -19,7 +19,7 @@
 
     .controls
         position: absolute
-        bottom: 2.5rem
+        bottom: -3rem
         width: clamp(0px, 100vw, 400px)
         left: 0
         right: 0

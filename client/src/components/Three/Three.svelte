@@ -47,7 +47,7 @@
     section
         position: relative
         margin: 5rem auto
-        height: clamp(0px, 100vh, 991.98px)
+        height: clamp(0px, 90vh, 991.98px)
 </style>
 
 <section id={aid} class:scroll-snap-child={scrollSnapChild}>

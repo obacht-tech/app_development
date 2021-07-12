@@ -145,7 +145,8 @@
         };
 
         const aspectRatio = sizes.width / sizes.height;
-        const camera = new THREE.OrthographicCamera(-5 * aspectRatio, 5 * aspectRatio, 5, -5, 0.1, 100);
+        const zoomingFactor = 8;
+        const camera = new THREE.OrthographicCamera(-zoomingFactor * aspectRatio, zoomingFactor * aspectRatio, zoomingFactor, -zoomingFactor, 0.1, 100);
 
         switch (aid) {
             case "full":
@@ -185,8 +186,8 @@
                 height: section.clientHeight
             };
 
-            camera.left = -5 * (sizes.width / sizes.height);
-            camera.right = 5 * (sizes.width / sizes.height);
+            camera.left = -zoomingFactor * (sizes.width / sizes.height);
+            camera.right = zoomingFactor * (sizes.width / sizes.height);
             camera.updateProjectionMatrix();
 
             renderer.setSize(sizes.width, sizes.height);
