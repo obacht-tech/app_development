@@ -38,7 +38,7 @@
 
             .right-side
                 max-width: 50%
-                text-align: right
+                text-align: center
 
                 p
                     margin: 0 1rem 0 0
@@ -64,14 +64,14 @@
 
 <div class="information">
     <div class="container-flex">
-        <div class="left-side">
+       <!--  <div class="left-side">
             <p>Mindestabstand: {$distance.new}m</p>
             <p>Maskentragende: {$maskWear.new}%</p>
             <p>Inzidenz: {$incidence.new}/100tsd</p>
-        </div>
+        </div> -->
         <div class="right-side">
-            <h5>{notCollidingPeoplePercentage(collidingPeople, $positionSplines ? $positionSplines.length : 1)}%</h5>
-            <p>halten sich an den Mindestabstand</p>
+            <h3>{notCollidingPeoplePercentage(collidingPeople, $positionSplines ? $positionSplines.length : 1)}%</h3>
+            <p>halten den Mindestabstand von {$distance.new}m ein*</p>
         </div>
     </div>
 

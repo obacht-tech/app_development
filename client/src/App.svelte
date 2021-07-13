@@ -37,6 +37,9 @@
     footer
         margin: 5rem 0
         text-align: center
+    .info
+        margin: 0 1rem
+
 </style>
 
 <svelte:head>
@@ -85,6 +88,7 @@
     </TextCard>
 
     <Three aid="full" scrollSnapChild/>
+    <h6 class="info">*aufgenommene Personen in der Zeit von 14:65 bis 15:46</h6>
 
 </main>
 
