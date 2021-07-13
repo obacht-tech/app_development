@@ -25,7 +25,7 @@
         line-height: 1em
         font-weight: 200
         color: $dark-grey
-        margin: clamp(1.5rem, 6vw, 2.5rem) 0 1.5rem
+        margin: clamp(1.5rem, 6vw, 2.5rem) 0 1rem
 
     .block
         display: flex

@@ -41,23 +41,12 @@
                 text-align: center
 
                 p
-                    margin: 0 1rem 0 0
+                    margin: 0.5rem 0 0 0
                     font-weight: normal
-                    font-size: clamp(0.5rem, 8vw, 1rem)
+                    font-size: 1rem
 
-            .left-side
-                //width: 50%
-                text-align: left
-
-                p
-                    margin: 0 0 0 1rem
-                    font-weight: normal
-                    font-size: clamp(0.5rem, 8vw, 1rem)
-
-
-        h5
-            margin: 0 1rem 0 0
-            font-size: clamp(0.8rem, 9vw, 1rem)
+        h3
+             background: $light-grey
 
 
 </style>

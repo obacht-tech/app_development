@@ -23,6 +23,7 @@
     import {generateCollisionCircles} from "./Layers/collision";
     import {updateDistances} from "./Layers/infection";
     import Information from "./Information/Information.svelte";
+    import datasetDates from "../../env";
 
     export let aid: ApplicationID;
     export let cid: CanvasID;
@@ -40,6 +41,8 @@
     let sizes: { width, height };
     let elapsedTime = 0;
     let collidingPeople;
+
+    let diffSeconds = Math.floor(((datasetDates.end - datasetDates.start) / 1000))
 
     /**
      * Subscription to Data
@@ -73,7 +76,7 @@
                     heatmap = generateHeatmap(data, aid);
                     heatmap.visible = false;
                     scene.add(paths, heatmap)
-                    collidingPeople = updateDistances(people.children, $distance.new, $markerStartEndSeconds.startValue, $markerStartEndSeconds.endValue)
+                    collidingPeople = updateDistances($positionSplines, $distance.new, 0, diffSeconds)
                     break
             }
         }
@@ -125,7 +128,7 @@
 
         distance.subscribe(value => {
             if (people.children.length > 0) {
-                collidingPeople = updateDistances(people.children, value.new, $markerStartEndSeconds.startValue, $markerStartEndSeconds.endValue)
+                collidingPeople = updateDistances($positionSplines, value.new, 0, diffSeconds )
             }
         });
 

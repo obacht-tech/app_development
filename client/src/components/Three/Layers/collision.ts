@@ -51,8 +51,6 @@ export function generateCollisionCircles(people: PersonSpline[]): THREE.Group {
         circle.position.y = -0.49;
         circle.timePosition = personSpline.timePosition;
         circle.timeDelta = personSpline.timeDelta;
-        circle.isInfected = personSpline.isInfected;
-        circle.wearsMask = personSpline.wearsMask;
         collisionCircles.add(circle);
     }
     return collisionCircles;
@@ -77,10 +75,6 @@ export function updateCollisionCircles(people: Object3DCustom[], person: Object3
         if (circle.uuid !== circle2.uuid && (circle2.timePosition <= second && time - circle2.timePosition <= circle2.timeDelta)) {
             if (collision(circle, circle2)) {
                 colliding = true;
-               if(circle2.isInfected){
-                   person.isInfected = true;
-                   break
-               }
             }
 
         }
