@@ -1,4 +1,8 @@
 <script lang="ts">
+    /**
+     * Footer Component
+     * Developers: Silvia Tosato and Valentin Rogg
+     */
     export let scrollSnapChild: boolean = false;
 </script>
 
@@ -15,8 +19,10 @@
 </style>
 
 <footer class:scroll-snap-child={scrollSnapChild} class="container">
-    <picture>
-        <img alt="Obacht! Logo" src="/client/static/obacht-logo.svg">
-    </picture>
+    <a href="https://obacht.tech/">
+        <picture>
+            <img alt="Obacht! Logo" src="/client/static/obacht-logo.svg">
+        </picture>
+    </a>
     <span><i class="far fa-copyright"></i> 2021</span>
 </footer>

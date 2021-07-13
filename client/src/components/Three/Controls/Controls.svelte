@@ -1,4 +1,9 @@
 <script lang="ts">
+    /**
+     * Controls Component
+     * Developer: Silvia Tosato
+     */
+
     import Zoom from "./Zoom.svelte";
     import Layers from "./Layers.svelte";
     import Settings from "./Settings.svelte";
@@ -10,7 +15,6 @@
     export let settings: boolean = false;
     export let cameraZoomLocked: boolean = true;
     export let layerState: LayerState = 'person';
-
 
 </script>
 

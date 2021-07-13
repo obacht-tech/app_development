@@ -1,4 +1,8 @@
 <script lang="ts">
+    /**
+     * Header Component
+     * Developers: Silvia Tosato and Valentin Rogg
+     */
     export let scrollSnapChild: boolean = false;
 </script>
 
@@ -15,8 +19,6 @@
         line-height: 1.2em
         font-family: 'IBM Plex Serif', sans-serif
         font-weight: 400
-        //word-break: break-word
-        //hyphens: auto
 
     h2
         font-size: clamp(1rem, 8vw, 1.5rem)

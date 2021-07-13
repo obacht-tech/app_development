@@ -1,4 +1,9 @@
 <script lang="ts">
+    /**
+     * Canvas Component
+     * Developers: Silvia Tosato and Valentin Rogg
+     */
+
     import * as THREE from "three";
     import {onMount} from "svelte";
     import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js";
@@ -19,7 +24,6 @@
     import {updateDistances, updateIncidence, updateWearMask} from "./Layers/infection";
     import Information from "./Information/Information.svelte";
 
-
     export let aid: ApplicationID;
     export let cid: CanvasID;
     export let inFrame: boolean;
@@ -39,7 +43,7 @@
 
     /**
      * Subscription to Data
-     **/
+     */
     positionSplines.subscribe(async (data: PersonSpline[]) => {
         if (data) {
             switch (aid) {
@@ -77,7 +81,7 @@
 
     /**
      * Subscription to Time Slider
-     **/
+     */
     markerNowSeconds.subscribe(data => {
         if (data) {
             elapsedTime = data;
@@ -86,7 +90,7 @@
 
     /**
      * Subscription to Range Slider
-     **/
+     */
     markerStartEndSeconds.subscribe((data: { startValue: number, endValue: number }) => {
         if (data.startValue && data.endValue) {
             if (aid === 'paths' || aid === 'full') {
@@ -100,7 +104,7 @@
 
     /**
      * Subscription Layers and Distance
-     **/
+     */
     if (aid === 'full') {
         layerState.subscribe((data: LayerState) => {
             switch (data) {
@@ -133,7 +137,7 @@
 
         /**
          * Canvas centering
-         **/
+         */
         const width = (): number => {
             return section.clientWidth
                     - parseInt(window.getComputedStyle(section, null).getPropertyValue('padding-left'))
@@ -166,7 +170,7 @@
         }
         /**
          * Renderer Initialisation
-         **/
+         */
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas,
         });
@@ -184,7 +188,7 @@
 
         /**
          * Controls
-         **/
+         */
         const controls = new OrbitControls(camera, canvas);
         controls.enabled = enableCameraControls;
         controls.enableZoom = !cameraZoomLocked;
@@ -195,7 +199,7 @@
 
         /**
          * EventListener Resize Window
-         **/
+         */
         window.addEventListener('resize', () => {
             sizes = {
                 width: width(),
@@ -213,7 +217,7 @@
 
         /**
          * Render
-         **/
+         */
         let delta = 0.016;
         function render() {
             window.requestAnimationFrame(render);

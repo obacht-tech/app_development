@@ -1,4 +1,9 @@
 <script lang="ts">
+    /**
+     * Controls Component
+     * Developer: Silvia Tosato
+     */
+
     import {createEventDispatcher} from "svelte";
     import { fade } from 'svelte/transition';
     import type {ModalType} from "../../../types";
@@ -8,7 +13,10 @@
     const dispatch = createEventDispatcher();
 
     const animate = (node) => fade(node, {duration: 80});
-
+    /**
+     * Controls Component
+     * Developer: Silvia Tosato
+     */
     function onCloseModal() {
         dispatch('close', {});
     }
