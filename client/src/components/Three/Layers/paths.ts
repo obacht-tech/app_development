@@ -1,3 +1,7 @@
+/**
+ * Paths Logic
+ * Developer: Silvia Tosato
+ */
 import * as THREE from "three";
 import type {Object3DCustom, PersonSpline} from "../../../types";
 /**

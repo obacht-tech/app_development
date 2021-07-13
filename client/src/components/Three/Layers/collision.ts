@@ -1,3 +1,8 @@
+/**
+ * Collision Logic
+ * Developer: Silvia Tosato
+ */
+
 import type {PersonSpline, Object3DCustom} from "../../../types";
 import * as THREE from "three";
 import {distance} from "../../../store";

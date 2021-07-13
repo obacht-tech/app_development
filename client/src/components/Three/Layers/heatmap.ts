@@ -1,3 +1,7 @@
+/**
+ * Heatmap Logic
+ * Developer: Silvia Tosato
+ */
 import h337 from './heatmap_script.js'
 import type {ApplicationID, HeatmapPoint, Object3DCustom, PersonSpline} from "../../../types";
 import * as THREE from "three";

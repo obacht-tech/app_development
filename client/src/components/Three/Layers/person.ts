@@ -1,9 +1,13 @@
+/**
+ * People Logic
+ * Developer: Silvia Tosato
+ */
 import * as THREE from "three";
 import type {Object3DCustom, PersonSpline, PlaybackState, PositionData} from "../../../types";
 import {SkeletonUtils} from "three/examples/jsm/utils/SkeletonUtils";
 import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
 import {updateCollisionCircles} from "./collision";
-import {calculateInfection, percentBool, updateIncidence} from "./infection";
+import {percentBool} from "./infection";
 import {incidence, infectionRate, maskWear} from "../../../store";
 import datasetDates from "../../../env";
 
@@ -73,7 +77,7 @@ export function initSplines(fetchingData: PositionData[]): PersonSpline[] {
     return peopleSplines;
 }
 /**
- *  Loads Models and generates People With Animations 
+ *  Loads Models and generates People With Animations
  *  for Three.js Scene
  *
  * @export
