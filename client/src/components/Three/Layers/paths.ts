@@ -1,6 +1,12 @@
 import * as THREE from "three";
 import type {Object3DCustom, PersonSpline} from "../../../types";
-
+/**
+ * generates Paths of given Splines
+ *
+ * @export
+ * @param {PersonSpline[]} people
+ * @return {*}  {THREE.Group}
+ */
 export function generatePaths(people: PersonSpline[]): THREE.Group {
     const paths = new THREE.Group()
     for (let personSpline of people) {
@@ -22,8 +28,15 @@ export function generatePaths(people: PersonSpline[]): THREE.Group {
     return paths;
 }
 
-
-export function rangePaths(paths: THREE.Group, start: number, end: number) {
+/**
+ * update Pathmap with given range Values
+ *
+ * @export
+ * @param {THREE.Group} paths
+ * @param {number} start
+ * @param {number} end
+ */
+export function updatePaths(paths: THREE.Group, start: number, end: number) {
     const allPaths: Object3DCustom[] = paths.children;
     for (let path of allPaths) {
         const pathRange = path.timePosition + path.timeDelta;

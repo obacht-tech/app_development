@@ -8,7 +8,14 @@ const planeMaterial = new THREE.MeshStandardMaterial({
     color: 0xffffff,
     transparent: true
 });
-
+/**
+ * Heatmap Instanciation and generate Plane with CanvasTexture of Heatmap
+ *
+ * @export
+ * @param {PersonSpline[]} people
+ * @param {ApplicationID} aid
+ * @return {*}  {THREE.Object3D}
+ */
 export function generateHeatmap(people: PersonSpline[], aid: ApplicationID): THREE.Object3D {
     if (aid === 'heatmap') {
         heatmapInstance = h337.create({
@@ -40,11 +47,11 @@ export function generateHeatmap(people: PersonSpline[], aid: ApplicationID): THR
     }
     if (aid === 'heatmap') {
         heatmapInstance.setData({
-            data: countPoints(points)
+           data: points
         });
     } else {
         heatmapFullInstance.setData({
-            data: countPoints(points)
+            data: points
         });
     }
     const heatmapCanvas: HTMLCanvasElement = document.querySelector('canvas.heatmap-canvas');
@@ -53,9 +60,13 @@ export function generateHeatmap(people: PersonSpline[], aid: ApplicationID): THR
     return initHeatmapPlane(heatMapTexture);
 }
 
-
+/**
+ * returns Plane with given Texture
+ *
+ * @param {THREE.CanvasTexture} texture
+ * @return {*}  {THREE.Object3D}
+ */
 function initHeatmapPlane(texture: THREE.CanvasTexture): THREE.Object3D {
-
     const planeGeometry = new THREE.PlaneGeometry(10, 10);
     const plane = new THREE.Mesh(planeGeometry, planeMaterial);
     planeMaterial.map = texture;
@@ -66,8 +77,17 @@ function initHeatmapPlane(texture: THREE.CanvasTexture): THREE.Object3D {
     return plane;
 }
 
-
-export function rangeHeatmap(start: number, end: number, people: PersonSpline[], aid: ApplicationID, plane: Object3DCustom) {
+/**
+ * updates Heatmap with given range Values
+ *
+ * @export
+ * @param {number} start
+ * @param {number} end
+ * @param {PersonSpline[]} people
+ * @param {ApplicationID} aid
+ * @param {Object3DCustom} plane
+ */
+export function updateHeatmap(start: number, end: number, people: PersonSpline[], aid: ApplicationID, plane: Object3DCustom) {
     const points: HeatmapPoint[] = [];
     for (let i = 0; i < people.length; i++) {
         const pathRange = people[i].timePosition + people[i].timeDelta;
@@ -96,14 +116,3 @@ export function rangeHeatmap(start: number, end: number, people: PersonSpline[],
 
 
 }
-
-function countPoints(points: HeatmapPoint[]) {
-    return Object.values(points.reduce((r, point) => {
-        let k = `${point.x}|${point.y}`;
-        if (!r[k]) r[k] = {...point, value: 1}
-        else r[k].value += 1;
-        return r;
-    }, {}))
-}
-
-

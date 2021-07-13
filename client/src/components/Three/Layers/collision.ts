@@ -13,14 +13,28 @@ distance.subscribe((value)=>{
     geometry.scale(redoScalingFactor,redoScalingFactor,redoScalingFactor)
     geometry.scale(value.new/2,value.new/2 ,value.new/2 )
 })
-
+/**
+ *  Collision between two Circles
+ *
+ * @export
+ * @param {THREE.Object3D} circle1
+ * @param {THREE.Object3D} circle2
+ * @param {number} [radiusVal]
+ * @return {*}  {boolean}
+ */
 export function collision(circle1: THREE.Object3D, circle2: THREE.Object3D, radiusVal?:number): boolean {
     const dx = circle1.position.x - circle2.position.x;
     const dy = circle1.position.z - circle2.position.z;
     const resultDistance = Math.sqrt(dx * dx + dy * dy);
     return resultDistance <= (radiusVal ? radiusVal*2 : radius*2);
 }
-
+/**
+ *  generates the Collision Circles around the people
+ *
+ * @export
+ * @param {PersonSpline[]} people
+ * @return {*}  {THREE.Group}
+ */
 export function generateCollisionCircles(people: PersonSpline[]): THREE.Group {
     let collisionCircles: THREE.Group = new THREE.Group();
     for (let personSpline of people) {
@@ -38,7 +52,16 @@ export function generateCollisionCircles(people: PersonSpline[]): THREE.Group {
     }
     return collisionCircles;
 }
-
+/**
+ * updates collisions and colors of collisionCircles
+ *
+ * @export
+ * @param {Object3DCustom[]} people
+ * @param {Object3DCustom} person
+ * @param {Object3DCustom} circle
+ * @param {number} second
+ * @param {number} time
+ */
 export function updateCollisionCircles(people: Object3DCustom[], person: Object3DCustom, circle: Object3DCustom, second: number, time: number) {
     circle.visible = true;
     circle.position.x = person.position.x;

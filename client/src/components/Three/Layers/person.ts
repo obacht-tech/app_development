@@ -30,7 +30,13 @@ infectionRate.subscribe(value => {
     infectionRateValue = value;
 })
 
-
+/**
+ * Reformat PositionData to Type PersonSpline
+ *
+ * @export
+ * @param {PositionData[]} fetchingData
+ * @return {*}  {PersonSpline[]}
+ */
 export function initSplines(fetchingData: PositionData[]): PersonSpline[] {
     let markerStart: Date = datasetDates.start;
     let markerEnd: Date = datasetDates.end;
@@ -66,10 +72,17 @@ export function initSplines(fetchingData: PositionData[]): PersonSpline[] {
 
     return peopleSplines;
 }
-
+/**
+ *  Loads Models and generates People With Animations 
+ *  for Three.js Scene
+ *
+ * @export
+ * @param {PersonSpline[]} people
+ * @return {*}  {Promise<THREE.Group>}
+ */
 export async function generatePeopleWithAnimations(people: PersonSpline[]): Promise<THREE.Group> {
     return new Promise((resolve) => {
-        fbxLoader.load('/client/static/models/human_male_walking.fbx', function (male_object) {
+        fbxLoader.load('/client/static/models/human_male_walking.fbx', function (male_object: THREE.Group) {
             male_object.scale.set(positionScaling, positionScaling, positionScaling)
             male_object.traverse(function (child: Object3DCustom) {
 
@@ -83,7 +96,7 @@ export async function generatePeopleWithAnimations(people: PersonSpline[]): Prom
 
             });
 
-            fbxLoader.load('/client/static/models/human_female_walking.fbx', function (female_object) {
+            fbxLoader.load('/client/static/models/human_female_walking.fbx', function (female_object: THREE.Group) {
                 female_object.scale.set(positionScaling, positionScaling, positionScaling)
                 female_object.traverse(function (child: Object3DCustom) {
 
@@ -104,11 +117,20 @@ export async function generatePeopleWithAnimations(people: PersonSpline[]): Prom
 
 }
 
-
-export function generatePeopleMeshes(people: PersonSpline[], maleObject, femaleObject) {
+/**
+ *  Part of generatePeopleWithAnimations
+ *  Initialisies People Meshes and AnimationMixers
+ *
+ * @export
+ * @param {PersonSpline[]} people
+ * @param {THREE.Group} maleObject
+ * @param {THREE.Group} femaleObject
+ * @return {*}  {THREE.Group}
+ */
+export function generatePeopleMeshes(people: PersonSpline[], maleObject: THREE.Group, femaleObject: THREE.Group): THREE.Group {
     const peopleGroup = new THREE.Group()
     for (let i = 0; i< people.length; i++ ) {
-        const object = Math.random() > 0.5 ? maleObject : femaleObject;
+        const object: THREE.Group = Math.random() > 0.5 ? maleObject : femaleObject;
         const personMesh: Object3DCustom = SkeletonUtils.clone(object)
         personMesh.animations = [...object.animations];
         const mixernew = new THREE.AnimationMixer(personMesh);
@@ -136,32 +158,22 @@ export function generatePeopleMeshes(people: PersonSpline[], maleObject, femaleO
         personMesh.wearsMask = people[i].wearsMask;
         personMesh.isInfected = people[i].isInfected;
         personMesh.isIncidenceInfected = people[i].isInfected;
-        // min 1 infected
-
-        /*if(personMesh.wearsMask){
-            personMesh.material = new THREE.MeshStandardMaterial({
-                color: new THREE.Color('green')
-                  })
-
-        }
-        if(personMesh.isInfected){
-            personMesh.material = new THREE.MeshStandardMaterial({
-                color: new THREE.Color('red')
-            })
-            console.log('Infected')
-        }*/
 
         peopleGroup.add(personMesh)
     }
-
-    // minimum 1 infected
-      /*   peopleGroup.children[3].isInfected = true;
-        peopleGroup.children[3].isIncidenceInfected = true;
- */
     return peopleGroup
 }
-
-export function updateAnimation(moment: number, person: Object3DCustom, delta:number, pos: THREE.Vector2) {
+/**
+ *  updates the Mixer of Persons Animations
+ *  with Rotations and Speed
+ *
+ * @export
+ * @param {number} moment
+ * @param {Object3DCustom} person
+ * @param {number} delta
+ * @param {THREE.Vector2} pos
+ */
+export function updateAnimation(moment: number, person: Object3DCustom, delta: number, pos: THREE.Vector2) {
     const t = ((moment+ delta) / (person.timeDelta))
     if(t <= 1){
         // Rotate to walk direction
@@ -176,7 +188,17 @@ export function updateAnimation(moment: number, person: Object3DCustom, delta:nu
         person.mixer = person.mixer.update(speed);
     }
 }
-
+/**
+ * updates Positions, Animations and Collisions
+ *
+ * @export
+ * @param {number} time
+ * @param {number} second
+ * @param {THREE.Group} group
+ * @param {THREE.Group} collisionCircles
+ * @param {number} delta
+ * @param {PlaybackState} playbackState
+ */
 export function updatePositions(time: number, second: number, group: THREE.Group, collisionCircles: THREE.Group, delta: number, playbackState: PlaybackState) {
     const people: Object3DCustom[] = group.children;
     let infections: number = 0;

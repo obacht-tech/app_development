@@ -18,8 +18,8 @@
         generatePeopleWithAnimations,
         updatePositions
     } from "./Layers/person";
-    import {generateHeatmap, rangeHeatmap} from "./Layers/heatmap";
-    import {generatePaths, rangePaths} from "./Layers/paths";
+    import {generateHeatmap, updateHeatmap} from "./Layers/heatmap";
+    import {generatePaths, updatePaths} from "./Layers/paths";
     import {generateCollisionCircles} from "./Layers/collision";
     import {updateDistances, updateIncidence, updateWearMask} from "./Layers/infection";
     import Information from "./Information/Information.svelte";
@@ -94,10 +94,10 @@
     markerStartEndSeconds.subscribe((data: { startValue: number, endValue: number }) => {
         if (data.startValue && data.endValue) {
             if (aid === 'paths' || aid === 'full') {
-                rangePaths(paths, data.startValue, data.endValue);
+                updatePaths(paths, data.startValue, data.endValue);
             }
             if (aid === 'heatmap' || aid === 'full') {
-                rangeHeatmap(data.startValue, data.endValue, $positionSplines, aid, heatmap);
+                updateHeatmap(data.startValue, data.endValue, $positionSplines, aid, heatmap);
             }
         }
     })
