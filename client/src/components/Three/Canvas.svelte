@@ -36,6 +36,10 @@
     let sizes: { width, height };
     let elapsedTime = 0;
     let collidingPeople;
+
+    /**
+     * Subscription to Data
+     **/
     positionSplines.subscribe(async (data: PersonSpline[]) => {
         if (data) {
             switch (aid) {
@@ -71,13 +75,18 @@
         }
     })
 
+    /**
+     * Subscription to Time Slider
+     **/
     markerNowSeconds.subscribe(data => {
         if (data) {
             elapsedTime = data;
-            // calculateInfection(people.children, data)
         }
     })
 
+    /**
+     * Subscription to Range Slider
+     **/
     markerStartEndSeconds.subscribe((data: { startValue: number, endValue: number }) => {
         if (data.startValue && data.endValue) {
             if (aid === 'paths' || aid === 'full') {
@@ -86,14 +95,12 @@
             if (aid === 'heatmap' || aid === 'full') {
                 rangeHeatmap(data.startValue, data.endValue, $positionSplines, aid, heatmap);
             }
-
-            /* if(aid === 'full' && people.children.length > 0 ){
-                    collidingPeople = updateDistances(people.children, $distance.new, data.startValue, data.endValue)
-            }*/
         }
     })
 
-
+    /**
+     * Subscription Layers and Distance
+     **/
     if (aid === 'full') {
         layerState.subscribe((data: LayerState) => {
             switch (data) {
@@ -112,14 +119,6 @@
             }
         })
 
-        incidence.subscribe(value => {
-            updateIncidence(people.children)
-        });
-
-        maskWear.subscribe(value => {
-            updateWearMask(people.children)
-        });
-
         distance.subscribe(value => {
             if (people.children.length > 0) {
                 collidingPeople = updateDistances(people.children, value.new, $markerStartEndSeconds.startValue, $markerStartEndSeconds.endValue)
@@ -132,6 +131,9 @@
         const section: HTMLElement = document.querySelector(`section#${aid}`)
         const canvas: HTMLCanvasElement = document.querySelector(`canvas#${cid}`);
 
+        /**
+         * Canvas centering
+         **/
         const width = (): number => {
             return section.clientWidth
                     - parseInt(window.getComputedStyle(section, null).getPropertyValue('padding-left'))
@@ -145,6 +147,10 @@
 
         const aspectRatio = sizes.width / sizes.height;
         const zoomingFactor = 8;
+
+        /**
+         * TopDownCamera or OrbitCamera
+         **/
         const camera = new THREE.OrthographicCamera(-zoomingFactor * aspectRatio, zoomingFactor * aspectRatio, zoomingFactor, -zoomingFactor, 0.1, 100);
 
         switch (aid) {
@@ -158,7 +164,9 @@
                 camera.position.y = 10;
                 break;
         }
-
+        /**
+         * Renderer Initialisation
+         **/
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas,
         });
@@ -167,10 +175,16 @@
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
+        /**
+         * Environment
+         **/
         scene.background = new THREE.Color(`white`);
         const env = environment();
         scene.add(env);
 
+        /**
+         * Controls
+         **/
         const controls = new OrbitControls(camera, canvas);
         controls.enabled = enableCameraControls;
         controls.enableZoom = !cameraZoomLocked;
@@ -179,6 +193,9 @@
         controls.maxZoom = 4;
         controls.maxPolarAngle = (Math.PI / 2) * 0.99;
 
+        /**
+         * EventListener Resize Window
+         **/
         window.addEventListener('resize', () => {
             sizes = {
                 width: width(),
@@ -195,12 +212,10 @@
         })
 
         /**
-         * Animate
-         */
+         * Render
+         **/
         let delta = 0.016;
-
-        function render(timeStamp?) {
-
+        function render() {
             window.requestAnimationFrame(render);
             if ($playbackState !== 'stop') {
                 elapsedTime += delta * ($playbackState === 'play' ? 1 : 5);
@@ -234,8 +249,8 @@
 {#if aid === 'heatmap' || aid === 'full'}
     <div style="height: 1000px; width: 1000px; display: none" class={aid==='heatmap'?'heatmap': 'full'}></div>
 {/if}
+
 {#if aid === 'full'}
-<!--    <p>{$infectionRate}/{people.children.length}</p>-->
     <Information bind:collidingPeople={collidingPeople}/>
 {/if}
 
