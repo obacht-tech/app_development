@@ -8,10 +8,10 @@
     import ControlsModal from "./ControlsModal.svelte";
     import {maskWear, distance, timeInfection, incidence} from "../../../store";
 
-    let distanceValue = 20;
+    let distanceValue = 15;
     let incidenceValue = 200;
     let timeInfectionValue = 0;
-    let maskWearValue = 10;
+    let maskWearValue = 90;
 
 
     /**

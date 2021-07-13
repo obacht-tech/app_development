@@ -28,9 +28,6 @@ export type PersonSpline = {
     timePosition?: number,
     startDate: string,
     timeDelta?: number,
-    isInfected: boolean,
-    wearsMask: boolean,
-    isIncidenceInfected?: boolean
 }
 
 export type OldNewValue = {
@@ -51,9 +48,6 @@ export type Object3DCustom = THREE.Object3D &
         material?: any,
         isMesh?: boolean,
         mixer?: THREE.AnimationMixer,
-        isInfected?: boolean,
-        isIncidenceInfected?: boolean,
-        wearsMask?: boolean
     }
 
 export type HeatmapPoint = {
