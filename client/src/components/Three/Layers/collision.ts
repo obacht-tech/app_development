@@ -2,7 +2,7 @@ import type {PersonSpline, Object3DCustom} from "../../../types";
 import * as THREE from "three";
 import {distance} from "../../../store";
 
-let geometry =  new THREE.TorusGeometry( 0.9, 0.1, 16, 50 );;
+let geometry =  new THREE.RingGeometry(0.8, 1, 18);
 export const materialCollision = new THREE.MeshBasicMaterial({color: 'red'});
 export const materialNoCollision = new THREE.MeshBasicMaterial({color: '#18A0FB'});
 let radius = 1;
@@ -29,7 +29,7 @@ export function generateCollisionCircles(people: PersonSpline[]): THREE.Group {
         circle.rotateX(-Math.PI / 2);
         circle.uuid = personSpline.pid;
         circle.visible = true;
-        circle.position.z = .48;
+        circle.position.y = -0.49;
         circle.timePosition = personSpline.timePosition;
         circle.timeDelta = personSpline.timeDelta;
         circle.isInfected = personSpline.isInfected;
@@ -50,7 +50,6 @@ export function updateCollisionCircles(people: Object3DCustom[], person: Object3
             if (collision(circle, circle2)) {
                 colliding = true;
                if(circle2.isInfected){
-                   person.material = materialCollision;
                    person.isInfected = true;
                    break
                }

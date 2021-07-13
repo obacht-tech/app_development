@@ -13,7 +13,7 @@ let infectionRateValue;
 
 export const positionScaling = 0.01;
 const humanMaterial = new THREE.MeshStandardMaterial({
-    color: '#C7C700'
+    color: 'red'
 })
 const manager = new THREE.LoadingManager();
 const fbxLoader = new FBXLoader(manager);
@@ -78,6 +78,7 @@ export async function generatePeopleWithAnimations(people: PersonSpline[]): Prom
                     child.receiveShadow = true;
                     child.scale.set(positionScaling, positionScaling, positionScaling)
                     child.position.set(0, 0, 0)
+                    child.material.material = humanMaterial;
                 }
 
             });
@@ -114,11 +115,11 @@ export function generatePeopleMeshes(people: PersonSpline[], maleObject, femaleO
         const action = mixernew.clipAction(object.animations[0]);
         personMesh.mixer = mixernew;
         action.play();
-       // const color = new THREE.Color(0xffffff);
-       //  color.setHex(Math.random() * 0xffffff);
-       //  const personMaterial = new THREE.MeshStandardMaterial({
-       //      color
-       //  })
+       const color = new THREE.Color(0xffffff);
+        color.setHex(Math.random() * 0xffffff);
+        const personMaterial = new THREE.MeshStandardMaterial({
+            color
+        })
         people[i].spline = new THREE.SplineCurve(people[i].splineData);
         people[i].timeDelta = people[i].splineData.length - 1;
 
@@ -128,7 +129,7 @@ export function generatePeopleMeshes(people: PersonSpline[], maleObject, femaleO
         personMesh.position.z = 0;
         personMesh.position.y = -0.5;
         personMesh.uuid = people[i].pid;
-        //personMesh.material = personMaterial;
+        personMesh.material = personMaterial;
         personMesh.spline = people[i].spline;
         personMesh.timePosition = people[i].timePosition;
         personMesh.timeDelta = people[i].timeDelta;
@@ -137,7 +138,7 @@ export function generatePeopleMeshes(people: PersonSpline[], maleObject, femaleO
         personMesh.isIncidenceInfected = people[i].isInfected;
         // min 1 infected
 
-        if(personMesh.wearsMask){
+        /*if(personMesh.wearsMask){
             personMesh.material = new THREE.MeshStandardMaterial({
                 color: new THREE.Color('green')
                   })
@@ -148,7 +149,7 @@ export function generatePeopleMeshes(people: PersonSpline[], maleObject, femaleO
                 color: new THREE.Color('red')
             })
             console.log('Infected')
-        }
+        }*/
 
         peopleGroup.add(personMesh)
     }

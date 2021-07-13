@@ -2,10 +2,15 @@
     import {
         maskWear,
         incidence,
-        distance
+        distance,
+        positionSplines
     } from "../../../store";
 
-    export let collidingPeople: number;
+    export let collidingPeople: number = 1;
+
+    function notCollidingPeoplePercentage (collidingPeopleLength: number, allPeopleLength: number): number  {
+        return    (allPeopleLength*(allPeopleLength-collidingPeopleLength))/100
+    }
 </script>
 
 <style lang="sass">
@@ -54,7 +59,7 @@
             <p>Inzidenz: {$incidence.new}/100tsd</p>
         </div>
         <div class="right-side">
-            <h5>{collidingPeople}%</h5>
+            <h5>{notCollidingPeoplePercentage(collidingPeople, $positionSplines?$positionSplines.length : 1)}%</h5>
             <p>halten sich an den Mindestabstand</p>
         </div>
     </div>
