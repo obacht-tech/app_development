@@ -42,6 +42,13 @@
                 font-size: $size-normal
                 line-height: $size-normal
                 margin: 1.5rem 0 0.5rem 0
+                display: inline-block
+            .text-right
+                text-align: right
+                font-size: $size-normal
+                line-height: $size-normal
+                float: right
+                margin: 1.5rem 0 0.5rem 0
 
 </style>
 
@@ -53,26 +60,29 @@
     {#if $modal === 'settings'}
         <ControlsModal positionArrow="settings" on:close={()=>modal.set('')}>
             <div class="settings__modal">
-                <p style="margin-top: 0">Maskentragende: {maskWearValue}%</p>
-                <RangeSlider on:change={(value) => maskWearValue = value.detail.value}
-                             on:stop={(value) => {const old = $maskWear.new ; maskWear.set({new:value, old: old})}}
-                             id="range_slider" range="min"
-                             values={[maskWearValue]}/>
-                <p>Mindestabstand: {distanceValue / 10}m </p>
+                <p>Mindestabstand:  </p> <span class="text-right">{distanceValue / 10}m</span>
                 <RangeSlider on:change={(value) => distanceValue = value.detail.value}
                              on:stop={(value) => {const old = $distance.new ; distance.set({new:value.detail.value/10, old: old})}}
                              min={5} max={30}
                              id="range_slider"
                              range="min" values={[distanceValue]}/>
-                <p>Inzidenz auf 100tsd: {incidenceValue}</p>
+                <p>Maskentragende: </p><span class="text-right">{maskWearValue}%</span>
+                <RangeSlider on:change={(value) => maskWearValue = value.detail.value}
+                             disabled
+                             on:stop={(value) => {const old = $maskWear.new ; maskWear.set({new:value, old: old})}}
+                             id="range_slider" range="min"
+                             values={[maskWearValue]}/>
+                <p>Inzidenz auf 100tsd: </p><span class="text-right">{incidenceValue}</span>
                 <RangeSlider on:change={(value) => incidenceValue = value.detail.value}
                              on:stop={(value) => {const old = $incidence.new ; incidence.set({new: value.detail.value, old: old})}}
                              min={0} max={10000}
+                             disabled
                              id="range_slider"
                              range="min" values={[incidenceValue]}/>
-                <p>Zeitlicher Kontakt zur Infektion: {timeInfectionValue}Sek.</p>
+                <p>Zeitlicher Kontakt zur Infektion: </p><span class="text-right">{timeInfectionValue}Sek.</span>
                 <RangeSlider on:change={(value) => timeInfectionValue = value.detail.value}
                              on:stop={(value) => timeInfection.set(value.detail.value)}
+                             disabled
                              min={0} max={300}
                              id="range_slider" range="min" values={[timeInfectionValue]}/>
             </div>

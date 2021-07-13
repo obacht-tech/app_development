@@ -1,0 +1,63 @@
+<script lang="ts">
+    import {
+        maskWear,
+        incidence,
+        distance
+    } from "../../../store";
+
+    export let collidingPeople: number;
+</script>
+
+<style lang="sass">
+    @import "./../../../styles/theme"
+
+    .information
+        position: absolute
+        top: clamp(1rem, 10vw, 5rem)
+        width: 100%
+
+        .container-flex
+            display: flex
+            justify-content: space-evenly
+            align-items: center
+
+            .right-side
+                max-width: 50%
+                text-align: right
+                p
+                    margin: 0 1rem 0 0
+                    font-weight: normal
+                    font-size: clamp(0.5rem, 8vw, 1rem)
+
+            .left-side
+                //width: 50%
+                text-align: left
+                p
+                    margin: 0 0 0 1rem
+                    font-weight: normal
+                    font-size: clamp(0.5rem, 8vw, 1rem)
+
+
+        h5
+            margin: 0 1rem 0 0
+            font-size: clamp(0.8rem, 9vw, 1rem)
+
+
+
+</style>
+
+<div class="information">
+    <div class="container-flex">
+        <div class="left-side">
+            <p>Mindestabstand: {$distance.new}m</p>
+            <p>Maskentragende: {$maskWear.new}%</p>
+            <p>Inzidenz: {$incidence.new}/100tsd</p>
+        </div>
+        <div class="right-side">
+            <h5>{collidingPeople}%</h5>
+            <p>halten sich an den Mindestabstand</p>
+        </div>
+    </div>
+
+
+</div>

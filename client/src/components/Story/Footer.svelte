@@ -6,7 +6,7 @@
     @import "./../../styles/scroll-snapping"
 
     footer
-        margin: 5rem auto 10rem
+        margin: 15rem auto 10rem
 
     img
         width: 100px

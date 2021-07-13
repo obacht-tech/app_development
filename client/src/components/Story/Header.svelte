@@ -11,8 +11,8 @@
         margin: 5rem auto 0
 
     h1
-        font-size: clamp(2rem, 6vw, 4rem)
-        line-height: 1em
+        font-size: clamp(2rem, 6vw, 2.5rem)
+        line-height: 1.2em
         font-family: 'IBM Plex Serif', sans-serif
         font-weight: 400
         //word-break: break-word
@@ -57,8 +57,10 @@
 </style>
 
 <header class:scroll-snap-child={scrollSnapChild} class="container">
-    <h1>Verhaltensstudie im Herzen von Augsburg</h1>
-    <h2>Abstandsmessung auf dem Rathausplatz</h2>
+    <h1>Corona-Studie im Herzen von Augsburg</h1>
+    <!--<i class="fas fa-heart"></i>-->
+    <h2>Abstandsmessung im Schaezlerpalais</h2>
+    <hr>
     <div class="block">
         <p class="info">
             <span class="info__logo">
@@ -68,7 +70,7 @@
             </span>
             <span class="info__release">15 Juli 2021</span>
             <span class="info__point">·</span>
-            <span class="info__read_time">5 min lesen</span>
+            <span class="info__read_time">8 min lesen</span>
         </p>
         <p class="links">
             <i class="fal fa-share-square" style="cursor: pointer"></i>

@@ -54,8 +54,6 @@ export default function (): THREE.Group {
 
 
         });});
-
-
     const material = new THREE.MeshStandardMaterial({color: 0xbbbbbb});
 
     const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1, 1);

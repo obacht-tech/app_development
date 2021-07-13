@@ -17,8 +17,7 @@
     import {generatePaths, rangePaths} from "./Layers/paths";
     import {generateCollisionCircles} from "./Layers/collision";
     import {updateDistances, updateIncidence, updateWearMask} from "./Layers/infection";
-
-
+    import Information from "./Information/Information.svelte";
 
 
     export let aid: ApplicationID;
@@ -88,7 +87,7 @@
                 rangeHeatmap(data.startValue, data.endValue, $positionSplines, aid, heatmap);
             }
 
-           /* if(aid === 'full' && people.children.length > 0 ){
+            /* if(aid === 'full' && people.children.length > 0 ){
                     collidingPeople = updateDistances(people.children, $distance.new, data.startValue, data.endValue)
             }*/
         }
@@ -199,6 +198,7 @@
          * Animate
          */
         let delta = 0.016;
+
         function render(timeStamp?) {
 
             window.requestAnimationFrame(render);
@@ -235,7 +235,8 @@
     <div style="height: 1000px; width: 1000px; display: none" class={aid==='heatmap'?'heatmap': 'full'}></div>
 {/if}
 {#if aid === 'full'}
-    <p>{collidingPeople} </p>
+<!--    <p>{$infectionRate}/{people.children.length}</p>-->
+    <Information bind:collidingPeople={collidingPeople}/>
 {/if}
-<p>{$infectionRate}/{people.children.length}</p>
+
 <canvas id={cid} class:cursor={enableCameraControls}></canvas>
