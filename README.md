@@ -46,6 +46,9 @@ Rust has no live reloading feature. If there are any changes to the server cargo
 First change to the client folder
 `cd client`
 
+install all nmp packages `npm i`
+do this before starting the backend server
+
 Start Svelte with hot reload `npm run dev`
 
 Or build Svelte once `npm run build`
