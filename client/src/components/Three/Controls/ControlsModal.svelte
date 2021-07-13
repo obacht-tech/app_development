@@ -5,22 +5,32 @@
      */
 
     import {createEventDispatcher} from "svelte";
-    import { fade } from 'svelte/transition';
+    import {fade} from 'svelte/transition';
     import type {ModalType} from "../../../types";
 
     export let positionArrow: ModalType = 'settings';
 
+
+    /**
+     * Animation Fade
+     */
+    const animate = (node) => fade(node, {duration: 80});
+
+    /**
+     * Dispatch event 'close'
+     */
     const dispatch = createEventDispatcher();
 
-    const animate = (node) => fade(node, {duration: 80});
-    /**
-     * Controls Component
-     * Developer: Silvia Tosato
-     */
     function onCloseModal() {
         dispatch('close', {});
     }
 
+    /**
+     * Listen on Click Outside of Modal
+     *
+     * @param {*} element
+     * @param {*} callbackFunction
+     */
     function clickOutside(element, callbackFunction) {
         function onClick(event) {
             if (!element.contains(event.target)) {

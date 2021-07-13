@@ -1,8 +1,17 @@
 <script lang="ts">
+    /**
+     * Playback Component
+     * Developer: Silvia Tosato
+     */
     import {playbackState} from "../../../store";
+
     type PlaybackState = "play" | "2x forward" | "stop";
 
-
+    /**
+     * set playback state
+     *
+     * @param {PlaybackState} state
+     */
     function handlePlay(state: PlaybackState) {
         if (state === "play") {
             playbackState.set("2x forward")

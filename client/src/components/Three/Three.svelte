@@ -1,4 +1,8 @@
 <script lang="ts">
+    /**
+     * Timeline Component
+     * Developers: Silvia Tosato and Valentin Rogg
+     */
     import {onMount} from "svelte";
     import Canvas from "./Canvas.svelte";
     import Timeline from "./Timeline/Timeline.svelte";

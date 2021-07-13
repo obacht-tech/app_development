@@ -1,4 +1,8 @@
 <script lang="ts">
+    /**
+     * Timeline Component
+     * Developers: Silvia Tosato and Valentin Rogg
+     */
     import TextCard from "./components/Story/TextCard.svelte";
     import Header from "./components/Story/Header.svelte";
     import Footer from "./components/Story/Footer.svelte";
@@ -7,6 +11,9 @@
     import {initSplines} from "./components/Three/Layers/person";
     import type {PersonSpline} from "./types";
 
+    /**
+     * fetch Position-Data of Backend
+     */
     fetch("/positions")
             .then(res => res.json())
             .then(json => {

@@ -11,7 +11,7 @@
     import {
         layerState,
         markerNowSeconds,
-        markerStartEndSeconds, playbackState, positionSplines, infectionRate, maskWear, incidence, distance
+        markerStartEndSeconds, playbackState, positionSplines, distance
     } from "../../store";
     import type {ApplicationID, CanvasID, LayerState, PersonSpline} from "../../types";
     import {
@@ -21,7 +21,7 @@
     import {generateHeatmap, updateHeatmap} from "./Layers/heatmap";
     import {generatePaths, updatePaths} from "./Layers/paths";
     import {generateCollisionCircles} from "./Layers/collision";
-    import {updateDistances, updateIncidence, updateWearMask} from "./Layers/infection";
+    import {updateDistances} from "./Layers/infection";
     import Information from "./Information/Information.svelte";
 
     export let aid: ApplicationID;

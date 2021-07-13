@@ -1,4 +1,8 @@
 <script lang="ts">
+    /**
+     * Information Component
+     * Developer: Silvia Tosato
+     */
     import {
         maskWear,
         incidence,
@@ -8,8 +12,14 @@
 
     export let collidingPeople: number = 1;
 
-    function notCollidingPeoplePercentage (collidingPeopleLength: number, allPeopleLength: number): number  {
-        return    (allPeopleLength*(allPeopleLength-collidingPeopleLength))/100
+    /**
+     * returns percentage of not collidingPeople
+     *
+     * @param {PlaybackState} state
+     * return number
+     */
+    function notCollidingPeoplePercentage(collidingPeopleLength: number, allPeopleLength: number): number {
+        return (allPeopleLength * (allPeopleLength - collidingPeopleLength)) / 100
     }
 </script>
 
@@ -29,6 +39,7 @@
             .right-side
                 max-width: 50%
                 text-align: right
+
                 p
                     margin: 0 1rem 0 0
                     font-weight: normal
@@ -37,6 +48,7 @@
             .left-side
                 //width: 50%
                 text-align: left
+
                 p
                     margin: 0 0 0 1rem
                     font-weight: normal
@@ -46,7 +58,6 @@
         h5
             margin: 0 1rem 0 0
             font-size: clamp(0.8rem, 9vw, 1rem)
-
 
 
 </style>
@@ -59,7 +70,7 @@
             <p>Inzidenz: {$incidence.new}/100tsd</p>
         </div>
         <div class="right-side">
-            <h5>{notCollidingPeoplePercentage(collidingPeople, $positionSplines?$positionSplines.length : 1)}%</h5>
+            <h5>{notCollidingPeoplePercentage(collidingPeople, $positionSplines ? $positionSplines.length : 1)}%</h5>
             <p>halten sich an den Mindestabstand</p>
         </div>
     </div>

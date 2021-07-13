@@ -1,4 +1,8 @@
 <script lang="ts">
+    /**
+     * Settings Component
+     * Developer: Silvia Tosato
+     */
     import RangeSlider from "svelte-range-slider-pips";
     import {modal} from "../../../store";
     import ControlsModal from "./ControlsModal.svelte";
@@ -10,7 +14,11 @@
     let maskWearValue = 10;
 
 
-
+    /**
+     * open Modal
+     *
+     * @param {*} event
+     */
     const showModal = (event) => {
         event.stopPropagation()
         if ($modal === '' || $modal === 'layers') {

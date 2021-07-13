@@ -1,4 +1,8 @@
 <script lang="ts">
+    /**
+     * Timeline Component
+     * Developer: Silvia Tosato
+     */
     import RangeSlider from "svelte-range-slider-pips";
     import Playback from "../Controls/Playback.svelte";
     import {markerNowSeconds, markerStartEndSeconds, playbackState} from "../../../store";
@@ -12,7 +16,11 @@
     export let markerNow: Date;
     export let markerEnd: Date;
 
+    /**
+     * seconds between datasetEnd and datasetStart
+     */
     const diffSeconds = Math.floor(((datasetEnd - datasetStart) / 1000));
+
     export let playback: boolean = false;
     let indicatorValue: number = 1;
     let markerStartValue: number = 1;
@@ -20,6 +28,9 @@
     let userInteraction: boolean = false;
 
     onMount(() => {
+        /**
+         * Subscriptions to range and indicator Slider Values
+         */
         if (indicator) {
             markerNowSeconds.subscribe(data => {
                 if (data) {
@@ -42,8 +53,11 @@
         markerStartEndSeconds.set({startValue: 0, endValue: diffSeconds})
     })
 
-    let delta = 0.016;
 
+    /**
+     * Renderer
+     */
+    let delta = 0.016;
     function render() {
         window.requestAnimationFrame(render);
         if ($playbackState !== 'stop') {
@@ -53,19 +67,34 @@
         }
     }
 
-    function addMinutes(date: Date, minutes: number) {
-        return new Date(date.getTime() + minutes * 60000);
-    }
-
+    /**
+     * add Seconds to Date and return new Date
+     *
+     * @param {Date} date
+     * @param {number} seconds
+     * return Date
+     */
     function addSeconds(date: Date, seconds: number) {
         return new Date(date.getTime() + seconds * 1000);
     }
 
+    /**
+     * format Date to String
+     *
+     * @param {Date} date
+     * return string
+     */
     function formatDate(date: Date) {
         const minutes = date.getMinutes();
         return date.getHours() + ':' + ((minutes < 10) ? 0 : '') + minutes + ':' + ((date.getSeconds() < 10) ? 0 : '') + date.getSeconds() + 'Uhr'
     }
 
+    /**
+     * set Range Slider Values in Store and Local
+     *
+     * @param {number} startValue
+     * @param {number} endValue
+     */
     function setMarkerStartEnd(startValue: number, endValue: number) {
         markerStartEndSeconds.set({startValue, endValue})
         markerStart = addSeconds(datasetStart, startValue);
@@ -73,11 +102,19 @@
         markerStartValue = startValue
         markerEndValue = endValue;
     }
-
+    /**
+     * set Indicator Slider Values Local
+     *
+     * @param {number} nowValue
+     */
     function setMarkerNow(nowValue: number) {
         markerNow = addSeconds(datasetStart, nowValue);
     }
-
+    /**
+     * set Indicator Slider Values in Store and Local
+     *
+     * @param {number} nowValue
+     */
     function onStopMarkerNow(nowValue: number) {
         setMarkerNow(nowValue);
         indicatorValue = nowValue;

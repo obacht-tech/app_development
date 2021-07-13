@@ -1,4 +1,8 @@
 <script lang="ts">
+    /**
+     * Zoom Component
+     * Developers: Silvia Tosato and Valentin Rogg
+     */
     export let cameraZoomLocked: boolean = true;
 </script>
 
@@ -15,44 +19,22 @@
         position: relative
         padding: 0.5rem .9rem
 
-        &:hover
-            cursor: pointer
 
-            .locked-icon:not(.locked-visible)
-                opacity: 1
-                color: lighten($blue, 10)
-
-            .locked-icon.locked-visible
-                opacity: 0 !important
-
-            .unlocked-icon.unlocked-visible
-                opacity: 1 !important
-                color: lighten($blue, 10)
-
-
-        &:active
-            .locked-icon:not(.locked-visible)
-                opacity: 1
-                color: $blue
-
-        .locked-icon, .unlocked-icon
+        .lock-icon
             color: $blue
             font-size: .7em
             position: absolute
             bottom: 5px
             left: 5px
-            opacity: 0
             transition: ease-in-out 25ms
 
-        .locked-visible
-            opacity: 1 !important
-
-        .unlocked-visible
-            opacity: 0 !important
 </style>
 
 <div class="zoom" on:click={() => {cameraZoomLocked = !cameraZoomLocked}}>
     <i class="fas fa-search"></i>
-    <span class="locked-icon" class:locked-visible={cameraZoomLocked}><i class="fas fa-lock"></i></span>
-    <span class="unlocked-icon" class:unlocked-visible={cameraZoomLocked}><i class="fas fa-lock-open"></i></span>
+    {#if cameraZoomLocked}
+        <span class="lock-icon"><i class="fas fa-lock"></i></span>
+    {:else }
+        <span class="lock-icon"><i class="fas fa-lock-open"></i></span>
+    {/if}
 </div>
