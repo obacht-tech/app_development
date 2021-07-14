@@ -7,7 +7,7 @@ import type {PersonSpline, Object3DCustom} from "../../../types";
 import * as THREE from "three";
 import {distance} from "../../../store";
 
-let geometry =  new THREE.RingGeometry(0.8, 1, 18);
+let geometry =  new THREE.RingGeometry(0.8, 1, 24);
 export const materialCollision = new THREE.MeshBasicMaterial({color: 'red'});
 export const materialNoCollision = new THREE.MeshBasicMaterial({color: '#18A0FB'});
 let radius = 1;

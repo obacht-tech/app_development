@@ -4,6 +4,18 @@
  */
 import * as THREE from "three";
 import type {Object3DCustom, PersonSpline} from "../../../types";
+
+const colors = ['#C7C700',
+    '#FFD500',
+    '#FF0000',
+    '#18A0FB',
+    '#CC00CC',
+    '#960064',
+    '#FFD500',
+    '#FF0000',
+    '#18A0FB',
+    '#C7C700']
+
 /**
  * generates Paths of given Splines
  *
@@ -16,8 +28,8 @@ export function generatePaths(people: PersonSpline[]): THREE.Group {
     for (let personSpline of people) {
         const points = personSpline.spline.getPoints(200);
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
-        const color = new THREE.Color('#18A0FB');
-       // color.setHex(Math.random() * 0xffffff);
+        const randomIndex = Math.floor(Math.random() * 10);
+        const color = new THREE.Color(colors[randomIndex]);
         const material = new THREE.LineBasicMaterial({color});
 
         const splineObject: Object3DCustom = new THREE.Line(geometry, material);
