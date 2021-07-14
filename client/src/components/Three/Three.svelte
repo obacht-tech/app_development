@@ -76,6 +76,6 @@
         <Canvas cid={aid + 'Canvas'} aid={aid} inFrame={inFrame} enableCameraControls cameraZoomLocked={cameraZoomLocked} />
         <Timeline indicator playback datasetStart={datasetDates.start} datasetEnd={datasetDates.end} bind:markerStart={markerStart} bind:markerNow={markerNow} bind:markerEnd={markerEnd}/>
         <Controls zoomLock settings layers bind:cameraZoomLocked={cameraZoomLocked}/>
-        <h6 class="info-footer">*trifft auf die aufgenommenen Personen in der Zeit von 14:56 bis 15:46 im Scheazlerpalais Augsburg, Raum 304 zu.</h6>
+        <h6 class="info-footer">*trifft auf die aufgenommenen Personen in der Zeit von 14:56 bis 15:46 am 06.07.20 im Scheazlerpalais Augsburg, Raum 304 zu.</h6>
     {/if}
 </section>

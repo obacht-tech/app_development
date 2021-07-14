@@ -64,7 +64,6 @@ export function updateDistances(people: PersonSpline[], radius: number, start: n
         }
     }
   // delete all duplicates
-    console.log(collidingPeople.length)
     let uniqueColliding = [...new Set(collidingPeople)];
     return uniqueColliding.length;
 }

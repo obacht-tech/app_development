@@ -10,7 +10,7 @@
     @import "./../../styles/theme"
 
     section
-        margin: 5rem auto
+        margin: 8rem auto 5rem auto
 </style>
 
 <section id="text" class:scroll-snap-child={scrollSnapChild} class="container">
